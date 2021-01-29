@@ -4,8 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     loading: {
-        margin: "10rem",
-       // fontSize: "30rem",
+        margin: "10rem 0 0 0",
     }
 }));
 export default function Loading() {

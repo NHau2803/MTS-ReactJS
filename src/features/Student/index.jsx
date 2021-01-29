@@ -8,7 +8,7 @@ import TablePage from './pages/Table';
 
 export default function Student(props) {
   const match = useRouteMatch();
-
+  
   return (
     <div>
       <Suspense fallback={Loading}>
