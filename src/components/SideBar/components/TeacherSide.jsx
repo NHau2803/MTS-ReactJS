@@ -11,7 +11,8 @@ import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import Collapse from '@material-ui/core/Collapse';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ViewListIcon from '@material-ui/icons/ViewList';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import PersonIcon from '@material-ui/icons/Person';
+import { SET_COLOR_PURPLE } from "../../../constant/color";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,12 +38,12 @@ const TeacherSide = props => {
   const itemsList = [
     {
       text: "View List",
-      icon: <ViewListIcon />,
+      icon: <ViewListIcon style={SET_COLOR_PURPLE}/>,
       onClick: () => history.push("/teacher")
     },
     {
       text: "Add New",
-      icon: <PersonAddIcon />,
+      icon: <PersonAddIcon style={SET_COLOR_PURPLE}/>,
       onClick: () => history.push("/teacher/add")
     },
 
@@ -50,20 +51,42 @@ const TeacherSide = props => {
   return (
       <div>
         <ListItem button onClick={handleClick}>
+
         <ListItemIcon>
-          <PersonOutlineIcon />
+          <PersonIcon style={SET_COLOR_PURPLE}/>
         </ListItemIcon>
-        <ListItemText primary="Teacher" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+
+        <ListItemText 
+          primary="Teacher" 
+          style={SET_COLOR_PURPLE}
+        />
+
+        {open 
+        ? <ExpandLess style={SET_COLOR_PURPLE}/> 
+        : <ExpandMore style={SET_COLOR_PURPLE}/>
+        }
+
         </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+
+          <Collapse 
+            in={open} 
+            timeout="auto" 
+            unmountOnExit
+          >
             <List component="div" disablePadding>
-                {itemsList.map((item, index) => {
+                {itemsList.map((item,) => {
+
                 const { text, icon, onClick } = item;
+
                 return (
                 <ListItem className={classes.nested} button key={text} onClick={onClick}>
-                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                    <ListItemText primary={text} />
+                    {icon 
+                    && <ListItemIcon>{icon}</ListItemIcon>
+                    }
+                    <ListItemText 
+                      primary={text}  
+                      style={SET_COLOR_PURPLE}
+                    />
                 </ListItem>
                 );
             })}

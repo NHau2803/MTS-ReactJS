@@ -12,6 +12,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
+import { SET_COLOR_AMBER } from "../../../constant/color";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,33 +38,55 @@ const TeamSide = props => {
   const itemsList = [
     {
       text: "View List",
-      icon: <ViewListIcon />,
+      icon: <ViewListIcon style={SET_COLOR_AMBER}/>,
       onClick: () => history.push("/team")
     },
     {
       text: "Add New",
-      icon: <GroupAddIcon />,
+      icon: <GroupAddIcon style={SET_COLOR_AMBER}/>,
       onClick: () => history.push("/team/add")
     },
 
   ];
   return (
       <div>
+
         <ListItem button onClick={handleClick}>
+
         <ListItemIcon>
-          <GroupWorkIcon />
+          <GroupWorkIcon style={SET_COLOR_AMBER}/>
         </ListItemIcon>
-        <ListItemText primary="Team" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+
+        <ListItemText 
+          primary="Team" 
+          style={SET_COLOR_AMBER}
+        />
+        
+        {open 
+          ? <ExpandLess style={SET_COLOR_AMBER}/> 
+          : <ExpandMore style={SET_COLOR_AMBER}/>
+        }
+        
         </ListItem>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                {itemsList.map((item, index) => {
+                {itemsList.map((item) => {
+
                 const { text, icon, onClick } = item;
+
                 return (
-                <ListItem className={classes.nested} button key={text} onClick={onClick}>
-                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                    <ListItemText primary={text} />
+
+                <ListItem 
+                  className={classes.nested} 
+                  button key={text} 
+                  onClick={onClick}>
+                  {icon && 
+                    <ListItemIcon>{icon}</ListItemIcon>
+                  }
+                    <ListItemText 
+                      primary={text} 
+                      style={SET_COLOR_AMBER}
+                    />
                 </ListItem>
                 );
             })}

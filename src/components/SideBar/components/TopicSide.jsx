@@ -10,8 +10,9 @@ import { withRouter } from "react-router-dom";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import Collapse from '@material-ui/core/Collapse';
 import ViewListIcon from '@material-ui/icons/ViewList';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import { SET_COLOR_RED } from "../../../constant/color";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,12 +38,12 @@ const TopicSide = props => {
   const itemsList = [
     {
       text: "View List",
-      icon: <ViewListIcon />,
+      icon: <ViewListIcon style={SET_COLOR_RED}/>,
       onClick: () => history.push("/topic")
     },
     {
       text: "Add New",
-      icon: <NoteAddIcon />,
+      icon: <NoteAddIcon style={SET_COLOR_RED}/>,
       onClick: () => history.push("/topic/add")
     },
 
@@ -50,20 +51,45 @@ const TopicSide = props => {
   return (
       <div>
         <ListItem button onClick={handleClick}>
+
         <ListItemIcon>
-          <ImportContactsIcon />
+          <AssignmentIcon style={SET_COLOR_RED}/>
         </ListItemIcon>
-        <ListItemText primary="Topic" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+
+        <ListItemText 
+          primary="Topic" 
+          style={SET_COLOR_RED}
+        />
+        
+        {open ? 
+          <ExpandLess style={SET_COLOR_RED}/> : 
+          <ExpandMore style={SET_COLOR_RED}/>
+        }
+
         </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse 
+            in={open} 
+            timeout="auto" 
+            unmountOnExit
+          >
             <List component="div" disablePadding>
-                {itemsList.map((item, index) => {
+                {itemsList.map((item) => {
+
                 const { text, icon, onClick } = item;
+
                 return (
-                <ListItem className={classes.nested} button key={text} onClick={onClick}>
-                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                    <ListItemText primary={text} />
+                <ListItem 
+                  className={classes.nested} 
+                  button key={text} 
+                  onClick={onClick}
+                  >
+                    {icon && 
+                      <ListItemIcon>{icon}</ListItemIcon>
+                    }
+                    <ListItemText 
+                      primary={text} 
+                      style={SET_COLOR_RED}
+                    />
                 </ListItem>
                 );
             })}

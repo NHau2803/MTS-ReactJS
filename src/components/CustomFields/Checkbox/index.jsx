@@ -1,5 +1,6 @@
 import React from 'react'
 import { FormControl, FormControlLabel, Checkbox as MuiCheckbox } from '@material-ui/core';
+import { SET_COLOR_PRIMARY } from '../../../constant/color';
 
 export default function Checkbox(props) {
 
@@ -15,13 +16,19 @@ export default function Checkbox(props) {
     return (
         <FormControl>
             <FormControlLabel
-                control={<MuiCheckbox
+                label={label}
+
+                control=
+                {
+                <MuiCheckbox
                     name={name}
                     color="primary"
                     checked={value}
-                    onChange={e => onChange(convertToDefEventPara(name, e.target.checked))}
+                    onChange={e => 
+                        onChange(convertToDefEventPara(name, e.target.checked))
+                    }
+                    style={SET_COLOR_PRIMARY}
                 />}
-                label={label}
             />
         </FormControl>
     )

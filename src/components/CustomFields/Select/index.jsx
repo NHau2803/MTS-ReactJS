@@ -3,8 +3,12 @@ import { FormControl, InputLabel, Select as MuiSelect, MenuItem, FormHelperText,
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        minWidth: theme.spacing(28),
+      //  minWidth: theme.spacing(28),
     },
+    muiSelect: {
+        maxHeight: theme.spacing(5),
+    }
+
 
 }));
 
@@ -16,12 +20,13 @@ export default function Select(props) {
 
     return (
         <FormControl 
-            className={classes.root}
+           // className={classes.root}
             variant="outlined" 
             {...(error && {error:true})}
         >
             <InputLabel>{label}</InputLabel>
             <MuiSelect
+                className={classes.muiSelect}
                 label={label}
                 name={name}
                 value={value}

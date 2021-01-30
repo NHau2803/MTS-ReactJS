@@ -12,6 +12,7 @@ import Collapse from '@material-ui/core/Collapse';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import PersonIcon from '@material-ui/icons/Person';
+import { SET_COLOR_TEAL } from "../../../constant/color";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,33 +38,62 @@ const StudentSide = props => {
   const itemsList = [
     {
       text: "View List",
-      icon: <ViewListIcon />,
+      icon: <ViewListIcon style={SET_COLOR_TEAL}/>,
       onClick: () => history.push("/student")
     },
     {
       text: "Add New",
-      icon: <PersonAddIcon />,
+      icon: <PersonAddIcon style={SET_COLOR_TEAL}/>,
       onClick: () => history.push("/student/add")
     },
 
   ];
   return (
       <div>
+
         <ListItem button onClick={handleClick}>
         <ListItemIcon>
-          <PersonIcon />
+          <PersonIcon style={SET_COLOR_TEAL}/>
         </ListItemIcon>
-        <ListItemText primary="Student" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+
+        <ListItemText 
+          primary="Student" 
+          style={SET_COLOR_TEAL} 
+        />
+
+        {open 
+        ? <ExpandLess style={SET_COLOR_TEAL}/> 
+        : <ExpandMore style={SET_COLOR_TEAL}/>
+        }
+
         </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-                {itemsList.map((item, index) => {
+          <Collapse 
+            in={open} 
+            timeout="auto" 
+            unmountOnExit
+          >
+            <List 
+              component="div" 
+              disablePadding
+            >
+                {itemsList.map((item) => {
+
                 const { text, icon, onClick } = item;
+
                 return (
-                <ListItem className={classes.nested} button key={text} onClick={onClick}>
-                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                    <ListItemText primary={text} />
+                <ListItem 
+                  className={classes.nested} 
+                  button key={text} 
+                  onClick={onClick}
+                  >
+                    {icon 
+                    && <ListItemIcon>{icon}</ListItemIcon>
+                    }
+
+                    <ListItemText 
+                      primary={text} 
+                      style={SET_COLOR_TEAL}
+                    />
                 </ListItem>
                 );
             })}

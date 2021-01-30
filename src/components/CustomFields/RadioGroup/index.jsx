@@ -3,9 +3,10 @@ import { FormControl, FormLabel, RadioGroup as MuiRadioGroup, FormControlLabel, 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        minWidth: theme.spacing(25),
+      //  minWidth: theme.spacing(25),
     },
     label: {
+       // fontSize: theme.spacing(1.5),
         display: "flex",
         justifyContent: "left",
         
@@ -21,8 +22,14 @@ export default function RadioGroup(props) {
 
     return (
         <FormControl className={classes.root}>
-            <FormLabel className={classes.label}>{label}</FormLabel>
-            <MuiRadioGroup row
+            <FormLabel 
+                className={classes.label}
+            >
+                {label}
+            </FormLabel>
+
+            <MuiRadioGroup 
+                row
                 name={name}
                 value={value}
                 onChange={onChange}>

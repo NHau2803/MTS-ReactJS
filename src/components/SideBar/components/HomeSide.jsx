@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import HomeIcon from '@material-ui/icons/Home';
+import { SET_COLOR_PRIMARY } from "../../../constant/color";
 
 
 const HomeSide = props => {
@@ -15,10 +16,10 @@ const HomeSide = props => {
         <div>
         <ListItem button onClick={() => history.push("/home")}>
             <ListItemIcon>
-            <HomeIcon />
+                <HomeIcon style={SET_COLOR_PRIMARY}/>
             </ListItemIcon>
 
-            <ListItemText primary="Home" />
+            <ListItemText primary="Home" style={SET_COLOR_PRIMARY}/>
         </ListItem>
         
         </div>

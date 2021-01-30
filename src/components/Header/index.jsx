@@ -13,7 +13,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Links from '../SideBar';
 import NotiProfileSide from '../SideBar/components/NotiProfileSide';
-const drawerWidth = 200;
+import { COLOR_PRIMARY, COLOR_WHITE, SET_COLOR_PRIMARY } from '../../constant/color';
+const drawerWidth = 190;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,10 +94,11 @@ export default function Header() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        style={{background: COLOR_PRIMARY}}
       >
         <Toolbar>
           <IconButton
-            color="inherit"
+            style={{color: COLOR_WHITE}}
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -105,8 +107,11 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
 
-          <Typography variant="h6" noWrap>
-            MTS
+          <Typography 
+            variant="h6" 
+            noWrap
+            >
+              MTS
           </Typography>
           
           <NotiProfileSide />
@@ -125,7 +130,10 @@ export default function Header() {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' 
+            ? <ChevronLeftIcon style={SET_COLOR_PRIMARY}/> 
+            : <ChevronRightIcon />
+            }
           </IconButton>
         </div>
 
