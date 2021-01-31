@@ -37,12 +37,12 @@ const TeacherSide = props => {
 
   const itemsList = [
     {
-      text: "View List",
+      text: "View",
       icon: <ViewListIcon style={SET_COLOR_PURPLE}/>,
       onClick: () => history.push("/teacher")
     },
     {
-      text: "Add New",
+      text: "Add",
       icon: <PersonAddIcon style={SET_COLOR_PURPLE}/>,
       onClick: () => history.push("/teacher/add")
     },

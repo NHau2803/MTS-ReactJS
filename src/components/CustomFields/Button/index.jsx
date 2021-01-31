@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Button(props) {
 
-    const { text, size, color, background, variant, onClick, ...other } = props
+    const { text, size, color, background, icon, variant, onClick, ...other } = props
     const classes = useStyles();
 
     return (
@@ -23,11 +23,11 @@ export default function Button(props) {
             color={color || "primary"}
             style={background}
             onClick={onClick}
-            {...other}
+            startIcon={icon}
             classes={{ root: classes.root, label: classes.label }}
-         //   style={}
-            >
-                {text}
+            {...other}
+        >
+            {text}
         </MuiButton>
     )
 }

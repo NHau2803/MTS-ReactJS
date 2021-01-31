@@ -37,12 +37,12 @@ const TopicSide = props => {
 
   const itemsList = [
     {
-      text: "View List",
+      text: "View",
       icon: <ViewListIcon style={SET_COLOR_RED}/>,
       onClick: () => history.push("/topic")
     },
     {
-      text: "Add New",
+      text: "Add",
       icon: <NoteAddIcon style={SET_COLOR_RED}/>,
       onClick: () => history.push("/topic/add")
     },

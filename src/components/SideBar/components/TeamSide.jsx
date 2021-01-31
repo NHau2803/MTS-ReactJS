@@ -37,12 +37,12 @@ const TeamSide = props => {
 
   const itemsList = [
     {
-      text: "View List",
+      text: "View",
       icon: <ViewListIcon style={SET_COLOR_AMBER}/>,
       onClick: () => history.push("/team")
     },
     {
-      text: "Add New",
+      text: "Add",
       icon: <GroupAddIcon style={SET_COLOR_AMBER}/>,
       onClick: () => history.push("/team/add")
     },

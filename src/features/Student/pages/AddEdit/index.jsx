@@ -1,129 +1,3 @@
-
-/**********************02:31  - 29/01/2021************************** */
-
-
-// import React, { useState } from 'react';
-// import { Form, Formik, useFormik } from 'formik';
-// import * as yup from 'yup';
-// import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
-// import { makeStyles } from '@material-ui/core/styles';
-// import { Grid } from '@material-ui/core';
-// import Select from '../../../../components/CustomFields/Select'
-// import { FACULTY_LIST } from '../../../../constant/dataDemo';
-
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         margin: "5rem auto 1rem auto",
-//     },
-//     grid: {
-//         //background: "red",
-//         padding: theme.spacing(1),
-//     }
-// }));
-
-// const validationSchema = yup.object({
-//     code: yup.string().min(10, 'minimum 8 characters length').required('Code is required'),
-    
-//     name: yup.string().required('name is required'),
-
-//     facultyId: yup.string().required('faculty is required'),
-
-// });
-
-// export default function AddEditPage(){
-
-//     const classes = useStyles();
-
-//     const [state, setState] = useState({
-//         code: '197ct31311',
-//         name: 'Nguyễn Công Hậu',
-//         facultyId: 1, 
-//       });
-
-//     const formik = useFormik({
-
-//         initialValues: {
-//             code: '197ct31311',
-//             name: 'Nguyễn Công Hậu',
-//             facultyId: 1, 
-//         },
-
-//         validationSchema: validationSchema,
-
-//         onSubmit: (values) => {
-//             alert(JSON.stringify(values, null, 2));
-//         },
-//     });
-
-//     const handleChange = (event) => {
-//         const name = event.target.name;
-//         setState({
-//           ...state,
-//           [name]: event.target.value,
-//         });
-//     };
-
-//     return (
-//         <Formik>
-//             <Form onSubmit={formik.handleSubmit} className={classes.root}>
-//                 <Grid item xs={12} className={classes.grid}>
-//                     <TextField
-//                         id="code"
-//                         name="code"
-//                         label="Code"
-//                         value={formik.values.code}
-//                         onChange={formik.handleChange}
-//                         error={formik.touched.code && Boolean(formik.errors.code)}
-//                         helperText={formik.touched.code && formik.errors.code}
-//                         variant="outlined"
-//                         size="small"
-//                     />
-//                 </Grid>
-
-//                 <Grid item xs={12} className={classes.grid}>
-//                     <TextField
-//                         id="name"
-//                         name="name"
-//                         label="Name"
-//                         value={formik.values.name}
-//                         onChange={formik.handleChange}
-//                         error={formik.touched.name && Boolean(formik.errors.name)}
-//                         helperText={formik.touched.name && formik.errors.name}
-//                         variant="outlined"
-//                         size="small"
-//                     />
-//                 </Grid>
-
-//                 <Grid item xs={12} className={classes.grid}>
-//                     <Select
-//                         id="faculty"
-//                         name="faculty"
-//                         label="Faculty"
-//                         value={formik.FACULTY_LIST}
-//                         error={formik.touched.name && Boolean(formik.errors.name)}
-//                         onChange={handleChange}
-//                         options ={FACULTY_LIST()}
-//                         variant="outlined"
-                        
-
-//                     />
-//                 </Grid>
-
-//                 <Grid item xs={12} className={classes.grid}>
-//                     <Button color="primary" variant="contained" type="submit">
-//                         Submit
-                        
-//                     </Button>
-//                 </Grid>
-//             </Form>
-//         </Formik>
-//     );
-// };
-
-
-/****************************************update 8:04***************** */
-
 import React, { useState, useEffect } from 'react'
 import { FormGroup, FormLabel, Grid, makeStyles, } from '@material-ui/core';
 import { FACULTY_LIST } from '../../../../constant/dataDemo';
@@ -135,6 +9,8 @@ import Checkbox from '../../../../components/CustomFields/Checkbox'
 import RadioGroup from '../../../../components/CustomFields/RadioGroup';
 import DatePicker from '../../../../components/CustomFields/DatePicker';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import SaveIcon from '@material-ui/icons/Save';
 import { SET_COLOR_PRIMARY, SET_BACKGROUND_COLOR_PRIMARY_DARK } from '../../../../constant/color';
 
 const useStyles = makeStyles((theme) => ({
@@ -230,10 +106,11 @@ export default function AddEditPage(props) {
         <div className={classes.root}>
             <FormGroup onSubmit={handleSubmit}>
             <FormLabel>
-                <PersonAddIcon 
+                {/* <PersonAddIcon 
                     className={classes.icon}
                     style={SET_COLOR_PRIMARY}
-                /> 
+                />  */}
+                <h1>Create a Student</h1>
             </FormLabel>
             
             {/* <div className={classes.root1}> */}
@@ -373,14 +250,16 @@ export default function AddEditPage(props) {
             <Grid item xs={12} className={classes.submit}>
                     <Button
                         type="submit"
-                        text="Submit" 
+                        text="Save" 
+                        startIcon={<SaveIcon />}
                         onClick={handleSubmit}
                         background = {SET_BACKGROUND_COLOR_PRIMARY_DARK}
-
                     />
                     <Button
+                    
                         text="Reset"
                         color="default"
+                        startIcon={<RefreshIcon />}
                         onClick={resetForm} 
                     />
             </Grid>

@@ -37,12 +37,12 @@ const StudentSide = props => {
 
   const itemsList = [
     {
-      text: "View List",
+      text: "View",
       icon: <ViewListIcon style={SET_COLOR_TEAL}/>,
       onClick: () => history.push("/student")
     },
     {
-      text: "Add New",
+      text: "Add",
       icon: <PersonAddIcon style={SET_COLOR_TEAL}/>,
       onClick: () => history.push("/student/add")
     },
