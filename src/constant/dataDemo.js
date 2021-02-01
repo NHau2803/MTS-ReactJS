@@ -512,3 +512,20 @@ export const STUDENT_LIST = [
 ];
 
 
+export const STUDENT1 = {
+    id: 0,
+    code: '197sv1',
+    name: 'sv1',
+    gender: 'male',
+    birthday: new Date('2001-01-01T12:00:00'),
+    tickDefaultEmail: false,
+    email: '197sv1@vn.vn',
+    phone: '0909090909',
+    facultyId: '',
+    username: 'sv1.197sv1',
+    tickDefaultUsername: false,
+    password: '',
+    tickDefaultPassword: false
+}
+
+

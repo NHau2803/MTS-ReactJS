@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
-import {makeStyles, TableBody, TableRow, TableCell, InputAdornment, Toolbar } from '@material-ui/core';
+import {makeStyles, TableBody, TableRow, TableCell, InputAdornment, Toolbar, FormLabel } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import CloseIcon from '@material-ui/icons/Close';
 import useTable from '../../../../components/CustomFields/Use/useTable';
 import { STUDENT_LIST } from '../../../../constant/dataDemo';
 import { Search } from '@material-ui/icons';
 import Input from '../../../../components/CustomFields/Input';
 import ButtonIcon from '../../../../components/CustomFields/ButtonIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import Notification from '../../../../components/CustomFields/Notification';
+import ConfirmDialog from '../../../../components/CustomFields/ConfirmDialog';
+import Popup from '../../../../components/CustomFields/Popup';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,6 +41,12 @@ export default function TablePage(props) {
 
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
 
+    const [openPopup, setOpenPopup] = useState(false)
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+
     const handleSearch = e => {
         let target = e.target;
 
@@ -46,10 +56,26 @@ export default function TablePage(props) {
                     return items;
                 else
                     console.log(items);
-                    return items.filter(x => x.code.toLowerCase().includes(target.value.toLowerCase()));
+                    return items.filter(
+                        x => x.code.toLowerCase().includes(target.value.toLowerCase())
+                    );
             }
         })
     };
+
+    const onDelete = id => {
+        setConfirmDialog({
+            ...confirmDialog,
+            isOpen: false
+        })
+        // employeeService.deleteEmployee(id);
+        // setRecords(employeeService.getAllEmployees())
+        setNotify({
+            isOpen: true,
+            message: 'Deleted Successfully',
+            type: 'error'
+        })
+    }
 
     const {
         TblContainer,
@@ -61,7 +87,10 @@ export default function TablePage(props) {
 
     return(
         <div className={classes.root}>
-
+            <FormLabel>
+                <h1>Student List</h1>
+            </FormLabel>
+            
             <Toolbar>
                 <Input
                     label="Search For Code"
@@ -73,7 +102,6 @@ export default function TablePage(props) {
                     }}
                     onChange={handleSearch}
                 />
-                
             </Toolbar>
 
              <TblContainer>
@@ -93,41 +121,58 @@ export default function TablePage(props) {
                                         <ButtonIcon
                                             size="small"
                                             icon={<EditOutlinedIcon fontSize="small" />}   
-                                            onClick= {() => history.push(`/student/add/${item.id}`)} 
+                                            onClick= {() => history.push(`/student/${item.id}`)} 
                                         />
+
                                         <ButtonIcon
                                             size="small"
                                             icon={<DeleteIcon fontSize="small" />}    
-                                            onClick= {() => history.push(`/student/delete/${item.id}`)}
-                                        />
-                                    </TableCell>
-                                    {/* <TableCell>
-                                        <ActionButton
-                                            color="primary"
-                                            onClick={() => { openInPopup(item) }}>
-                                            <EditOutlinedIcon fontSize="small" />
-                                        </ActionButton>
-
-                                        <ActionButton
-                                            color="secondary"
-                                            onClick={() => {
-                                                setConfirmDialog({
-                                                    isOpen: true,
-                                                    title: 'Are you sure to delete this record?',
-                                                    subTitle: "You can't undo this operation",
-                                                    onConfirm: () => { onDelete(item.id) }
-                                                })
-                                            }}>
+                                           // onClick= {() => history.push(`/student/delete/${item.id}`)}
+                                           onClick={() => {
+                                            setConfirmDialog({
+                                                isOpen: true,
+                                                title: 'Are you sure to delete this student?',
+                                                subTitle: "You can't undo this operation",
+                                                onConfirm: () => { onDelete(item.id) }
+                                            },)
+                                        }}>
                                             <CloseIcon fontSize="small" />
-                                        </ActionButton>
-                                    </TableCell> */}
+                                        </ButtonIcon>
 
+                                        <ButtonIcon
+                                            size="small"
+                                            icon={<AssignmentIndIcon fontSize="small" />}   
+                                            onClick= {() => history.push(`/student/${item.id}/info`)} 
+                                        />
+                                        
+                                    </TableCell>
                                 </TableRow>)
                             )
                         }
                     </TableBody>
                 </TblContainer>
                 <TblPagination />
+
+                <Popup
+                    title="Employee Form"
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                >
+                    {/* <EmployeeForm
+                        recordForEdit={recordForEdit}
+                        addOrEdit={addOrEdit} 
+                    /> */}
+                </Popup>
+            
+                <Notification
+                    notify={notify}
+                    setNotify={setNotify}
+                />
+                <ConfirmDialog
+                    confirmDialog={confirmDialog}
+                    setConfirmDialog={setConfirmDialog}
+                />
+                
         </div>
     );
 }

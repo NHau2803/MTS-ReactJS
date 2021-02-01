@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeStyles } from "@material-ui/core";
 
-export function useForm(initialFValues, validateOnChange = false, validate) {
+export function useForm(initialFValuesDefault, initialFValues, validateOnChange = false, validate) {
 
 
     const [values, setValues] = useState(initialFValues);
@@ -18,7 +18,7 @@ export function useForm(initialFValues, validateOnChange = false, validate) {
     }
 
     const resetForm = () => {
-        setValues(initialFValues);
+        setValues(initialFValuesDefault);
         setErrors({})
     }
 

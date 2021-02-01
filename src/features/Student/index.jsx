@@ -1,22 +1,24 @@
 import React, { Suspense } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import Loading from '../../components/Loading';
+import Loader from '../../components/Loader';
 import NotFound from '../../components/NotFound';
-import AddEditPage from './pages/AddEdit';
-import ProfilePage from './pages/Profile';
-import TablePage from './pages/Table';
+
+const TablePage = React.lazy(() => import("./pages/Table"));
+const AddEditPage = React.lazy(() => import("./pages/AddEdit"));
+const InfoPage = React.lazy(() => import("./pages/Info"));
 
 export default function Student(props) {
-  const match = useRouteMatch();
+  
+  const match = useRouteMatch();  
   
   return (
     <div>
-      <Suspense fallback={Loading}>
+      <Suspense fallback={<Loader />}>
         <Switch>
+        
         <Route exact path={match.url} component={TablePage} />
-
         <Route exact path={`${match.url}/add`} component={AddEditPage} />
-        <Route path={`${match.url}/:studentId/profile`} component={ProfilePage} />
+        <Route path={`${match.url}/:studentId/info`} component={InfoPage} />
         <Route path={`${match.url}/:studentId`} component={AddEditPage} />
 
         <Route component={NotFound} />

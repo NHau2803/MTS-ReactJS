@@ -11,7 +11,9 @@ import DatePicker from '../../../../components/CustomFields/DatePicker';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SaveIcon from '@material-ui/icons/Save';
-import { SET_COLOR_PRIMARY, SET_BACKGROUND_COLOR_PRIMARY_DARK } from '../../../../constant/color';
+import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from '../../../../constant/color';
+import {STUDENT1} from '../../../../constant/dataDemo'
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     },
     gridLeft: {
         padding: theme.spacing(2),
-        
     },
     gridRight: {
         padding: theme.spacing(2)
@@ -51,7 +52,7 @@ const genderItems = [
     { id: 'female', title: 'Female' },
 ]
 
-const initialFValues = {
+const initialFValuesDefault = {
     id: 0,
     code: '',
     name: '',
@@ -69,19 +70,38 @@ const initialFValues = {
 
 export default function AddEditPage(props) {
 
-    const classes = useStyles()
+    const classes = useStyles();
+
+    const { studentId } = useParams();
+
+    const isAddMode = !studentId;
+
+    const editedStudent = () => {
+        return STUDENT1; //call api 
+    };
+
+    const initialFValues = isAddMode 
+    ? initialFValuesDefault
+    : editedStudent
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('code' in fieldValues)
             temp.code = fieldValues.code ? "" : "This field is required."
+        if ('name' in fieldValues)
+            temp.name = fieldValues.name ? "" : "This field is required."
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
+        if ('phone' in fieldValues)
+            temp.phone = fieldValues.phone ? "" : "This field is required."
         if ('facultyId' in fieldValues)
             temp.facultyId = fieldValues.facultyId.length !== 0 ? "" : "This field is required."
-        setErrors({
-            ...temp
-        })
+        if ('username' in fieldValues)
+            temp.username = fieldValues.username ? "" : "This field is required."
+        if ('password' in fieldValues)
+            temp.password = fieldValues.password ? (fieldValues.password.length > 8 ? "" : "Password must be geater than 8") : "This field is required"
+
+        setErrors({ ...temp })
 
         if (fieldValues === values)
             return Object.values(temp).every(x => x === "")
@@ -94,26 +114,21 @@ export default function AddEditPage(props) {
         setErrors,
         handleInputChange,
         resetForm
-    } = useForm(initialFValues, true, validate);
+    } = useForm(initialFValuesDefault, initialFValues, true, validate);
 
     const handleSubmit = e => {
         e.preventDefault()
         console.log(values);
+        console.log({errors})//if have error show message
     }
-
 
     return (
         <div className={classes.root}>
-            <FormGroup onSubmit={handleSubmit}>
+        <FormGroup onSubmit={handleSubmit}>
             <FormLabel>
-                {/* <PersonAddIcon 
-                    className={classes.icon}
-                    style={SET_COLOR_PRIMARY}
-                />  */}
-                <h1>Create a Student</h1>
+                <h1>Create a Student id {studentId}</h1>
             </FormLabel>
             
-            {/* <div className={classes.root1}> */}
             <Grid container className={classes.grid}>
             
                 <Grid item xs={12} sm={3} className={classes.gridLeft}>
@@ -150,15 +165,6 @@ export default function AddEditPage(props) {
                         value={values.birthday}
                         onChange={handleInputChange}
                     />
-                    {/* <br/>
-                    <Select
-                        name="facultyId"
-                        label="Faculty"
-                        value={values.facultyId}
-                        onChange={handleInputChange}
-                        options={FACULTY_LIST()}
-                        error={errors.facultyId}
-                    /> */}
                     <br/>
                     <Input
                         name="phone"
@@ -169,7 +175,6 @@ export default function AddEditPage(props) {
                         error={errors.phone}
                     />
                     <br/>
-                    
                     </FormGroup>
 
                 </Grid>
@@ -184,7 +189,6 @@ export default function AddEditPage(props) {
                         options={FACULTY_LIST()}
                         error={errors.facultyId}
                     />
-
                     <br/>
                     <Input
                         name="email"
@@ -194,7 +198,6 @@ export default function AddEditPage(props) {
                         onChange={handleInputChange}
                         error={errors.email}
                         disabled={values.tickDefaultEmail}
-                        
                     />
                     <Checkbox 
                         name="tickDefaultEmail"
@@ -202,7 +205,6 @@ export default function AddEditPage(props) {
                         value={values.tickDefaultEmail}
                         onChange={handleInputChange}
                     />
-                    
                     <Input
                         name="username"
                         label="Username"
@@ -218,7 +220,6 @@ export default function AddEditPage(props) {
                         value={values.tickDefaultUsername}
                         onChange={handleInputChange}
                     />
-
                     <Input
                         name="password"
                         label="Password"
@@ -242,7 +243,7 @@ export default function AddEditPage(props) {
                         onChange={handleInputChange}
                         options={FACULTY_LIST()}
                         error={errors.facultyId}
-                    /> */}
+                    /> */}  
                     </FormGroup>
                 </Grid>
             

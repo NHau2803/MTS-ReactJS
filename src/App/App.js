@@ -5,7 +5,7 @@ import '../components/Header'
 import NotFound from '../components/NotFound';
 import HomePage from '../features/Home';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import Loading from '../components/Loading';
+import Loader from '../components/Loader';
 
 const Student = React.lazy(() => import('../features/Student'));
 
@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
 
-      <Suspense fallback={Loading}>
+      <Suspense fallback={<Loader />}>
         <BrowserRouter>
           <Header />
         
