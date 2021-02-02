@@ -11,9 +11,15 @@ import DatePicker from '../../../../components/CustomFields/DatePicker';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SaveIcon from '@material-ui/icons/Save';
+import UpdateIcon from '@material-ui/icons/Update';
 import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from '../../../../constant/color';
 import {STUDENT1} from '../../../../constant/dataDemo'
 import { useParams } from 'react-router-dom';
+import { getNameFromFullName } from '../../../../utils/converter';
+import studentApi from '../../../../api/studentApi';
+import axios from 'axios';
+import urlApi from '../../../../api/urlApi';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -68,21 +74,63 @@ const initialFValuesDefault = {
     tickDefaultPassword: true
 }
 
+// async function doSomething() {
+//     let result = await studentApi.find(39);
+//     console.log(result);
+//     return result;
+// }
+
+// doSomething();
+
 export default function AddEditPage(props) {
 
     const classes = useStyles();
 
     const { studentId } = useParams();
 
+    const [student, setStudent] = useState([]);
+
     const isAddMode = !studentId;
 
-    const editedStudent = () => {
-        return STUDENT1; //call api 
+    
+
+    async function getStundetToUpdate(){
+        return studentApi.find(studentId).then(res => res);
+        // student.tickDefaultEmail = false;
+        // student.tickDefaultUsername = false;
+        // student.tickDefaultPassword = false;
+        // //return student;
+        // setValues(student);
+        // break;
+        // const {result} = data;
+        // result.tickDefaultEmail = false;
+        // result.tickDefaultUsername = false;
+        // result.tickDefaultPassword = false;
+        // return [];
     };
 
-    const initialFValues = isAddMode 
-    ? initialFValuesDefault
-    : editedStudent
+    // const initialFValues = isAddMode
+    // ? initialFValuesDefault
+    // : getStundetToUpdate()
+
+    // console.log(initialFValues);
+
+    async function getStudent() {
+
+        // read github user
+        let student = await studentApi.find(studentId);
+        //console.log(githubResponse);
+       // let githubUser = await githubResponse;
+    
+        // wait 3 seconds
+        await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+      
+        return student;
+      }
+      
+ //   console.log(showAvatar());
+
+   
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -114,19 +162,40 @@ export default function AddEditPage(props) {
         setErrors,
         handleInputChange,
         resetForm
-    } = useForm(initialFValuesDefault, initialFValues, true, validate);
+    } = useForm(initialFValuesDefault, isAddMode ? initialFValuesDefault : getStudent(), true, validate);
 
     const handleSubmit = e => {
-        e.preventDefault()
-        console.log(values);
-        console.log({errors})//if have error show message
+        //add or update 
+        e.preventDefault();
+        const studentObject = {
+            code: values.code,
+            name: values.name,
+            gender: values.gender.toUpperCase(),
+            birthday:"10-09-1990",
+            email: values.email,
+            phone: values.phone,
+            facultyId: Number(values.facultyId),
+            username: values.username,
+            password: values.password,
+        }
+
+        if(isAddMode){
+            
+            console.log(studentObject);
+            //studentApi.create(studentNew);
+        }else{
+
+            console.log(studentObject);
+           // studentApi.create(studentNew);
+        }
+
     }
 
     return (
         <div className={classes.root}>
         <FormGroup onSubmit={handleSubmit}>
             <FormLabel>
-                <h1>Create a Student id {studentId}</h1>
+                <h1>Create a Student id {student.code}</h1>
             </FormLabel>
             
             <Grid container className={classes.grid}>
@@ -194,7 +263,7 @@ export default function AddEditPage(props) {
                         name="email"
                         label="Email"
                         placeholder="Ex: an.197CT11122@vanlanguni.vn"
-                        value={values.tickDefaultEmail ? values.email = values.username + "@vanlanguni.vn" : values.email}
+                        value={values.tickDefaultEmail ? values.email = getNameFromFullName(values.name)+ "." + values.code + "@vanlanguni.vn" : values.email}
                         onChange={handleInputChange}
                         error={errors.email}
                         disabled={values.tickDefaultEmail}
@@ -209,7 +278,7 @@ export default function AddEditPage(props) {
                         name="username"
                         label="Username"
                         placeholder="Ex: an.197CT11122"
-                        value={values.tickDefaultUsername ? values.username = values.name+ "." + values.code : values.username}
+                        value={values.tickDefaultUsername ? values.username = getNameFromFullName(values.name)+ "." + values.code : values.username}
                         onChange={handleInputChange}
                         error={errors.username}
                         disabled={values.tickDefaultUsername}
@@ -236,14 +305,17 @@ export default function AddEditPage(props) {
                         onChange={handleInputChange}
                     />
 
-                    {/* <Select
+                    {/* {isAddMode
+                    ? "abc"
+                    : <Select
                         name="facultyId"
                         label="Faculty"
                         value={values.facultyId}
                         onChange={handleInputChange}
                         options={FACULTY_LIST()}
                         error={errors.facultyId}
-                    /> */}  
+                        />
+                    }   */}
                     </FormGroup>
                 </Grid>
             
@@ -251,8 +323,8 @@ export default function AddEditPage(props) {
             <Grid item xs={12} className={classes.submit}>
                     <Button
                         type="submit"
-                        text="Save" 
-                        startIcon={<SaveIcon />}
+                        text={isAddMode ? "Save": "Update"} 
+                        startIcon={isAddMode ? <SaveIcon />: <UpdateIcon />}
                         onClick={handleSubmit}
                         background = {SET_BACKGROUND_COLOR_PRIMARY_DARK}
                     />

@@ -1,8 +1,10 @@
 export const FACULTY_LIST = () => ([
     { id: '1', title: 'Công Nghệ Thông Tin' },
     { id: '2', title: 'Xây Dựng' },
-    { id: '3', title: 'Mỹ Thuật' },
-    { id: '4', title: 'Quản Trị Kinh Doanh' },
+    { id: '3', title: 'Kế toán' },
+    { id: '4', title: 'Quản trị kinh doanh' },
+    { id: '5', title: 'Mỹ thuật' },
+    { id: '6', title: 'Thế kế thời trang' },
 ])
 
 export const ROLE_LIST = () => ([
@@ -521,7 +523,7 @@ export const STUDENT1 = {
     tickDefaultEmail: false,
     email: '197sv1@vn.vn',
     phone: '0909090909',
-    facultyId: '',
+    facultyId: 2,
     username: 'sv1.197sv1',
     tickDefaultUsername: false,
     password: '',

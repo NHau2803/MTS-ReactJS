@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {makeStyles, TableBody, TableRow, TableCell, InputAdornment, Toolbar, FormLabel } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import CloseIcon from '@material-ui/icons/Close';
@@ -12,6 +12,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import Notification from '../../../../components/CustomFields/Notification';
 import ConfirmDialog from '../../../../components/CustomFields/ConfirmDialog';
 import Popup from '../../../../components/CustomFields/Popup';
+import studentApi from '../../../../api/studentApi';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,6 +48,18 @@ export default function TablePage(props) {
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
+    // Define the function that fetches the data from API
+    const fetchData = async () => {
+        
+        studentApi.search().then(res=>{
+            setRecords(res);
+        });
+    
+    };
+
+    // Trigger the fetchData after the initial render by using the useEffect hook
+    useEffect(() => { fetchData(); }, []);
+
     const handleSearch = e => {
         let target = e.target;
 
@@ -55,7 +68,7 @@ export default function TablePage(props) {
                 if (target.value === "")
                     return items;
                 else
-                    console.log(items);
+                    //console.log(items);
                     return items.filter(
                         x => x.code.toLowerCase().includes(target.value.toLowerCase())
                     );
@@ -68,8 +81,8 @@ export default function TablePage(props) {
             ...confirmDialog,
             isOpen: false
         })
-        // employeeService.deleteEmployee(id);
-        // setRecords(employeeService.getAllEmployees())
+        
+        studentApi.delete(id);
         setNotify({
             isOpen: true,
             message: 'Deleted Successfully',

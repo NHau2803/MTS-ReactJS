@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Grid, ListItem, ListItemAvatar, ListItemText, Paper } from "@material-ui/core";
 import { STUDENT1 } from "../../../../constant/dataDemo";
@@ -10,6 +10,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import ClassIcon from '@material-ui/icons/Class';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import WcIcon from '@material-ui/icons/Wc';
+import studentApi from "../../../../api/studentApi";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,15 +46,22 @@ export default function InfoPage() {
 
     const classes = useStyles();
 
-    const student = {
-        "code": "197XD51241",
-        "name": "Huỳnh Trọng Chí",
-        "gender": "MALE",
-        "birthday": "03-02-1997",
-        "email": "197XD51241@gmail.com",
-        "phone": "0966966387",
-        "facultyName": "Quản trị kinh doanh"
-        }
+    const { studentId } = useParams();
+
+    const [studentInfo, setStudentInfo] = useState({});
+
+    const fetchData = async () => {
+    
+        studentApi.info(studentId).then(res=>{
+            console.log(studentId)
+            console.log(res)
+            setStudentInfo(res);
+        });
+    
+    };
+
+    // Trigger the fetchData after the initial render by using the useEffect hook
+    useEffect(() => { fetchData(); }, []);
     
     const renderRow = (icon, title, info) =>{
         return(
@@ -87,13 +96,13 @@ export default function InfoPage() {
                 <Paper elevation={4} className={classes.pager}>
                     
                     <h1 className={classes.title}>Student Info</h1>
-                    {renderRow(<ContactsIcon/>, "Code", "197XD51241")}
-                    {renderRowRight(<PersonIcon />, "Name", "Huỳnh Trọng Chí")}
-                    {renderRow(<WcIcon />, "Gender", "MALE")}
-                    {renderRowRight(<DateRangeIcon />, "Birthday", "03-02-1997")}
-                    {renderRow(<EmailIcon />, "Email", "197XD51241@gmail.com")}
-                    {renderRowRight(<PhoneIphoneIcon />, "Phone", "0966966387")}
-                    {renderRow(<ClassIcon />, "Faculty", "Quản trị kinh doanh")}
+                    {renderRow(<ContactsIcon/>, "Code", studentInfo.code)}
+                    {renderRowRight(<PersonIcon />, "Name", studentInfo.name)}
+                    {renderRow(<WcIcon />, "Gender", studentInfo.gender)}
+                    {renderRowRight(<DateRangeIcon />, "Birthday", studentInfo.birthday)}
+                    {renderRow(<EmailIcon />, "Email", studentInfo.email)}
+                    {renderRowRight(<PhoneIphoneIcon />, "Phone", studentInfo.phone)}
+                    {renderRow(<ClassIcon />, "Faculty", studentInfo.facultyName)}
                 </Paper>
                 
             </Grid>

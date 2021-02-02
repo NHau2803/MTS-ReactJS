@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core";
 
 export function useForm(initialFValuesDefault, initialFValues, validateOnChange = false, validate) {
 
+    console.log({initialFValues});
 
     const [values, setValues] = useState(initialFValues);
     const [errors, setErrors] = useState({});
@@ -21,7 +22,6 @@ export function useForm(initialFValuesDefault, initialFValues, validateOnChange 
         setValues(initialFValuesDefault);
         setErrors({})
     }
-
 
     return {
         values,
