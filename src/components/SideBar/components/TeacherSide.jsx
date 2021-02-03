@@ -39,12 +39,12 @@ const TeacherSide = props => {
     {
       text: "View",
       icon: <ViewListIcon style={SET_COLOR_PURPLE}/>,
-      onClick: () => history.push("/teacher")
+      onClick: () => history.push("/admin/teacher")
     },
     {
       text: "Add",
       icon: <PersonAddIcon style={SET_COLOR_PURPLE}/>,
-      onClick: () => history.push("/teacher/add")
+      onClick: () => history.push("/admin/teacher/add")
     },
 
   ];

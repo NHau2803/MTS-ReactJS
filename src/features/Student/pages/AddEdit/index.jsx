@@ -195,7 +195,10 @@ export default function AddEditPage(props) {
         <div className={classes.root}>
         <FormGroup onSubmit={handleSubmit}>
             <FormLabel>
-                <h1>Create a Student id {student.code}</h1>
+                {isAddMode 
+                ? <h1>Create a Student</h1>
+                : <h1>Update Student</h1>
+                }
             </FormLabel>
             
             <Grid container className={classes.grid}>

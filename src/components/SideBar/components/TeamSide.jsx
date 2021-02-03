@@ -39,12 +39,12 @@ const TeamSide = props => {
     {
       text: "View",
       icon: <ViewListIcon style={SET_COLOR_AMBER}/>,
-      onClick: () => history.push("/team")
+      onClick: () => history.push("/admin/team")
     },
     {
       text: "Add",
       icon: <GroupAddIcon style={SET_COLOR_AMBER}/>,
-      onClick: () => history.push("/team/add")
+      onClick: () => history.push("/admin/team/add")
     },
 
   ];

@@ -38,7 +38,7 @@ const AccountSide = props => {
     {
       text: "View",
       icon: <ViewListIcon style={SET_COLOR_PRIMARY}/>,
-      onClick: () => history.push("/account")
+      onClick: () => history.push("/admin/account")
     },
   ];
   return (

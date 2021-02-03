@@ -14,7 +14,7 @@ const HomeSide = props => {
     
     return (
         <div>
-        <ListItem button onClick={() => history.push("/home")}>
+        <ListItem button onClick={() => history.push("/admin/home")}>
             <ListItemIcon>
                 <HomeIcon style={SET_COLOR_PRIMARY}/>
             </ListItemIcon>

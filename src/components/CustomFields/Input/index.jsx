@@ -14,13 +14,13 @@ export default function Input(props) {
 
     //const classes = useStyles()
 
-    const { name, label, placeholder, value, error=null, onChange, disabled, ...other } = props;
+    const { name, label, placeholder, value, error=null, onChange, disabled, variant="outlined",...other } = props;
     
     return (
         
         <TextField
 
-            variant="outlined"
+            variant={variant}
             label={label}
             name={name}
             value={value}

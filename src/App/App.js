@@ -3,11 +3,10 @@ import Header from '../components/Header';
 import './App.css';
 import '../components/Header'
 import NotFound from '../components/NotFound';
-import HomePage from '../features/Home';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Loader from '../components/Loader';
-
-const Student = React.lazy(() => import('../features/Student'));
+import Login from '../features/Login';
+import RouteAdmin from '../features/RouteAdmin';
 
 function App() {
   return (
@@ -15,15 +14,14 @@ function App() {
 
       <Suspense fallback={<Loader />}>
         <BrowserRouter>
-          <Header />
-        
-          <Switch>
-            <Redirect exact from="/" to="/home" />
 
-            <Route path="/home" component={HomePage} />
-            <Route path="/student" component={Student} />
+          <Switch>
+            <Redirect exact from="/" to="/login" />
+            <Route path="/login" component={Login} />
+            <Route path="/admin" component={RouteAdmin} />
             <Route component={NotFound} />
           </Switch>
+          
         </BrowserRouter>
 
       </Suspense>

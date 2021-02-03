@@ -10,6 +10,7 @@ export const COLOR_TEAL = "#009688";
 
 /*******************STYLE COLOR***********************/
 export const SET_COLOR_PRIMARY = {color: COLOR_PRIMARY};
+export const SET_COLOR_PRIMARY_DARK = {color: COLOR_PRIMARY_DARK};
 export const SET_COLOR_PURPLE = {color: COLOR_PURPLE};
 export const SET_COLOR_TEAL = {color: COLOR_TEAL};
 export const SET_COLOR_AMBER = {color: "#ffc107"};
