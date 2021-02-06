@@ -11,9 +11,11 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import Links from '../SideBar';
-import NotiProfileSide from '../SideBar/components/NotiProfileSide';
-import { COLOR_PRIMARY, COLOR_WHITE, SET_COLOR_PRIMARY } from '../../constant/color';
+
+import { COLOR_PRIMARY, COLOR_WHITE, SET_COLOR_PRIMARY } from 'constant/color';
+import SideBar from 'components/SideBar';
+import NotiProfileSide from 'components/SideBar/components/NotiProfileSide';
+import SideBarForUser from 'components/SideBarForUser';
 const drawerWidth = 190;
 
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +75,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header() {
+export default function Header(props) {
+
+  const { mode } = props;
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -139,7 +144,11 @@ export default function Header() {
 
         {/* SideMenu */}
         <Divider />
-          <Links />
+          {
+            mode == "ADMIN" 
+            ?<SideBar /> 
+            :<SideBarForUser />
+          }
         <Divider />
        
       </Drawer>

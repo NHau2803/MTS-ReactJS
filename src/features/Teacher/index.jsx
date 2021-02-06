@@ -3,12 +3,11 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Loader from 'components/Loader';
 import NotFound from 'components/NotFound';
 
-
 const TablePage = React.lazy(() => import("./pages/Table"));
 const AddEditPage = React.lazy(() => import("./pages/AddEdit"));
 const InfoPage = React.lazy(() => import("./pages/Info"));
 
-export default function Student(props) {
+export default function Teacher(props) {
   
   const match = useRouteMatch();  
   
@@ -19,8 +18,8 @@ export default function Student(props) {
         
         <Route exact path={match.url} component={TablePage} />
         <Route exact path={`${match.url}/add`} component={AddEditPage} />
-        <Route path={`${match.url}/:studentId/info`} component={InfoPage} />
-        <Route path={`${match.url}/:studentId`} component={AddEditPage} />
+        <Route path={`${match.url}/:teacherId/info`} component={InfoPage} />
+        <Route path={`${match.url}/:teacherId`} component={AddEditPage} />
 
         <Route component={NotFound} />
         </Switch>

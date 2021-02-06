@@ -11,7 +11,7 @@ import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import Collapse from '@material-ui/core/Collapse';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { SET_COLOR_PRIMARY } from "../../../constant/color";
+import { SET_COLOR_PRIMARY } from "constant/color";
 
 const useStyles = makeStyles((theme) => ({
   root: {

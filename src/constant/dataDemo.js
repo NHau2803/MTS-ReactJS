@@ -24,13 +24,19 @@ export const STUDENT_LIST = [
     "team 0",
     "team 14",
     "team 16",
-    "team 24"
+    "team 24",
+    "team 2",
+    "team 21",
+    "team 40"
     ],
     "topicNames": [
     "DO AN 1",
     "DO AN 4",
     "DO AN 0",
-    "DO AN 5"
+    "DO AN 5",
+    "DO AN 7",
+    "DO AN 8",
+    "DO AN 9",
     ],
     "status": "ACTIVE"
     },
@@ -514,12 +520,13 @@ export const STUDENT_LIST = [
 ];
 
 
+
 export const STUDENT1 = {
     id: 0,
     code: '197sv1',
     name: 'sv1',
     gender: 'male',
-    birthday: new Date('2001-01-01T12:00:00'),
+    birthday: new Date('2001-01-18T12:00'),
     tickDefaultEmail: false,
     email: '197sv1@vn.vn',
     phone: '0909090909',
@@ -531,3 +538,219 @@ export const STUDENT1 = {
 }
 
 
+export const TOPIC_LIST = [
+    {
+    "id": 1,
+    "name": "DO AN 7", 
+    "teamNames": [
+        "team 0",
+        "team 14",
+        "team 16",
+        "team 24",
+        "team 2",
+        "team 21",
+        "team 40"
+        ],
+    "startTime": "2021-02-05T13:22:57.811Z",
+    "endTime": "2021-02-05T13:22:57.811Z",
+    "teacherName": "Nguyễn Văn A"
+    },
+    {
+        "id": 2,
+        "name": "DO AN 6", 
+        "teamNames": [
+            "team 0",
+            "team 7",
+            "team 15",
+            "team 40"
+            ],
+        "startTime": "2021-02-05T13:22:57.811Z",
+        "endTime": "2021-02-05T13:22:57.811Z",
+        "teacherName": "Nguyễn Văn B"
+        },
+]
+
+export const TEAM_LIST = [
+    {
+        "id": 0,
+        "name": "team 6",
+        "topicName": "DO AN 1",
+        "studentTotal": 10,
+
+    },
+    {
+        "id": 2,
+        "name": "team 5",
+        "topicName": "DO AN TIEU LUAN",
+        "studentTotal": 5,
+    },
+    {
+        "id": 3,
+        "name": "team 1",
+        "topicName": "DO AN CHUNG",
+        "studentTotal": 25,
+    },
+    {
+        "id": 4,
+        "name": "team vui",
+        "topicName": "DO AN 2 - CNTT",
+        "studentTotal": 6,
+    },
+
+]
+
+
+export const TEACHER_LIST = [
+    {
+    "id": 1,
+    "code": "197XD51241",
+    "name": "Huỳnh Trọng Chí",
+    "academyName": "Thach Si",
+    "positonName": "Giang Vien",
+    "facultyName": "Quản trị kinh doanh",
+    "topicNames": [
+    "DO AN 1",
+    "DO AN 4",
+    "DO AN 0",
+    "DO AN 5",
+    "DO AN 7",
+    "DO AN 8",
+    "DO AN 9",
+    ],
+    "status": "ACTIVE"
+    },
+    {
+    "id": 2,
+    "code": "197TC38246",
+    "name": "Nguyễn Trí Hưng",
+    "academyName": "Thach Si",
+    "positonName": "Giang Vien",
+    "facultyName": "Quản trị kinh doanh",
+    "topicNames": [
+    "DO AN 1",
+    "DO AN 4",
+    "DO AN 0",
+    "DO AN 5",
+    "DO AN 8",
+    "DO AN 9",
+    ],
+    "status": "ACTIVE"
+    },
+    {
+    "id": 4,
+    "code": "197CT70612",
+    "name": "Đặng Chí Nhân",
+    "academyName": "Thach Si",
+    "positonName": "Giang Vien",
+    "facultyName": "Quản trị kinh doanh",
+    "topicNames": [
+    "DO AN 1",
+    "DO AN 4",
+    "DO AN 0",
+    "DO AN 5",
+    "DO AN 7",
+    "DO AN 8",
+    "DO AN 9",
+    ],
+    "status": "ACTIVE"
+    },
+    {
+    "id": 5,
+    "code": "197XD98250",
+    "name": "Đặng Mai Trang",
+    "academyName": "Thach Si",
+    "positonName": "Giang Vien",
+    "facultyName": "Quản trị kinh doanh",
+    "topicNames": [
+    "DO AN 1",
+    "DO AN 9",
+    ],
+    "status": "ACTIVE"
+    },
+    {
+    "id": 6,
+    "code": "197TC75028",
+    "name": "Nguyễn Thành Minh",
+    "academyName": "Thach Si",
+    "positonName": "Giang Vien",
+    "facultyName": "Quản trị kinh doanh",
+    "topicNames": [
+
+    ],
+    "status": "ACTIVE"
+    },
+    {
+    "id": 7,
+    "code": "197TC81390",
+    "name": "Phan Kim Tú",
+    "academyName": "Thach Si",
+    "positonName": "Giang Vien",
+    "facultyName": "Quản trị kinh doanh",
+    "topicNames": [
+    "DO AN 1",
+    "DO AN 4",
+    "DO AN 7",
+    "DO AN 8",
+    "DO AN 9",
+    ],
+    "status": "ACTIVE"
+    },
+    {
+    "id": 8,
+    "code": "197CT17022",
+    "name": "Huỳnh Việt Phương",
+    "academyName": "Thach Si",
+    "positonName": "Giang Vien",
+    "facultyName": "Quản trị kinh doanh",
+    "topicNames": [
+    "DO AN 1",
+    "DO AN 9",
+    ],
+    "status": "ACTIVE"
+    },
+]
+
+
+export const TEACHER1 = {
+    id: 0,
+    code: '197sv1',
+    name: 'sv1',
+    gender: 'male',
+    birthday: new Date('2001-01-18T12:00'),
+    tickDefaultEmail: false,
+    email: '197sv1@vn.vn',
+    phone: '0909090909',
+    facultyId: 2,
+    username: 'sv1.197sv1',
+    tickDefaultUsername: false,
+    password: '',
+    tickDefaultPassword: false
+}
+
+export const DEADLINE_LIST = [
+    {
+    "id": 1,
+    "startTime": '2021-02-06T13:59:37.973Z',
+    "endTime": '2021-02-06T13:59:51.945Z',
+    "content": 'Lam Chuong 1',
+    },
+    {
+        "id": 2,
+        "startTime": '2021-02-06T13:59:37.973Z',
+        "endTime": '2021-02-06T13:59:51.945Z',
+        "content": 'Lam Chuong 1',
+    },
+    {
+        "id": 3,
+        "startTime": '2021-02-06T13:59:37.973Z',
+        "endTime": '2021-02-06T13:59:51.945Z',
+        "content": 'Lam Chuong 1',
+    },
+    {
+        "id": 4,
+        "startTime": '2021-02-06T13:59:37.973Z',
+        "endTime": '2021-02-06T13:59:51.945Z',
+        "content": 'Lam Chuong 1',
+    },
+
+]

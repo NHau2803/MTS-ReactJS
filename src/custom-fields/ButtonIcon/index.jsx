@@ -16,11 +16,12 @@ export default function ButtonIcon(props) {
 
     return (
         <Button
+            className={classes.root}
             startIcon={icon}
             size={size || "large"}
             color={color || "primary"}
             onClick={onClick}
-            className={classes.root}
+            {...other}
         />
     )
 }

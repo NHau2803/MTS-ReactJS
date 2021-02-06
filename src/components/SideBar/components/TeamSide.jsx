@@ -12,7 +12,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
-import { SET_COLOR_AMBER } from "../../../constant/color";
+import { SET_COLOR_AMBER } from "constant/color";
 
 const useStyles = makeStyles((theme) => ({
   root: {

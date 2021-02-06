@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import {makeStyles, TableBody, TableRow, TableCell, InputAdornment, Toolbar, FormLabel } from '@material-ui/core';
+import {makeStyles, TableBody, TableRow, TableCell, Toolbar, FormLabel, InputAdornment } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { Search } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import ButtonIcon from 'custom-fields/ButtonIcon';
+import ConfirmDialog from 'custom-fields/ConfirmDialog';
+import Popup from 'custom-fields/Popup';
+import { TEAM_LIST, TOPIC_LIST } from 'constant/dataDemo';
+import studentApi from 'api/studentApi';
 import useTable from 'custom-fields/Use/useTable';
 import Input from 'custom-fields/Input';
-import ButtonIcon from 'custom-fields/ButtonIcon';
-import Popup from 'custom-fields/Popup';
-import ConfirmDialog from 'custom-fields/ConfirmDialog';
-import { STUDENT_LIST } from 'constant/dataDemo';
-import Notification from 'custom-fields/Notification';
-import studentApi from 'api/studentApi';
 import { changeListToText } from 'utils/converter';
+import Notification from 'custom-fields/Notification';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,12 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 const headCells = [
     { id: 'id', label: 'ID' },
-    { id: 'code', label: 'Code' },
     { id: 'name', label: 'Name' },
-    { id: 'facultyName', label: 'Faculty' },
-    { id: 'teamNames', label: 'Team ' },
-    { id: 'topicNames', label: 'Topic' },
-    { id: 'status', label: 'Status' },
+    { id: 'topicName', label: 'Type Topic ' },
+    { id: 'studentTotal', label: 'Total' },
     { id: 'action', label: 'Action' },
    
 ]
@@ -44,7 +41,7 @@ export default function TablePage(props) {
 
     const {history} = props;
 
-    const [records, setRecords] = useState(STUDENT_LIST);
+    const [records, setRecords] = useState(TEAM_LIST);
 
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
 
@@ -56,7 +53,7 @@ export default function TablePage(props) {
 
     //console.log(history.location.pathname); <=> useRouteMatch()???
 
-    // Define the function that fetches the data from API
+    // // Define the function that fetches the data from API
     // const fetchData = async () => {
         
     //     studentApi.search().then(res=>{
@@ -78,7 +75,7 @@ export default function TablePage(props) {
                 else
                     //console.log(items);
                     return items.filter(
-                        x => x.code.toLowerCase().includes(target.value.toLowerCase())
+                        x => x.name.toLowerCase().includes(target.value.toLowerCase())
                     );
             }
         })
@@ -109,12 +106,12 @@ export default function TablePage(props) {
     return(
         <div className={classes.root}>
             <FormLabel>
-                <h1 className={classes.title}>Student List</h1>
+                <h1 className={classes.title}>Team List</h1>
             </FormLabel>
             
             <Toolbar>
                 <Input
-                    label="Search For Code"
+                    label="Search For Team Name"
                     className={classes.searchInput}
                     InputProps={{
                         startAdornment: (<InputAdornment position="start">
@@ -132,12 +129,9 @@ export default function TablePage(props) {
                             recordsAfterPagingAndSorting().map(item =>
                                 (<TableRow key={item.id}>
                                     <TableCell>{item.id}</TableCell>
-                                    <TableCell>{item.code}</TableCell>
                                     <TableCell>{item.name}</TableCell>
-                                    <TableCell>{item.facultyName}</TableCell>
-                                    <TableCell className={classes.tableCell}>{changeListToText(item.teamNames)}</TableCell>
-                                    <TableCell className={classes.tableCell}>{changeListToText(item.topicNames)}</TableCell>
-                                    <TableCell>{item.status}</TableCell>
+                                    <TableCell>{item.topicName}</TableCell>
+                                    <TableCell>{item.studentTotal}</TableCell>
                                     <TableCell>
                                         <ButtonIcon
                                             size="small"
@@ -161,8 +155,8 @@ export default function TablePage(props) {
 
                                         <ButtonIcon
                                             size="small"
-                                            icon={<AssignmentIndIcon fontSize="small" />}   
-                                            onClick= {() => history.push(`${history.location.pathname}/${item.id}/info`)} 
+                                            icon={<VisibilityIcon fontSize="small" />}   
+                                            onClick= {() => history.push(`${history.location.pathname}/${item.id}/s`)} 
                                         />
                                         
                                     </TableCell>
@@ -173,7 +167,6 @@ export default function TablePage(props) {
                 </TblContainer>
                 <TblPagination />
 
-            
                 <Notification
                     notify={notify}
                     setNotify={setNotify}

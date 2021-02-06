@@ -9,8 +9,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import ClassIcon from '@material-ui/icons/Class';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import WcIcon from '@material-ui/icons/Wc';
+import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
+import SchoolIcon from '@material-ui/icons/School';
 import { COLOR_PRIMARY, COLOR_WHITE, SET_BACKGROUND_COLOR_PRIMARY } from "constant/color";
-import studentApi from "api/studentApi";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,19 +42,34 @@ const useStyles = makeStyles((theme) => ({
      
     }
 }));
+
+export const TeacherInfo = {
+    id: 1,
+    code: '180BC12576',
+    name: 'Le Cong Hieu',
+    gender: 'male',
+    birthday: '1/18/1980',
+    email: '197sv1@vn.vn',
+    phone: '0909090909',
+    academyName: "Thạch Sĩ",
+    positionName:"Giảng Viên",
+    facultyName: "Công Nghệ Thông Tin"
+}
+
+
 export default function InfoPage() {
 
     const classes = useStyles();
 
     const { studentId } = useParams();
 
-    const [studentInfo, setStudentInfo] = useState({});
+    const [teacherInfo, setteacherInfo] = useState(TeacherInfo);
 
     // const fetchData = async () => {
     //     studentApi.info(studentId).then(res=>{
     //         console.log(studentId)
     //         console.log(res)
-    //         setStudentInfo(res);
+    //         setteacherInfo(res);
     //     });
     
     // };
@@ -93,14 +109,17 @@ export default function InfoPage() {
             <Grid item xs={12} sm={4}>
                 <Paper elevation={4} className={classes.pager}>
                     
-                    <h1 className={classes.title}>Student Info</h1>
-                    {renderRow(<ContactsIcon/>, "Code", studentInfo.code)}
-                    {renderRowRight(<PersonIcon />, "Name", studentInfo.name)}
-                    {renderRow(<WcIcon />, "Gender", studentInfo.gender)}
-                    {renderRowRight(<DateRangeIcon />, "Birthday", studentInfo.birthday)}
-                    {renderRow(<EmailIcon />, "Email", studentInfo.email)}
-                    {renderRowRight(<PhoneIphoneIcon />, "Phone", studentInfo.phone)}
-                    {renderRow(<ClassIcon />, "Faculty", studentInfo.facultyName)}
+                    <h1 className={classes.title}>Teacher Info</h1>
+                    {renderRow(<ContactsIcon/>, "Code", teacherInfo.code)}
+                    {renderRowRight(<PersonIcon />, "Name", teacherInfo.name)}
+                    {renderRow(<WcIcon />, "Gender", teacherInfo.gender)}
+                    {renderRowRight(<DateRangeIcon />, "Birthday", teacherInfo.birthday)}
+                    {renderRow(<EmailIcon />, "Email", teacherInfo.email)}
+                    {renderRowRight(<PhoneIphoneIcon />, "Phone", teacherInfo.phone)}
+                    {renderRow(<SchoolIcon />, "Academy", teacherInfo.academyName)}
+                    {renderRowRight(<WorkOutlineIcon />, "Position", teacherInfo.positionName)}
+                    {renderRow(<ClassIcon />, "Faculty", teacherInfo.facultyName)}
+                    
                 </Paper>
                 
             </Grid>

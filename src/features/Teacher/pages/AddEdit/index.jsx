@@ -65,20 +65,14 @@ const initialFValuesDefault = {
     tickDefaultEmail: true,
     email: '',
     phone: '',
+    academyId: '',
+    positionId: '',
     facultyId: '',
     username: '',
     tickDefaultUsername: true,
     password: '',
     tickDefaultPassword: true
 }
-
-// async function doSomething() {
-//     let result = await studentApi.find(39);
-//     console.log(result);
-//     return result;
-// }
-
-// doSomething();
 
 export default function AddEditPage(props) {
 
@@ -101,6 +95,10 @@ export default function AddEditPage(props) {
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
         if ('phone' in fieldValues)
             temp.phone = fieldValues.phone ? "" : "This field is required."
+        if ('academyId' in fieldValues)
+        temp.academyId = fieldValues.academyId.length !== 0 ? "" : "This field is required."
+        if ('positionId' in fieldValues)
+        temp.positionId = fieldValues.positionId.length !== 0 ? "" : "This field is required."
         if ('facultyId' in fieldValues)
             temp.facultyId = fieldValues.facultyId.length !== 0 ? "" : "This field is required."
         if ('username' in fieldValues)
@@ -126,13 +124,15 @@ export default function AddEditPage(props) {
     const handleSubmit = e => {
         //add or update 
         e.preventDefault();
-        const studentObject = {
+        const teacherObject = {
             code: values.code,
             name: values.name,
             gender: values.gender.toUpperCase(),
             birthday:values.birthday.toISOString(),
             email: values.email,
             phone: values.phone,
+            academyId: Number(values.academyId),
+            position: Number(values.positionId),
             facultyId: Number(values.facultyId),
             username: values.username,
             password: values.password,
@@ -140,11 +140,11 @@ export default function AddEditPage(props) {
 
         if(isAddMode){
             
-            console.log(studentObject);
-            //studentApi.create(studentObject);
+            console.log(teacherObject);
+            //studentApi.create(teacherObject);
         }else{
 
-            console.log(studentObject);
+            console.log(teacherObject);
            // studentApi.create(studentNew);
         }
 
@@ -154,8 +154,8 @@ export default function AddEditPage(props) {
         <FormGroup onSubmit={handleSubmit}>
             <FormLabel>
                 {isAddMode 
-                ? <h1>Create a Student</h1>
-                : <h1>Update Student</h1>
+                ? <h1>Create a Teacher</h1>
+                : <h1>Update Teacher</h1>
                 }
             </FormLabel>
             
@@ -205,12 +205,28 @@ export default function AddEditPage(props) {
                         error={errors.phone}
                     />
                     <br/>
+                    <Select
+                        name="positionId"
+                        label="Position"
+                        value={values.positionId}
+                        onChange={handleInputChange}
+                        options={FACULTY_LIST()}
+                        error={errors.facultyId}
+                    />
                     </FormGroup>
 
                 </Grid>
                 <Grid item xs={12} sm={3} className={classes.gridRight}>
                     <FormGroup>
-                     
+                    <Select
+                        name="academyId"
+                        label="Academy"
+                        value={values.academyId}
+                        onChange={handleInputChange}
+                        options={FACULTY_LIST()}
+                        error={errors.facultyId}
+                    />
+                    <br/>
                     <Select
                         name="facultyId"
                         label="Faculty"

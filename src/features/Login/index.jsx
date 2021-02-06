@@ -1,12 +1,12 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Checkbox, FormControlLabel, FormGroup, Grid, Paper, TextField, Typography } from "@material-ui/core";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Button from "../../components/CustomFields/Button";
 import { Link } from "react-router-dom";
-import { COLOR_PRIMARY, COLOR_PRIMARY_DARK, SET_BACKGROUND_COLOR_PRIMARY, SET_BACKGROUND_COLOR_PRIMARY_DARK, SET_COLOR_PRIMARY, SET_COLOR_PRIMARY_DARK, SET_COLOR_PURPLE } from "../../constant/color";
-import Input from "../../components/CustomFields/Input";
+import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, Checkbox, FormControlLabel, FormGroup, Grid, Paper, Typography } from "@material-ui/core";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { COLOR_PRIMARY, COLOR_PRIMARY_DARK, SET_BACKGROUND_COLOR_PRIMARY } from "constant/color";
+import Input from "custom-fields/Input";
+import Button from "custom-fields/Button";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,12 +35,10 @@ const useStyles = makeStyles((theme) => ({
 
     },
  
-  
 }));
-export default function InfoPage() {
+export default function Login() {
 
     const classes = useStyles();
-
 
     return(
         <div className={classes.root}>
@@ -91,7 +89,7 @@ export default function InfoPage() {
                         />
                         <br/>
                         <Typography >
-                            <Link href="#" className={classes.link}>
+                            <Link to="#" className={classes.link}>
                                 Forgot password ?
                             </Link>
                         </Typography>

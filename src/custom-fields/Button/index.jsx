@@ -18,13 +18,13 @@ export default function Button(props) {
 
     return (
         <MuiButton
+            classes={{ root: classes.root, label: classes.label }}
             variant={variant || "contained"}
             size={size || "large"}
             color={color || "primary"}
             style={background}
             onClick={onClick}
             startIcon={icon}
-            classes={{ root: classes.root, label: classes.label }}
             {...other}
         >
             {text}

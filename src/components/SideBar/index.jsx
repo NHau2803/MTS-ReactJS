@@ -1,17 +1,12 @@
 import React from "react";
 import { List } from "@material-ui/core";
-// import { makeStyles } from "@material-ui/core/styles";
-// import { withRouter } from "react-router-dom";
-import StudentSide from "./components/StudentSide";
+import HomeSide from "./components/HomeSide";
 import TeacherSide from "./components/TeacherSide";
-import TeamSide from "./components/TeamSide";
+import StudentSide from "./components/StudentSide";
 import TopicSide from "./components/TopicSide";
 import AccountSide from "./components/AccountSide";
-import HomeSide from "./components/HomeSide";
+import TeamSide from "./components/TeamSide";
 
-// const useStyles = makeStyles((theme) => ({
- 
-// }));
 
 export default function SideBar() {
 

@@ -1,12 +1,12 @@
 import React from "react";
 import {
-    ListItem,
+  ListItem,
   ListItemIcon,
   ListItemText
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import HomeIcon from '@material-ui/icons/Home';
-import { SET_COLOR_PRIMARY } from "../../../constant/color";
+import { SET_COLOR_PRIMARY } from "constant/color";
 
 
 const HomeSide = props => {

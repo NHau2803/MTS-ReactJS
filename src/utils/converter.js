@@ -5,3 +5,9 @@ export const getNameFromFullName = (fullName) => {
 }
 
 //change date => string / fix backend
+
+export const changeListToText = (list) => {
+    let str = ""
+    list.map(i => {str += " |" +i} );
+    return str;
+}

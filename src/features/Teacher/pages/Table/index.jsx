@@ -9,7 +9,7 @@ import Input from 'custom-fields/Input';
 import ButtonIcon from 'custom-fields/ButtonIcon';
 import Popup from 'custom-fields/Popup';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
-import { STUDENT_LIST } from 'constant/dataDemo';
+import { STUDENT_LIST, TEACHER_LIST } from 'constant/dataDemo';
 import Notification from 'custom-fields/Notification';
 import studentApi from 'api/studentApi';
 import { changeListToText } from 'utils/converter';
@@ -30,8 +30,9 @@ const headCells = [
     { id: 'id', label: 'ID' },
     { id: 'code', label: 'Code' },
     { id: 'name', label: 'Name' },
+    { id: 'academyName', label: 'Academy' },
+    { id: 'positonName', label: 'Positon' },
     { id: 'facultyName', label: 'Faculty' },
-    { id: 'teamNames', label: 'Team ' },
     { id: 'topicNames', label: 'Topic' },
     { id: 'status', label: 'Status' },
     { id: 'action', label: 'Action' },
@@ -44,7 +45,7 @@ export default function TablePage(props) {
 
     const {history} = props;
 
-    const [records, setRecords] = useState(STUDENT_LIST);
+    const [records, setRecords] = useState(TEACHER_LIST);
 
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
 
@@ -109,7 +110,7 @@ export default function TablePage(props) {
     return(
         <div className={classes.root}>
             <FormLabel>
-                <h1 className={classes.title}>Student List</h1>
+                <h1 className={classes.title}>Teacher List</h1>
             </FormLabel>
             
             <Toolbar>
@@ -134,8 +135,9 @@ export default function TablePage(props) {
                                     <TableCell>{item.id}</TableCell>
                                     <TableCell>{item.code}</TableCell>
                                     <TableCell>{item.name}</TableCell>
+                                    <TableCell>{item.academyName}</TableCell>
+                                    <TableCell>{item.positonName}</TableCell>
                                     <TableCell>{item.facultyName}</TableCell>
-                                    <TableCell className={classes.tableCell}>{changeListToText(item.teamNames)}</TableCell>
                                     <TableCell className={classes.tableCell}>{changeListToText(item.topicNames)}</TableCell>
                                     <TableCell>{item.status}</TableCell>
                                     <TableCell>
