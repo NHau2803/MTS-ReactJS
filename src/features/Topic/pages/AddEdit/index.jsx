@@ -8,14 +8,14 @@ import Input from 'custom-fields/Input';
 import RadioGroup from 'custom-fields/RadioGroup';
 import DatePicker from 'custom-fields/DatePicker';
 import Select from 'custom-fields/Select';
-import { useForm } from 'custom-fields/Use/useForm';
-import studentApi from 'api/studentApi';
+import studentApi from 'api/Student/studentApi';
 import { FACULTY_LIST } from 'constant/dataDemo';
 import { getNameFromFullName } from 'utils/converter';
 import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constant/color';
 import Button from 'custom-fields/Button';
 import Checkbox from 'custom-fields/Checkbox';
 import DealinesTable from 'features/Topic/components/Deadline';
+import { useFormCustom } from 'custom-fields/Use/useFormCustom';
 
 
 
@@ -99,7 +99,7 @@ export default function AddEditPage(props) {
         setErrors,
         handleInputChange,
         resetForm
-    } = useForm(initialFValuesDefault, isAddMode, true, validate);
+    } = useFormCustom(initialFValuesDefault, isAddMode, true, validate);
 
     const handleSubmit = e => {
         //add or update 

@@ -20,7 +20,7 @@ export default function Student(props) {
         <Route exact path={match.url} component={TablePage} />
         <Route exact path={`${match.url}/add`} component={AddEditPage} />
         <Route path={`${match.url}/:studentId/info`} component={InfoPage} />
-        <Route path={`${match.url}/:studentId`} component={AddEditPage} />
+        <Route exact path={`${match.url}/:studentId`} component={AddEditPage} />
 
         <Route component={NotFound} />
         </Switch>

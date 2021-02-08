@@ -8,7 +8,7 @@ import ButtonIcon from 'custom-fields/ButtonIcon';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
 import Popup from 'custom-fields/Popup';
 import { TOPIC_LIST } from 'constant/dataDemo';
-import studentApi from 'api/studentApi';
+import studentApi from 'api/Student/studentApi';
 import useTable from 'custom-fields/Use/useTable';
 import Input from 'custom-fields/Input';
 import { changeListToText } from 'utils/converter';

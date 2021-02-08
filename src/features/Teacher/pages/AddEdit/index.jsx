@@ -8,16 +8,19 @@ import Input from 'custom-fields/Input';
 import RadioGroup from 'custom-fields/RadioGroup';
 import DatePicker from 'custom-fields/DatePicker';
 import Select from 'custom-fields/Select';
-import { useForm } from 'custom-fields/Use/useForm';
-import studentApi from 'api/studentApi';
-import { FACULTY_LIST } from 'constant/dataDemo';
-import { getNameFromFullName } from 'utils/converter';
+import { getNameFromFullName, handleEmail } from 'utils/converter';
 import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constant/color';
 import Button from 'custom-fields/Button';
 import Checkbox from 'custom-fields/Checkbox';
-
-
-
+import FacultyListAPI from 'api/Select/facultyList';
+import Notification from 'custom-fields/Notification';
+import { useFormCustom } from 'custom-fields/Use/useFormCustom';
+import { initialValuesTeacherDefault, GENDER_LIST, LIST_DEFAULT } from 'constant/initialValues';
+import PositionListAPI from 'api/Select/positionList';
+import AcademyListAPI from 'api/Select/academyList';
+import teacherApi from 'api/Teacher/teacherApi';
+import { TYPE } from 'constant/type';
+import { getTeacherCreateObject, getTeacherUpdateObject } from 'utils/getObject';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,42 +51,15 @@ const useStyles = makeStyles((theme) => ({
         //background: "red",
     },
    
-    
 }));
 
-const genderItems = [
-    { id: 'male', title: 'Male' },
-    { id: 'female', title: 'Female' },
-]
-
-const initialFValuesDefault = {
-    id: 0,
-    code: '',
-    name: '',
-    gender: 'male',
-    birthday: new Date('2001-01-01T12:00:00'),
-    tickDefaultEmail: true,
-    email: '',
-    phone: '',
-    academyId: '',
-    positionId: '',
-    facultyId: '',
-    username: '',
-    tickDefaultUsername: true,
-    password: '',
-    tickDefaultPassword: true
-}
 
 export default function AddEditPage(props) {
 
     const classes = useStyles();
-
-    const { studentId } = useParams();
-
-  //  const [student, setStudent] = useState([]);
-
-    const isAddMode = !studentId;
-
+    const { teacherId } = useParams();
+    const {history} = props;
+    const isAddMode = !teacherId;
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -96,9 +72,9 @@ export default function AddEditPage(props) {
         if ('phone' in fieldValues)
             temp.phone = fieldValues.phone ? "" : "This field is required."
         if ('academyId' in fieldValues)
-        temp.academyId = fieldValues.academyId.length !== 0 ? "" : "This field is required."
+            temp.academyId = fieldValues.academyId.length !== 0 ? "" : "This field is required."
         if ('positionId' in fieldValues)
-        temp.positionId = fieldValues.positionId.length !== 0 ? "" : "This field is required."
+            temp.positionId = fieldValues.positionId.length !== 0 ? "" : "This field is required."
         if ('facultyId' in fieldValues)
             temp.facultyId = fieldValues.facultyId.length !== 0 ? "" : "This field is required."
         if ('username' in fieldValues)
@@ -114,48 +90,69 @@ export default function AddEditPage(props) {
 
     const {
         values,
-        setValues,
         errors,
         setErrors,
+        notify,
+        setNotify,
+        notFound,
         handleInputChange,
-        resetForm
-    } = useForm(initialFValuesDefault, isAddMode, true, validate);
+        onReset
+    } = useFormCustom(initialValuesTeacherDefault , isAddMode, TYPE.TEACHER, teacherId, true, validate);
 
     const handleSubmit = e => {
         //add or update 
         e.preventDefault();
-        const teacherObject = {
-            code: values.code,
-            name: values.name,
-            gender: values.gender.toUpperCase(),
-            birthday:values.birthday.toISOString(),
-            email: values.email,
-            phone: values.phone,
-            academyId: Number(values.academyId),
-            position: Number(values.positionId),
-            facultyId: Number(values.facultyId),
-            username: values.username,
-            password: values.password,
-        }
-
+        
         if(isAddMode){
-            
-            console.log(teacherObject);
-            //studentApi.create(teacherObject);
-        }else{
+            const teacherCreate = getTeacherCreateObject(values);
+            teacherApi.create(teacherCreate).then(res=>{
+                if(res.success){
+                    setNotify({
+                        isOpen: true,
+                        message: "Create Successfully",
+                        type: "success"
+                    });
+                    setTimeout(() => history.push('/admin/teacher'), 1500);
+                    
+                }else{
+                    setNotify({
+                        isOpen: true,
+                        message: "Sorry, Create Unsuccessfully",
+                        type: "error"
+                    });
+                }
+            });
 
-            console.log(teacherObject);
-           // studentApi.create(studentNew);
+        }else{
+            const teacherUpdate = getTeacherUpdateObject(values);
+            teacherApi.update(teacherId, teacherUpdate).then(res=>{
+                if(res.success){
+                    setNotify({
+                        isOpen: true,
+                        message: "Update Successfully",
+                        type: "success"
+                    });
+                    setTimeout(() => history.push('/admin/teacher'), 1500);
+                    
+                }else{
+                    setNotify({
+                        isOpen: true,
+                        message: "Sory, Update Unsuccessfully",
+                        type: "error"
+                    });
+                }
+            });
         }
 
     }
     return (
-        <div className={classes.root}>
+        <div className={classes.root} >
         <FormGroup onSubmit={handleSubmit}>
+
             <FormLabel>
                 {isAddMode 
-                ? <h1>Create a Teacher</h1>
-                : <h1>Update Teacher</h1>
+                ? <h1>Create a teacher</h1>
+                : <h1>Update teacher</h1>
                 }
             </FormLabel>
             
@@ -167,16 +164,21 @@ export default function AddEditPage(props) {
                         name="code"
                         label="Code"
                         placeholder="Ex: 197CT11122"
-                        value={values.code}
+                        value={values.code || ""}
                         onChange={handleInputChange}
                         error={errors.code}
+                        disabled={
+                            !isAddMode
+                            ? true
+                            : false
+                        }
                     />
                     <br/>
                     <Input
                         name="name"
                         label="Name"
                         placeholder="Ex: Nguyễn Văn An"
-                        value={values.name}
+                        value={values.name || ""}
                         onChange={handleInputChange}
                         error={errors.name}
                     />
@@ -184,15 +186,15 @@ export default function AddEditPage(props) {
                     <RadioGroup
                         name="gender"
                         label="Gender"
-                        value={values.gender}
+                        value={values.gender || "MALE"}
                         onChange={handleInputChange}
-                        items={genderItems}
+                        items={GENDER_LIST}
                     />
                     <br/>
                     <DatePicker
                         name="birthday"
                         label="Birthday"
-                        value={values.birthday}
+                        value={values.birthday || new Date()}
                         onChange={handleInputChange}
                     />
                     <br/>
@@ -200,7 +202,7 @@ export default function AddEditPage(props) {
                         name="phone"
                         label="Phone"
                         placeholder="Ex: 0946111222"
-                        value={values.phone}
+                        value={values.phone || ''}
                         onChange={handleInputChange}
                         error={errors.phone}
                     />
@@ -208,10 +210,10 @@ export default function AddEditPage(props) {
                     <Select
                         name="positionId"
                         label="Position"
-                        value={values.positionId}
+                        value={values.positionId || ''}
                         onChange={handleInputChange}
-                        options={FACULTY_LIST()}
-                        error={errors.facultyId}
+                        options={PositionListAPI() || LIST_DEFAULT()}
+                        error={errors.positionId}
                     />
                     </FormGroup>
 
@@ -221,18 +223,18 @@ export default function AddEditPage(props) {
                     <Select
                         name="academyId"
                         label="Academy"
-                        value={values.academyId}
+                        value={values.academyId || ''}
                         onChange={handleInputChange}
-                        options={FACULTY_LIST()}
-                        error={errors.facultyId}
+                        options={AcademyListAPI() || LIST_DEFAULT()}
+                        error={errors.academyId}
                     />
                     <br/>
                     <Select
                         name="facultyId"
                         label="Faculty"
-                        value={values.facultyId}
+                        value={values.facultyId || ""}
                         onChange={handleInputChange}
-                        options={FACULTY_LIST()}
+                        options={FacultyListAPI() || LIST_DEFAULT()}
                         error={errors.facultyId}
                     />
                     <br/>
@@ -240,7 +242,15 @@ export default function AddEditPage(props) {
                         name="email"
                         label="Email"
                         placeholder="Ex: an.197CT11122@vanlanguni.vn"
-                        value={values.tickDefaultEmail ? values.email = getNameFromFullName(values.name)+ "." + values.code + "@vanlanguni.vn" : values.email}
+                        value={
+                            ! isAddMode
+                            ? values.email = values.email || ""
+                            :
+                                values.tickDefaultEmail 
+                                ? values.email = getNameFromFullName(values.name)+ "." + values.code + "@vanlanguni.vn" 
+                                : values.email 
+                            
+                        }
                         onChange={handleInputChange}
                         error={errors.email}
                         disabled={values.tickDefaultEmail}
@@ -248,73 +258,90 @@ export default function AddEditPage(props) {
                     <Checkbox
                         name="tickDefaultEmail"
                         label="Default"
-                        value={values.tickDefaultEmail}
+                        value={values.tickDefaultEmail || false}
                         onChange={handleInputChange}
                     />
                     <Input
                         name="username"
                         label="Username"
                         placeholder="Ex: an.197CT11122"
-                        value={values.tickDefaultUsername ? values.username = getNameFromFullName(values.name)+ "." + values.code : values.username}
+                        value={
+                            !isAddMode
+                            ? values.username || ""
+                            : 
+                                values.tickDefaultUsername 
+                                ? values.username = getNameFromFullName(values.name)+ "." + values.code 
+                                : values.username
+                            
+                            }
                         onChange={handleInputChange}
                         error={errors.username}
-                        disabled={values.tickDefaultUsername}
+                        disabled={
+                                !isAddMode
+                                ? true
+                                : values.tickDefaultUsername
+                            }
                     />
                     <Checkbox 
                         name="tickDefaultUsername"
                         label="Default"
-                        value={values.tickDefaultUsername}
+                        value={values.tickDefaultUsername || false}
                         onChange={handleInputChange}
                     />
                     <Input
                         name="password"
                         label="Password"
-                        value={values.tickDefaultPassword ? values.password = values.code: values.password}
+                        value={
+                            !isAddMode 
+                            ? values.password || ""
+                            :
+                                values.tickDefaultPassword 
+                                ? values.password = values.code
+                                : values.password
+                           
+                            }
                         onChange={handleInputChange}
                         error={errors.password}
-                        disabled={values.tickDefaultPassword}
+                        disabled={
+                            !isAddMode
+                            ? true
+                            : values.tickDefaultPassword
+                        }
                     
                     />
                     <Checkbox
                         name="tickDefaultPassword"
                         label="Default"
-                        value={values.tickDefaultPassword}
+                        value={values.tickDefaultPassword || false}
                         onChange={handleInputChange}
                     />
 
-                    {/* {isAddMode
-                    ? "abc"
-                    : <Select
-                        name="facultyId"
-                        label="Faculty"
-                        value={values.facultyId}
-                        onChange={handleInputChange}
-                        options={FACULTY_LIST()}
-                        error={errors.facultyId}
-                        />
-                    }   */}
                     </FormGroup>
                 </Grid>
             
             </Grid>
             <Grid item xs={12} className={classes.submit}>
-                    <Button
-                        type="submit"
-                        text={isAddMode ? "Save": "Update"} 
-                        startIcon={isAddMode ? <SaveIcon />: <UpdateIcon />}
-                        onClick={handleSubmit}
-                        background = {SET_BACKGROUND_COLOR_PRIMARY_DARK}
-                    />
-                    <Button
-                    
-                        text="Reset"
-                        color="default"
-                        startIcon={<RefreshIcon />}
-                        onClick={resetForm} 
-                    />
+                <Button
+                    type="submit"
+                    text={isAddMode ? "Save": "Update"} 
+                    startIcon={isAddMode ? <SaveIcon />: <UpdateIcon />}
+                    onClick={handleSubmit}
+                    background = {SET_BACKGROUND_COLOR_PRIMARY_DARK}
+                    disabled={notFound ? true : false}
+                />
+                <Button
+                    text="Reset"
+                    color="default"
+                    startIcon={<RefreshIcon />}
+                    onClick={onReset} 
+                />
             </Grid>
-            
             </FormGroup>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }

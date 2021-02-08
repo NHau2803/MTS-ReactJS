@@ -4,14 +4,13 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { Search } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import CachedIcon from '@material-ui/icons/Cached';
 import useTable from 'custom-fields/Use/useTable';
 import Input from 'custom-fields/Input';
 import ButtonIcon from 'custom-fields/ButtonIcon';
-import Popup from 'custom-fields/Popup';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
-import { STUDENT_LIST } from 'constant/dataDemo';
 import Notification from 'custom-fields/Notification';
-import studentApi from 'api/studentApi';
+import studentApi from 'api/Student/studentApi';
 import { changeListToText } from 'utils/converter';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,32 +40,31 @@ const headCells = [
 export default function TablePage(props) {
 
     const classes = useStyles();
-
     const {history} = props;
-
-    const [records, setRecords] = useState(STUDENT_LIST);
-
+    const [records, setRecords] = useState([]);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
-
     const [openPopup, setOpenPopup] = useState(false)
-
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
-
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     //console.log(history.location.pathname); <=> useRouteMatch()???
 
-    // Define the function that fetches the data from API
-    // const fetchData = async () => {
+    const fetchData = async () => {
         
-    //     studentApi.search().then(res=>{
-    //         setRecords(res);
-    //     });
-    
-    // };
+        studentApi.search().then(res=>{
+            res.errorMessage
+            ? setNotify({
+                isOpen: true,
+                message: res.errorMessage,
+                type: 'error'
+            })
+            : setRecords(res.result);
 
-    // // Trigger the fetchData after the initial render by using the useEffect hook
-    // useEffect(() => { fetchData(); }, []);
+        })
+    
+    };
+
+    useEffect(() => { fetchData(); }, []);
 
     const handleSearch = e => {
         let target = e.target;
@@ -91,11 +89,17 @@ export default function TablePage(props) {
         })
         
         studentApi.delete(id);
+
         setNotify({
             isOpen: true,
             message: 'Deleted Successfully',
             type: 'error'
         })
+    }
+
+    const onRefresh = () => {
+        console.log("Refresh!")
+        fetchData();
     }
 
     const {
@@ -123,6 +127,10 @@ export default function TablePage(props) {
                     }}
                     onChange={handleSearch}
                 />
+                 <ButtonIcon
+                    icon={<CachedIcon />}   
+                    onClick= {onRefresh} 
+                />
             </Toolbar>
 
              <TblContainer>
@@ -148,14 +156,13 @@ export default function TablePage(props) {
                                         <ButtonIcon
                                             size="small"
                                             icon={<DeleteIcon fontSize="small" />}    
-                                           // onClick= {() => history.push(`/student/delete/${item.id}`)}
-                                           onClick={() => {
-                                            setConfirmDialog({
-                                                isOpen: true,
-                                                title: 'Are you sure to delete this student?',
-                                                subTitle: "You can't undo this operation",
-                                                onConfirm: () => { onDelete(item.id) }
-                                            },)
+                                            onClick={() => {
+                                                setConfirmDialog({
+                                                    isOpen: true,
+                                                    title: 'Are you sure to delete this student?',
+                                                    subTitle: "You can't undo this operation",
+                                                    onConfirm: () => { onDelete(item.id) }
+                                                },)
                                         }}>
                                         </ButtonIcon>
 

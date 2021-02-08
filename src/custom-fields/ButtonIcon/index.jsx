@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ButtonIcon(props) {
 
-    const { icon, color, background, size, onClick, ...other} = props;
+    const { icon, color, background, size, onClick, disabled, ...other} = props;
     const classes = useStyles();
 
     return (
@@ -21,6 +21,7 @@ export default function ButtonIcon(props) {
             size={size || "large"}
             color={color || "primary"}
             onClick={onClick}
+            disabled={disabled}
             {...other}
         />
     )

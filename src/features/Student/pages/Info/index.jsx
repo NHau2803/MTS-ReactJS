@@ -10,7 +10,9 @@ import ClassIcon from '@material-ui/icons/Class';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import WcIcon from '@material-ui/icons/Wc';
 import { COLOR_PRIMARY, COLOR_WHITE, SET_BACKGROUND_COLOR_PRIMARY } from "constant/color";
-import studentApi from "api/studentApi";
+import studentApi from "api/Student/studentApi";
+import Notification from "custom-fields/Notification";
+import { formatDate } from "utils/converter";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,22 +46,26 @@ const useStyles = makeStyles((theme) => ({
 export default function InfoPage() {
 
     const classes = useStyles();
-
     const { studentId } = useParams();
-
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [studentInfo, setStudentInfo] = useState({});
 
-    // const fetchData = async () => {
-    //     studentApi.info(studentId).then(res=>{
-    //         console.log(studentId)
-    //         console.log(res)
-    //         setStudentInfo(res);
-    //     });
-    
-    // };
+    const fetchData = async () => {
+        studentApi.info(studentId).then(res=>{
+            res.errorMessage
+            ? setNotify({
+                isOpen: true,
+                message: res.errorMessage,
+                type: 'error'
+            })
+            : setStudentInfo(res.result);
 
-    // // Trigger the fetchData after the initial render by using the useEffect hook
-    // useEffect(() => { fetchData(); }, []);
+            
+        });
+    
+    };
+
+    useEffect(() => { fetchData(); }, []);
     
     const renderRow = (icon, title, info) =>{
         return(
@@ -97,7 +103,7 @@ export default function InfoPage() {
                     {renderRow(<ContactsIcon/>, "Code", studentInfo.code)}
                     {renderRowRight(<PersonIcon />, "Name", studentInfo.name)}
                     {renderRow(<WcIcon />, "Gender", studentInfo.gender)}
-                    {renderRowRight(<DateRangeIcon />, "Birthday", studentInfo.birthday)}
+                    {renderRowRight(<DateRangeIcon />, "Birthday", formatDate(studentInfo.birthday))}
                     {renderRow(<EmailIcon />, "Email", studentInfo.email)}
                     {renderRowRight(<PhoneIphoneIcon />, "Phone", studentInfo.phone)}
                     {renderRow(<ClassIcon />, "Faculty", studentInfo.facultyName)}
@@ -105,6 +111,10 @@ export default function InfoPage() {
                 
             </Grid>
         </Grid>
+        <Notification
+            notify={notify}
+            setNotify={setNotify}
+        />
         </div>
         
     );

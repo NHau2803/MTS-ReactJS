@@ -11,7 +11,7 @@ import Popup from 'custom-fields/Popup';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
 import { STUDENT_LIST, TEACHER_LIST } from 'constant/dataDemo';
 import Notification from 'custom-fields/Notification';
-import studentApi from 'api/studentApi';
+import studentApi from 'api/Student/studentApi';
 import { changeListToText } from 'utils/converter';
 
 const useStyles = makeStyles((theme) => ({
