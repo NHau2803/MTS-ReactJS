@@ -7,24 +7,12 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import useTable from 'custom-fields/Use/useTable';
 import Input from 'custom-fields/Input';
 import ButtonIcon from 'custom-fields/ButtonIcon';
-import Popup from 'custom-fields/Popup';
+import CachedIcon from '@material-ui/icons/Cached';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
-import { STUDENT_LIST, TEACHER_LIST } from 'constant/dataDemo';
 import Notification from 'custom-fields/Notification';
-import studentApi from 'api/Student/studentApi';
 import { changeListToText } from 'utils/converter';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: theme.spacing(1),
-    },
-    title: {
-        marginTop: theme.spacing(10),
-    },
-    tableCell: {
-        maxWidth: theme.spacing(35),
-    }
-}));
+import teacherApi from 'api/Teacher/teacherApi';
+import { useTableStyles } from 'styles';
 
 const headCells = [
     { id: 'id', label: 'ID' },
@@ -36,38 +24,32 @@ const headCells = [
     { id: 'topicNames', label: 'Topic' },
     { id: 'status', label: 'Status' },
     { id: 'action', label: 'Action' },
-   
 ]
 
 export default function TablePage(props) {
 
-    const classes = useStyles();
-
+    const classes = useTableStyles();
     const {history} = props;
-
-    const [records, setRecords] = useState(TEACHER_LIST);
-
+    const [records, setRecords] = useState([]);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
-
-    const [openPopup, setOpenPopup] = useState(false)
-
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
-
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    //console.log(history.location.pathname); <=> useRouteMatch()???
-
-    // Define the function that fetches the data from API
-    // const fetchData = async () => {
+    const fetchData = async () => {
         
-    //     studentApi.search().then(res=>{
-    //         setRecords(res);
-    //     });
-    
-    // };
+        teacherApi.search().then(res=>{
+            res.errorMessage
+            ? setNotify({
+                isOpen: true,
+                message: res.errorMessage,
+                type: 'error'
+            })
+            : setRecords(res.result);
 
-    // // Trigger the fetchData after the initial render by using the useEffect hook
-    // useEffect(() => { fetchData(); }, []);
+        });
+    };
+
+    useEffect(() => { fetchData(); }, []);
 
     const handleSearch = e => {
         let target = e.target;
@@ -90,14 +72,26 @@ export default function TablePage(props) {
             ...confirmDialog,
             isOpen: false
         })
-        
-        studentApi.delete(id);
-        setNotify({
-            isOpen: true,
-            message: 'Deleted Successfully',
-            type: 'error'
+        teacherApi.delete(id).then(res=>{
+           res.success
+           ? setNotify({
+                isOpen: true,
+                message: 'Deleted Successfully',
+                type: 'error'
+            })
+           : setNotify({
+                isOpen: true,
+                message: 'Sory, Deleted Unsuccessfully',
+                type: 'error'
+            })
         })
     }
+
+    const onRefresh = () => {
+        console.log("Refresh!")
+        fetchData();
+    }
+
 
     const {
         TblContainer,
@@ -123,6 +117,10 @@ export default function TablePage(props) {
                         </InputAdornment>)
                     }}
                     onChange={handleSearch}
+                />
+                <ButtonIcon
+                    icon={<CachedIcon />}   
+                    onClick= {onRefresh} 
                 />
             </Toolbar>
 
@@ -154,7 +152,7 @@ export default function TablePage(props) {
                                            onClick={() => {
                                             setConfirmDialog({
                                                 isOpen: true,
-                                                title: 'Are you sure to delete this student?',
+                                                title: 'Are you sure to delete this teacher?',
                                                 subTitle: "You can't undo this operation",
                                                 onConfirm: () => { onDelete(item.id) }
                                             },)

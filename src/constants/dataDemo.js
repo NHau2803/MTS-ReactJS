@@ -756,3 +756,18 @@ export const DEADLINE_LIST = [
     },
 
 ]
+
+
+
+export const TeacherInfo = {
+    id: 1,
+    code: '180BC12576',
+    name: 'Le Cong Hieu',
+    gender: 'male',
+    birthday: '1/18/1980',
+    email: '197sv1@vn.vn',
+    phone: '0909090909',
+    academyName: "Thạch Sĩ",
+    positionName:"Giảng Viên",
+    facultyName: "Công Nghệ Thông Tin"
+}

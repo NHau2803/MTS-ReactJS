@@ -9,43 +9,16 @@ import PersonIcon from '@material-ui/icons/Person';
 import ClassIcon from '@material-ui/icons/Class';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import WcIcon from '@material-ui/icons/Wc';
-import { COLOR_PRIMARY, COLOR_WHITE, SET_BACKGROUND_COLOR_PRIMARY } from "constant/color";
+import { SET_BACKGROUND_COLOR_PRIMARY } from "constants/color";
 import studentApi from "api/Student/studentApi";
 import Notification from "custom-fields/Notification";
 import { formatDate } from "utils/converter";
+import { useInfoStyles } from "styles";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        margin: "5rem auto 1rem auto",
-        flexGrow: 1,
-    },
-    grid: {
-        display: "flex",
-        justifyContent: "center",
-        padding: theme.spacing(1),
-       
-    },
-    pager:{
-        padding: theme.spacing(0.5),
-    },
-    title:{
-        background: COLOR_PRIMARY,
-        color: COLOR_WHITE,
-        borderRadius: theme.spacing(0.5)
-    },
-    left: {
-        textAlign: "left",
-        paddingLeft : "10%",
-    },
-    right: {
-        textAlign: "left",
-        paddingLeft : "50%",
-     
-    }
-}));
+
 export default function InfoPage() {
 
-    const classes = useStyles();
+    const classes = useInfoStyles();
     const { studentId } = useParams();
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [studentInfo, setStudentInfo] = useState({});
@@ -58,11 +31,8 @@ export default function InfoPage() {
                 message: res.errorMessage,
                 type: 'error'
             })
-            : setStudentInfo(res.result);
-
-            
+            : setStudentInfo(res.result);            
         });
-    
     };
 
     useEffect(() => { fetchData(); }, []);

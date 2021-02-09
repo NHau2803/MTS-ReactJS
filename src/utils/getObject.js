@@ -99,3 +99,30 @@ export const getTeacherObject = (result) => {
         tickDefaultPassword: true
     }
 }
+
+
+/***************************TEAM**************************************/
+
+export const getTeamCreateObject = (values) => {
+    return {
+       name: values.name,
+       topicId: values.topicId
+    }
+}
+
+export const getTeamUpdateObject = (values) => {
+    return {
+       id: values.id,
+       name: values.name,
+       topicId: values.topicId
+    }
+}
+
+export const getTeamObject = (result) =>{
+    return {
+        id: result.id,
+        name: result.name,
+        topicId: result.topicId,
+        topicName: result.topicName
+    }
+}

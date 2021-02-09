@@ -1,69 +1,70 @@
 import React, { useEffect, useState } from 'react'
-import {makeStyles, TableBody, TableRow, TableCell, Toolbar, FormLabel, InputAdornment } from '@material-ui/core';
+import { TableBody, TableRow, TableCell, InputAdornment, Toolbar, FormLabel } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { Search } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import ButtonIcon from 'custom-fields/ButtonIcon';
-import ConfirmDialog from 'custom-fields/ConfirmDialog';
-import Popup from 'custom-fields/Popup';
-import { TEAM_LIST, TOPIC_LIST } from 'constant/dataDemo';
-import studentApi from 'api/Student/studentApi';
+import CachedIcon from '@material-ui/icons/Cached';
 import useTable from 'custom-fields/Use/useTable';
 import Input from 'custom-fields/Input';
-import { changeListToText } from 'utils/converter';
+import ButtonIcon from 'custom-fields/ButtonIcon';
+import ConfirmDialog from 'custom-fields/ConfirmDialog';
 import Notification from 'custom-fields/Notification';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: theme.spacing(1),
-    },
-    title: {
-        marginTop: theme.spacing(10),
-    },
-    tableCell: {
-        maxWidth: theme.spacing(35),
-    }
-}));
+import { useTableStyles } from 'styles';
+import teamApi from 'api/Team/teamApi';
+import { useParams } from 'react-router-dom';
 
 const headCells = [
     { id: 'id', label: 'ID' },
     { id: 'name', label: 'Name' },
-    { id: 'topicName', label: 'Type Topic ' },
+    { id: 'facultyName', label: 'Faculty' },
+    { id: 'topicName', label: 'Topic ' },
     { id: 'studentTotal', label: 'Total' },
+    { id: 'status', label: 'Status' },
     { id: 'action', label: 'Action' },
    
 ]
 
 export default function TablePage(props) {
 
-    const classes = useStyles();
-
+    const classes = useTableStyles();
     const {history} = props;
-
-    const [records, setRecords] = useState(TEAM_LIST);
-
+    const { topicId } = useParams();
+    const [records, setRecords] = useState([]);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
-
-    const [openPopup, setOpenPopup] = useState(false)
-
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
-
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     //console.log(history.location.pathname); <=> useRouteMatch()???
 
-    // // Define the function that fetches the data from API
-    // const fetchData = async () => {
-        
-    //     studentApi.search().then(res=>{
-    //         setRecords(res);
-    //     });
-    
-    // };
+    const fetchData = async () => {
 
-    // // Trigger the fetchData after the initial render by using the useEffect hook
-    // useEffect(() => { fetchData(); }, []);
+        if(topicId){
+            teamApi.searchByTopicId(topicId).then(res=>{
+                res.errorMessage
+                ? setNotify({
+                    isOpen: true,
+                    message: res.errorMessage,
+                    type: 'error'
+                })
+                : setRecords(res.result);
+
+            })
+        }else{
+            teamApi.search().then(res=>{
+                res.errorMessage
+                ? setNotify({
+                    isOpen: true,
+                    message: res.errorMessage,
+                    type: 'error'
+                })
+                : setRecords(res.result);
+
+            })
+        }
+    };
+
+    useEffect(() => { fetchData(); }, []);
 
     const handleSearch = e => {
         let target = e.target;
@@ -87,12 +88,24 @@ export default function TablePage(props) {
             isOpen: false
         })
         
-        studentApi.delete(id);
-        setNotify({
-            isOpen: true,
-            message: 'Deleted Successfully',
-            type: 'error'
+        teamApi.delete(id).then(res=>{
+            res.success
+            ? setNotify({
+                 isOpen: true,
+                 message: 'Deleted Successfully',
+                 type: 'error'
+             })
+            : setNotify({
+                 isOpen: true,
+                 message: 'Sory, Deleted Unsuccessfully',
+                 type: 'error'
+             })
         })
+    }
+
+    const onRefresh = () => {
+        console.log("Refresh!")
+        fetchData();
     }
 
     const {
@@ -111,7 +124,7 @@ export default function TablePage(props) {
             
             <Toolbar>
                 <Input
-                    label="Search For Team Name"
+                    label="Search For Name"
                     className={classes.searchInput}
                     InputProps={{
                         startAdornment: (<InputAdornment position="start">
@@ -119,6 +132,10 @@ export default function TablePage(props) {
                         </InputAdornment>)
                     }}
                     onChange={handleSearch}
+                />
+                <ButtonIcon
+                    icon={<CachedIcon />}   
+                    onClick= {onRefresh} 
                 />
             </Toolbar>
 
@@ -130,8 +147,11 @@ export default function TablePage(props) {
                                 (<TableRow key={item.id}>
                                     <TableCell>{item.id}</TableCell>
                                     <TableCell>{item.name}</TableCell>
+                                    <TableCell>{item.facultyName}</TableCell>
                                     <TableCell>{item.topicName}</TableCell>
                                     <TableCell>{item.studentTotal}</TableCell>
+                                    <TableCell>{item.status}</TableCell>
+                             
                                     <TableCell>
                                         <ButtonIcon
                                             size="small"
@@ -142,21 +162,20 @@ export default function TablePage(props) {
                                         <ButtonIcon
                                             size="small"
                                             icon={<DeleteIcon fontSize="small" />}    
-                                           // onClick= {() => history.push(`/student/delete/${item.id}`)}
-                                           onClick={() => {
-                                            setConfirmDialog({
-                                                isOpen: true,
-                                                title: 'Are you sure to delete this student?',
-                                                subTitle: "You can't undo this operation",
-                                                onConfirm: () => { onDelete(item.id) }
-                                            },)
+                                            onClick={() => {
+                                                setConfirmDialog({
+                                                    isOpen: true,
+                                                    title: 'Are you sure to delete this Team?',
+                                                    subTitle: "You can't undo this operation",
+                                                    onConfirm: () => { onDelete(item.id) }
+                                                },)
                                         }}>
                                         </ButtonIcon>
 
                                         <ButtonIcon
                                             size="small"
                                             icon={<VisibilityIcon fontSize="small" />}   
-                                            onClick= {() => history.push(`${history.location.pathname}/${item.id}/s`)} 
+                                            onClick= {() => history.push(`${history.location.pathname}/${item.id}/view`)} 
                                         />
                                         
                                     </TableCell>
@@ -167,6 +186,7 @@ export default function TablePage(props) {
                 </TblContainer>
                 <TblPagination />
 
+            
                 <Notification
                     notify={notify}
                     setNotify={setNotify}

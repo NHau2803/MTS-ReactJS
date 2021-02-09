@@ -4,7 +4,6 @@ import Header from 'components/Header';
 import Loader from 'components/Loader';
 import NotFound from 'components/NotFound';
 
-const AccountPage = React.lazy(() => import('../../features/Student/pages/Account'));
 const InfoPage = React.lazy(() => import('../../features/Student/pages/Info'));
 const HomePage = React.lazy(() => import('../../features/Home'));
 const Topic = React.lazy(() => import('../../features/Topic'));
@@ -24,7 +23,6 @@ export default function RouteUser(props) {
             <Route path={`${match.url}/home`} component={HomePage} />
             <Route path={`${match.url}/topic`} component={Topic} />
             <Route path={`${match.url}/info`} component={InfoPage} /> 
-            <Route path={`${match.url}/account`} component={AccountPage} /> 
             <Route path={`${match.url}/team/add`} component={AddTeamPage} /> 
             {/* get in localStoges */}
             

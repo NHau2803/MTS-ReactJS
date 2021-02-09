@@ -12,7 +12,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import { SET_COLOR_RED } from "constant/color";
+import { SET_COLOR_RED } from "constants/color";
 
 const useStyles = makeStyles((theme) => ({
   root: {

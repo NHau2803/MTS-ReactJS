@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import { COLOR_PRIMARY, COLOR_WHITE, SET_COLOR_PRIMARY } from 'constant/color';
+import { COLOR_PRIMARY, COLOR_WHITE, SET_COLOR_PRIMARY } from 'constants/color';
 import SideBar from 'components/SideBar';
 import NotiProfileSide from 'components/SideBar/components/NotiProfileSide';
 import SideBarForUser from 'components/SideBarForUser';

@@ -1,11 +1,10 @@
 
 export const handleApi = (res) => {
-  console.log(res.status);
+  console.log("STATUS: "+res.status);
   if(res.status === 200){
     let dataApi = res.data; 
     
     if(dataApi.success){ //server success = false!
-
       return{
         result : dataApi.result,
         success: true,

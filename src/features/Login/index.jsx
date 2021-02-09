@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Checkbox, FormControlLabel, FormGroup, Grid, Paper, Typography } from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { COLOR_PRIMARY, COLOR_PRIMARY_DARK, SET_BACKGROUND_COLOR_PRIMARY } from "constant/color";
+import { COLOR_PRIMARY, COLOR_PRIMARY_DARK, SET_BACKGROUND_COLOR_PRIMARY } from "constants/color";
 import Input from "custom-fields/Input";
 import Button from "custom-fields/Button";
 

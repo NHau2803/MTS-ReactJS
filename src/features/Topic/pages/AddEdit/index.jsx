@@ -1,81 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import { FormGroup, FormLabel, Grid, makeStyles, Paper, } from '@material-ui/core';
+import { FormGroup, FormLabel, Grid, List, ListItem, ListItemText, ListSubheader, makeStyles, Paper, } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SaveIcon from '@material-ui/icons/Save';
 import UpdateIcon from '@material-ui/icons/Update';
 import Input from 'custom-fields/Input';
-import RadioGroup from 'custom-fields/RadioGroup';
-import DatePicker from 'custom-fields/DatePicker';
-import Select from 'custom-fields/Select';
-import studentApi from 'api/Student/studentApi';
-import { FACULTY_LIST } from 'constant/dataDemo';
-import { getNameFromFullName } from 'utils/converter';
-import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constant/color';
+import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constants/color';
 import Button from 'custom-fields/Button';
-import Checkbox from 'custom-fields/Checkbox';
-import DealinesTable from 'features/Topic/components/Deadline';
 import { useFormCustom } from 'custom-fields/Use/useFormCustom';
+import { useFormStyles } from 'styles';
+import { TYPE } from 'constants/type';
+import { initialFValuesTopicDefault } from 'constants/initialValues';
+import { useSelectTopicStyles } from 'styles';
+import TopicListAPI from 'api/Select/topicListAPI';
+import { gettopicUpdateObject, gettopicCreateObject } from 'utils/getObject';
+import Notification from 'custom-fields/Notification';
+import DatePicker from 'custom-fields/DatePicker';
+import FacultyListAPI from 'api/Select/facultyList';
+import Select from 'custom-fields/Select';
+import TypeTopicListAPI from 'api/Select/typeTopicList';
 
-
-
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        margin: "5rem auto 1rem auto",
-        flexGrow: 1,
-    },
-   
-    icon: {
-        fontSize: theme.spacing(10),
-    },
-    grid: {
-        display: "flex",
-        justifyContent: "center",
-        padding: theme.spacing(1),
-    },
-    gridLeft: {
-        padding: theme.spacing(2),
-    },
-    gridRight: {
-        padding: theme.spacing(2)
-    },
-    gridItem: {
-        padding: theme.spacing(2),
-    },
-    formGroup: {
-        margin: theme.spacing(1),
-    },
-    submit: {
-        //background: "red",
-    },
-    // paper: {
-    //     padding: theme.spacing(1),
-    // }
-   
-    
-}));
-
-
-const initialFValuesDefault = {
-    id: 0,
-    code: '',
-    name: '',
-    startTime: new Date('2001-01-01T12:00:00'),
-    endTime: new Date('2001-01-01T12:00:00'),
-    typeTopicId: '',
-}
 
 export default function AddEditPage(props) {
 
-    const classes = useStyles();
-
-    const { studentId } = useParams();
-
-  //  const [student, setStudent] = useState([]);
-
-    const isAddMode = !studentId;
-
+    const classes = useFormStyles();
+    const {history} = props;
+    const { topicId } = useParams();
+    const isAddMode = !topicId;
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -83,8 +34,8 @@ export default function AddEditPage(props) {
             temp.code = fieldValues.code ? "" : "This field is required."
         if ('name' in fieldValues)
             temp.name = fieldValues.name ? "" : "This field is required."
-        if ('typeTopicId' in fieldValues)
-        temp.typeTopicId = fieldValues.typeTopicId.length !== 0 ? "" : "This field is required."
+        if ('topicId' in fieldValues)
+            temp.topicId = fieldValues.topicId.length !== 0 ? "" : "This field is required."
         
         setErrors({ ...temp })
 
@@ -97,32 +48,62 @@ export default function AddEditPage(props) {
         setValues,
         errors,
         setErrors,
+        notify,
+        setNotify,
+        notFound,
         handleInputChange,
-        resetForm
-    } = useFormCustom(initialFValuesDefault, isAddMode, true, validate);
-
-    const handleSubmit = e => {
-        //add or update 
+        onReset
+    } = useFormCustom(initialFValuesTopicDefault, isAddMode, TYPE.TOPIC, topicId, true, validate);
+   
+   const handleSubmit = e => {
+    //add or update 
         e.preventDefault();
-        const teacherObject = {
-            code: values.code,
-            name: values.name,
-            startTime:values.startTime.toISOString(),
-            endTime:values.endTime.toISOString(),
-            typeTopicId: Number(values.typeTopicId)
-        }
+        
+        // if(isAddMode){
 
-        if(isAddMode){
-            
-            console.log(teacherObject);
-            //studentApi.create(teacherObject);
-        }else{
+        //     const topicCreate = gettopicCreateObject(values);
+        //     topicApi.create(topicCreate).then(res=>{
+        //         if(res.success){
+        //             setNotify({
+        //                 isOpen: true,
+        //                 message: "Create Successfully",
+        //                 type: "success"
+        //             });
+        //             setTimeout(() => history.push('/admin/topic'), 1500);
+                    
+        //         }else{
+        //             setNotify({
+        //                 isOpen: true,
+        //                 message: "Sorry, Create Unsuccessfully",
+        //                 type: "error"
+        //             });
+        //         }
+        //     });
 
-            console.log(teacherObject);
-           // studentApi.create(studentNew);
-        }
+        // }else{
+
+        //     const topicUpdate = gettopicUpdateObject(values);
+        //     topicApi.update(topicId, topicUpdate).then(res=>{
+        //         if(res.success){
+        //             setNotify({
+        //                 isOpen: true,
+        //                 message: "Update Successfully",
+        //                 type: "success"
+        //             });
+        //             setTimeout(() => history.push('/admin/topic'), 1500);
+                    
+        //         }else{
+        //             setNotify({
+        //                 isOpen: true,
+        //                 message: "Sory, Update Unsuccessfully",
+        //                 type: "error"
+        //             });
+        //         }
+        //     });
+        // }
 
     }
+
     return (
         <div className={classes.root}>
         <FormGroup onSubmit={handleSubmit}>
@@ -134,11 +115,8 @@ export default function AddEditPage(props) {
             </FormLabel>
             
             <Grid container className={classes.grid}>
-
                 <Grid item xs={12} sm={3}>
-                {/* <h3>Info</h3> */}
-
-                    <FormGroup>
+                <FormGroup>
                     <Input
                         name="code"
                         label="Code"
@@ -176,38 +154,38 @@ export default function AddEditPage(props) {
                         label="Type Topic"
                         value={values.typeTopicId}
                         onChange={handleInputChange}
-                        options={FACULTY_LIST()}
+                        options={TypeTopicListAPI() || ""}
                         error={errors.typeTopicId}
                     />
+                    <br/>
+                    DEADLINE??
                     </FormGroup>
-
-
                 </Grid>
-             
             </Grid>
 
-
-
-            {/* <DealinesTable /> */}
-
             <Grid item xs={12} className={classes.submit}>
-                    <Button
-                        type="submit"
-                        text={isAddMode ? "Save": "Update"} 
-                        startIcon={isAddMode ? <SaveIcon />: <UpdateIcon />}
-                        onClick={handleSubmit}
-                        background = {SET_BACKGROUND_COLOR_PRIMARY_DARK}
-                    />
-                    <Button
-                    
-                        text="Reset"
-                        color="default"
-                        startIcon={<RefreshIcon />}
-                        onClick={resetForm} 
-                    />
+                <Button
+                    type="submit"
+                    text={isAddMode ? "Save": "Update"} 
+                    startIcon={isAddMode ? <SaveIcon />: <UpdateIcon />}
+                    onClick={handleSubmit}
+                    background = {SET_BACKGROUND_COLOR_PRIMARY_DARK}
+                    disabled={notFound ? true : false}
+                />
+                <Button
+                    text="Reset"
+                    color="default"
+                    startIcon={<RefreshIcon />}
+                    onClick={onReset} 
+                />
             </Grid>
             
             </FormGroup>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }

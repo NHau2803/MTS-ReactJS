@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormControl, FormControlLabel, Checkbox as MuiCheckbox } from '@material-ui/core';
-import { SET_COLOR_PRIMARY } from 'constant/color';
+import { SET_COLOR_PRIMARY } from 'constants/color';
 
 export default function Checkbox(props) {
 

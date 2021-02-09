@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom';
-import { FormGroup, FormLabel, Grid, makeStyles, } from '@material-ui/core';
+import { FormGroup, FormLabel, Grid } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SaveIcon from '@material-ui/icons/Save';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -10,51 +10,20 @@ import DatePicker from 'custom-fields/DatePicker';
 import Select from 'custom-fields/Select';
 import studentApi from 'api/Student/studentApi';
 import { getNameFromFullName } from 'utils/converter';
-import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constant/color';
+import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constants/color';
 import Button from 'custom-fields/Button';
 import Checkbox from 'custom-fields/Checkbox';
 import FacultyListAPI from 'api/Select/facultyList';
 import Notification from 'custom-fields/Notification';
 import { useFormCustom } from 'custom-fields/Use/useFormCustom';
-import {GENDER_LIST, initialValuesStudentDefault, LIST_DEFAULT} from 'constant/initialValues';
-import { TYPE } from 'constant/type';
+import {GENDER_LIST, initialValuesStudentDefault, LIST_DEFAULT} from 'constants/initialValues';
+import { TYPE } from 'constants/type';
 import { getStudentCreateObject, getStudentUpdateObject } from 'utils/getObject';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        margin: "5rem auto 1rem auto",
-        flexGrow: 1,
-    },
-   
-    icon: {
-        fontSize: theme.spacing(10),
-    },
-    grid: {
-        display: "flex",
-        justifyContent: "center",
-    },
-    gridLeft: {
-        padding: theme.spacing(2),
-    },
-    gridRight: {
-        padding: theme.spacing(2)
-    },
-    gridItem: {
-        padding: theme.spacing(2),
-    },
-    formGroup: {
-        margin: theme.spacing(1),
-    },
-    submit: {
-        //background: "red",
-    },
-   
-}));
-
+import { useFormStyles } from 'styles';
 
 export default function AddEditPage(props) {
 
-    const classes = useStyles();
+    const classes = useFormStyles();
     const { studentId } = useParams();
     const {history} = props;
     const isAddMode = !studentId;

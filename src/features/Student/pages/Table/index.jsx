@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {makeStyles, TableBody, TableRow, TableCell, InputAdornment, Toolbar, FormLabel } from '@material-ui/core';
+import { TableBody, TableRow, TableCell, InputAdornment, Toolbar, FormLabel } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { Search } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -12,18 +12,7 @@ import ConfirmDialog from 'custom-fields/ConfirmDialog';
 import Notification from 'custom-fields/Notification';
 import studentApi from 'api/Student/studentApi';
 import { changeListToText } from 'utils/converter';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: theme.spacing(1),
-    },
-    title: {
-        marginTop: theme.spacing(10),
-    },
-    tableCell: {
-        maxWidth: theme.spacing(35),
-    }
-}));
+import { useTableStyles } from 'styles';
 
 const headCells = [
     { id: 'id', label: 'ID' },
@@ -39,11 +28,10 @@ const headCells = [
 
 export default function TablePage(props) {
 
-    const classes = useStyles();
+    const classes = useTableStyles();
     const {history} = props;
     const [records, setRecords] = useState([]);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
-    const [openPopup, setOpenPopup] = useState(false)
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
@@ -61,7 +49,6 @@ export default function TablePage(props) {
             : setRecords(res.result);
 
         })
-    
     };
 
     useEffect(() => { fetchData(); }, []);
@@ -88,12 +75,18 @@ export default function TablePage(props) {
             isOpen: false
         })
         
-        studentApi.delete(id);
-
-        setNotify({
-            isOpen: true,
-            message: 'Deleted Successfully',
-            type: 'error'
+        studentApi.delete(id).then(res=>{
+            res.success
+            ? setNotify({
+                 isOpen: true,
+                 message: 'Deleted Successfully',
+                 type: 'error'
+             })
+            : setNotify({
+                 isOpen: true,
+                 message: 'Sory, Deleted Unsuccessfully',
+                 type: 'error'
+             })
         })
     }
 
@@ -127,7 +120,7 @@ export default function TablePage(props) {
                     }}
                     onChange={handleSearch}
                 />
-                 <ButtonIcon
+                <ButtonIcon
                     icon={<CachedIcon />}   
                     onClick= {onRefresh} 
                 />

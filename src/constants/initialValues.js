@@ -43,3 +43,28 @@ export const initialValuesTeacherDefault = {
     tickDefaultPassword: true
 }
 
+export const initialFValuesTeamDefault = {
+    id: 0,
+    name: '',
+    topicId: '',
+    topicName: '',
+}
+
+export const initialFValuesTopicDefault = {
+    id: 0,
+    code: '',
+    name: '',
+    startTime: new Date('2001-01-01T12:00:00'),
+    endTime: new Date('2001-01-01T12:00:00'),
+    facultyId: '',
+    teacherId: '',
+    typeTopicId: '',
+    deadlines: [
+        {
+            startDeadline: new Date('2001-01-01T12:00:00'),
+            endDeadline: new Date('2001-01-01T12:00:00'),
+            content: '',
+        },
+
+    ],
+}

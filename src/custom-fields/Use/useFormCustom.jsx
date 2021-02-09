@@ -1,8 +1,9 @@
 import studentApi from 'api/Student/studentApi';
 import teacherApi from 'api/Teacher/teacherApi';
-import { TYPE } from 'constant/type';
+import teamApi from 'api/Team/teamApi';
+import { TYPE } from 'constants/type';
 import { useEffect, useState } from 'react'
-import { getStudentObject, getTeacherObject } from 'utils/getObject';
+import { getStudentObject, getTeacherObject, getTeamObject } from 'utils/getObject';
 
 export function useFormCustom(initialFValuesDefault, isAddMode, type , id, validateOnChange = false, validate) {
 
@@ -52,6 +53,24 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
                 });
                 break;
 
+                case TYPE.TEAM:
+                    teamApi.find(id).then(res => {
+                        if(res.errorMessage === null){
+                            let object = getTeamObject(res.result);
+                            console.log(object);
+                            setValues(object);
+                        }else{
+                            setValues(initialFValuesDefault);
+                            setNotify({
+                                isOpen: true,
+                                message: res.errorMessage,
+                                type: 'error'
+                            });
+                            setNotFound(true);
+                        }
+                    });
+                    break;
+
             default:
                 setValues([]);
                 setNotFound(true);
@@ -81,6 +100,7 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
 
     return {
         values,
+        setValues,
         errors,
         setErrors,
         notify,

@@ -2,12 +2,12 @@ import { handleApi } from 'api/Handle/handleApi';
 import axios from 'axios';
 import urlApi from '../URL/urlApi';
 
-const teacherApi = {
+const topicApi = {
   
   search: async (params) => {
     try{
 
-      const url = urlApi.BASE_URL_ADMIN + '/teacher/search';  
+      const url = urlApi.BASE_URL_TOPIC + '/search';  
       let result = await handleApi(await axios.get(url));
       console.log(result);
       return result;
@@ -21,15 +21,32 @@ const teacherApi = {
     }
   },
 
+  // searchTopics: async (params) => {
+  //   try{
+
+  //    // const url = urlApi.BASE_URL_TOPIC + '/all';  
+  //     let result = await handleApi(await axios.get('http://localhost:8090/topic/all'));
+  //     console.log(result);
+  //     return result;
+
+  //   }catch(error){
+  //     return {
+  //       result: null,
+  //       success: false,
+  //       errorMessage: "Sorry, Server Connection Problem!"
+  //     };
+  //   }
+  // },
+
   find: async (id) => {
     try{
 
-      const url = urlApi.BASE_URL_TEACHER +`/${id}`;
+      const url = urlApi.BASE_URL_TOPIC +`/${id}`;
       return await handleApi(await axios.get(url));
       
     }catch(error){
       return {
-        result: null,
+        result: null,   
         success: false,
         errorMessage: "Sorry, Server Connection Problem!"
       };
@@ -38,7 +55,7 @@ const teacherApi = {
 
   info: async(id) => {
     try{
-      const url = urlApi.BASE_URL_TEACHER + `/${id}/info`;
+      const url = urlApi.BASE_URL_TOPIC + `/${id}/info`;
       return await handleApi(await axios.get(url));
     }catch(error){
       return {
@@ -49,11 +66,11 @@ const teacherApi = {
     }
   },
 
-  create: async(teacher) => {
+  create: async(topic) => {
     try{
 
-      const url = urlApi.BASE_URL_ADMIN + '/teacher';
-      return await handleApi(await axios.post(url, teacher));
+      const url = urlApi.BASE_URL_TOPIC + '/team';
+      return await handleApi(await axios.post(url, topic));
 
     }catch(error){
       return {
@@ -64,11 +81,11 @@ const teacherApi = {
     }
   },
 
-  update: async(id, teacher) => {
+  update: async(id, topic) => {
     try{
 
-      const url = urlApi.BASE_URL_TEACHER + `/${id}`;
-      return await handleApi(await axios.post(url, teacher));
+      const url = urlApi.BASE_URL_TOPIC + `/${id}`;
+      return await handleApi(await axios.post(url, topic));
 
     }catch(error){
       return {
@@ -83,7 +100,7 @@ const teacherApi = {
   delete: async(id) => {
     try{
 
-      const url = urlApi.BASE_URL_ADMIN + `/teacher/${id}/delete`;
+      const url = urlApi.BASE_URL_ADMIN + `/topic/${id}/delete`;
       return await handleApi(await axios.post(url, id));
 
     }catch(error){
@@ -97,4 +114,4 @@ const teacherApi = {
 
 }
 
-export default teacherApi;
+export default topicApi;

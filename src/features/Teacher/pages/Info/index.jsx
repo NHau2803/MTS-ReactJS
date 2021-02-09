@@ -11,71 +11,31 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 import WcIcon from '@material-ui/icons/Wc';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import SchoolIcon from '@material-ui/icons/School';
-import { COLOR_PRIMARY, COLOR_WHITE, SET_BACKGROUND_COLOR_PRIMARY } from "constant/color";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        margin: "5rem auto 1rem auto",
-        flexGrow: 1,
-    },
-    grid: {
-        display: "flex",
-        justifyContent: "center",
-        padding: theme.spacing(1),
-       
-    },
-    pager:{
-        padding: theme.spacing(0.5),
-    },
-    title:{
-        background: COLOR_PRIMARY,
-        color: COLOR_WHITE,
-        borderRadius: theme.spacing(0.5)
-    },
-    left: {
-        textAlign: "left",
-        paddingLeft : "10%",
-    },
-    right: {
-        textAlign: "left",
-        paddingLeft : "50%",
-     
-    }
-}));
-
-export const TeacherInfo = {
-    id: 1,
-    code: '180BC12576',
-    name: 'Le Cong Hieu',
-    gender: 'male',
-    birthday: '1/18/1980',
-    email: '197sv1@vn.vn',
-    phone: '0909090909',
-    academyName: "Thạch Sĩ",
-    positionName:"Giảng Viên",
-    facultyName: "Công Nghệ Thông Tin"
-}
-
+import { SET_BACKGROUND_COLOR_PRIMARY } from "constants/color";
+import teacherApi from "api/Teacher/teacherApi";
+import { useInfoStyles } from "styles";
+import { formatDate } from "utils/converter";
 
 export default function InfoPage() {
 
-    const classes = useStyles();
+    const classes = useInfoStyles();
+    const { teacherId } = useParams();
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [teacherInfo, setTeacherInfo] = useState({});
 
-    const { studentId } = useParams();
+    const fetchData = async () => {
+        teacherApi.info(teacherId).then(res=>{
+            res.errorMessage
+            ? setNotify({
+                isOpen: true,
+                message: res.errorMessage,
+                type: 'error'
+            })
+            : setTeacherInfo(res.result);            
+        });
+    };
 
-    const [teacherInfo, setteacherInfo] = useState(TeacherInfo);
-
-    // const fetchData = async () => {
-    //     studentApi.info(studentId).then(res=>{
-    //         console.log(studentId)
-    //         console.log(res)
-    //         setteacherInfo(res);
-    //     });
-    
-    // };
-
-    // // Trigger the fetchData after the initial render by using the useEffect hook
-    // useEffect(() => { fetchData(); }, []);
+    useEffect(() => { fetchData(); }, []);
     
     const renderRow = (icon, title, info) =>{
         return(
@@ -113,7 +73,7 @@ export default function InfoPage() {
                     {renderRow(<ContactsIcon/>, "Code", teacherInfo.code)}
                     {renderRowRight(<PersonIcon />, "Name", teacherInfo.name)}
                     {renderRow(<WcIcon />, "Gender", teacherInfo.gender)}
-                    {renderRowRight(<DateRangeIcon />, "Birthday", teacherInfo.birthday)}
+                    {renderRowRight(<DateRangeIcon />, "Birthday", formatDate(teacherInfo.birthday))}
                     {renderRow(<EmailIcon />, "Email", teacherInfo.email)}
                     {renderRowRight(<PhoneIphoneIcon />, "Phone", teacherInfo.phone)}
                     {renderRow(<SchoolIcon />, "Academy", teacherInfo.academyName)}

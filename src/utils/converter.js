@@ -44,6 +44,11 @@ export const formatDate = (date) =>{
     return d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
 }
 
+export const formatDateTime = (date) =>{
+    let d = new Date(date);
+    return d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " "+d.toLocaleTimeString();
+}
+
 // export const handleEmail = (tickDefaultEmail, email, name, code) => {
 //     if(tickDefaultEmail){
 //         return getNameFromFullName(name)+ "." + code + "@vanlanguni.vn";

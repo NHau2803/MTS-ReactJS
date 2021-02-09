@@ -2,12 +2,29 @@ import { handleApi } from 'api/Handle/handleApi';
 import axios from 'axios';
 import urlApi from '../URL/urlApi';
 
-const teacherApi = {
+const teamApi = {
   
   search: async (params) => {
     try{
 
-      const url = urlApi.BASE_URL_ADMIN + '/teacher/search';  
+      const url = urlApi.BASE_URL_TEAM + '/search';  
+      let result = await handleApi(await axios.get(url));
+      console.log(result);
+      return result;
+
+    }catch(error){
+      return {
+        result: null,
+        success: false,
+        errorMessage: "Sorry, Server Connection Problem!"
+      };
+    }
+  },
+
+  searchByTopicId: async (id, params) => {
+    try{
+
+      const url = urlApi.BASE_URL_TEAM + `/search/${id}`;  
       let result = await handleApi(await axios.get(url));
       console.log(result);
       return result;
@@ -24,12 +41,27 @@ const teacherApi = {
   find: async (id) => {
     try{
 
-      const url = urlApi.BASE_URL_TEACHER +`/${id}`;
+      const url = urlApi.BASE_URL_TEAM +`/${id}`;
       return await handleApi(await axios.get(url));
       
     }catch(error){
       return {
-        result: null,
+        result: null,   
+        success: false,
+        errorMessage: "Sorry, Server Connection Problem!"
+      };
+    }
+  },
+
+  view: async (id) => {
+    try{
+
+      const url = urlApi.BASE_URL_TEAM +`/${id}/view`;
+      return await handleApi(await axios.get(url));
+      
+    }catch(error){
+      return {
+        result: null,   
         success: false,
         errorMessage: "Sorry, Server Connection Problem!"
       };
@@ -38,7 +70,7 @@ const teacherApi = {
 
   info: async(id) => {
     try{
-      const url = urlApi.BASE_URL_TEACHER + `/${id}/info`;
+      const url = urlApi.BASE_URL_TEAM + `/${id}/info`;
       return await handleApi(await axios.get(url));
     }catch(error){
       return {
@@ -49,11 +81,11 @@ const teacherApi = {
     }
   },
 
-  create: async(teacher) => {
+  create: async(team) => {
     try{
 
-      const url = urlApi.BASE_URL_ADMIN + '/teacher';
-      return await handleApi(await axios.post(url, teacher));
+      const url = urlApi.BASE_URL_TEAM;
+      return await handleApi(await axios.post(url, team));
 
     }catch(error){
       return {
@@ -64,11 +96,11 @@ const teacherApi = {
     }
   },
 
-  update: async(id, teacher) => {
+  update: async(id, team) => {
     try{
 
-      const url = urlApi.BASE_URL_TEACHER + `/${id}`;
-      return await handleApi(await axios.post(url, teacher));
+      const url = urlApi.BASE_URL_TEAM + `/${id}`;
+      return await handleApi(await axios.post(url, team));
 
     }catch(error){
       return {
@@ -83,7 +115,7 @@ const teacherApi = {
   delete: async(id) => {
     try{
 
-      const url = urlApi.BASE_URL_ADMIN + `/teacher/${id}/delete`;
+      const url = urlApi.BASE_URL_TEAM + `/${id}/delete`;
       return await handleApi(await axios.post(url, id));
 
     }catch(error){
@@ -97,4 +129,4 @@ const teacherApi = {
 
 }
 
-export default teacherApi;
+export default teamApi;

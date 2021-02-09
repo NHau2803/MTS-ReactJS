@@ -12,7 +12,7 @@ import Collapse from '@material-ui/core/Collapse';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import PersonIcon from '@material-ui/icons/Person';
-import { SET_COLOR_TEAL } from "constant/color";
+import { SET_COLOR_TEAL } from "constants/color";
 
 const useStyles = makeStyles((theme) => ({
   root: {

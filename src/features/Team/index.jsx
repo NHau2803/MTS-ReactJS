@@ -5,6 +5,7 @@ import NotFound from 'components/NotFound';
 
 const TablePage = React.lazy(() => import("./Table"));
 const AddEditPage = React.lazy(() => import("./AddEdit"));
+const ViewTeamPage =  React.lazy(() => import("./Views"))
 
 export default function Team(props) {
   
@@ -17,6 +18,7 @@ export default function Team(props) {
         
         <Route exact path={match.url} component={TablePage} />
         <Route exact path={`${match.url}/add`} component={AddEditPage} />
+        <Route path={`${match.url}/:teamId/view`} component={ViewTeamPage} />
         <Route path={`${match.url}/:teamId`} component={AddEditPage} />
 
         <Route component={NotFound} />
