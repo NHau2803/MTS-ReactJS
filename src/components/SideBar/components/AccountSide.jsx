@@ -11,23 +11,15 @@ import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import Collapse from '@material-ui/core/Collapse';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { SET_COLOR_PRIMARY } from "constants/color";
+import { SET_COLOR_PRIMARY } from "styles/Color";
+import { useSideStyles } from "styles/Side";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-}));
+
 
 const AccountSide = props => {
 
   const { history } = props;
-  const classes = useStyles();
+  const classes = useSideStyles();
 
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {

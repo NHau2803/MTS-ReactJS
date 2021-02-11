@@ -1,6 +1,6 @@
 import { handleApi } from 'api/Handle/handleApi';
 import axios from 'axios';
-import urlApi from '../URL/urlApi';
+import urlApi from '../URL';
 
 const topicApi = {
   

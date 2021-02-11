@@ -9,6 +9,7 @@ const Teacher = React.lazy(() => import('../../features/Teacher'));
 const HomePage = React.lazy(() => import('../../features/Home'));
 const Topic = React.lazy(() => import('../../features/Topic'));
 const Team = React.lazy(()=> import('../../features/Team'));
+const Account = React.lazy(()=> import('../../features/Account'));
 
 export default function RouteAdmin(props) {
   
@@ -26,6 +27,7 @@ export default function RouteAdmin(props) {
             <Route path={`${match.url}/teacher`} component={Teacher} />
             <Route path={`${match.url}/topic`} component={Topic} />
             <Route path={`${match.url}/team`} component={Team} />
+            <Route path={`${match.url}/account`} component={Account} />
             <Route component={NotFound} />
         </Switch>
 

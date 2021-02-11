@@ -5,19 +5,20 @@ import { Search } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CachedIcon from '@material-ui/icons/Cached';
-import useTable from 'custom-fields/Use/useTable';
+import useTableCustom from 'custom-fields/Use/useTableCustom';
 import Input from 'custom-fields/Input';
 import ButtonIcon from 'custom-fields/ButtonIcon';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
 import Notification from 'custom-fields/Notification';
-import { useTableStyles } from 'styles';
-import topicApi from 'api/Topic/topicApi';
+import { useTableStyles } from 'styles/Table';
+import topicApi from 'api/Topic';
 import { changeListToText, formatDateTime } from 'utils/converter';
 
 const headCells = [
     { id: 'id', label: 'ID' },
     { id: 'name', label: 'Name' },
     { id: 'teamNames', label: 'Team ' },
+    { id: 'facultyName', label: 'Faculty ' },
     { id: 'startTime', label: 'Start Time' },
     { id: 'endTime', label: 'End Time' },
     { id: 'teacherName', label: 'Teacher' },
@@ -100,7 +101,7 @@ export default function TablePage(props) {
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting
-    } = useTable(records, headCells, filterFn);
+    } = useTableCustom(records, headCells, filterFn);
 
 
     return(
@@ -135,6 +136,7 @@ export default function TablePage(props) {
                                     <TableCell>{item.id}</TableCell>
                                     <TableCell>{item.name}</TableCell>
                                     <TableCell className={classes.tableCell}>{changeListToText(item.teamNames)}</TableCell>
+                                    <TableCell>{item.facultyName}</TableCell>
                                     <TableCell>{formatDateTime(item.startTime)}</TableCell>
                                     <TableCell>{formatDateTime(item.endTime)}</TableCell>
                                     <TableCell>{item.teacherName}</TableCell>

@@ -5,14 +5,14 @@ import { Search } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import CachedIcon from '@material-ui/icons/Cached';
-import useTable from 'custom-fields/Use/useTable';
+import useTableCustom from 'custom-fields/Use/useTableCustom';
 import Input from 'custom-fields/Input';
 import ButtonIcon from 'custom-fields/ButtonIcon';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
 import Notification from 'custom-fields/Notification';
-import studentApi from 'api/Student/studentApi';
+import studentApi from 'api/Student';
 import { changeListToText } from 'utils/converter';
-import { useTableStyles } from 'styles';
+import { useTableStyles } from 'styles/Table';
 
 const headCells = [
     { id: 'id', label: 'ID' },
@@ -100,7 +100,7 @@ export default function TablePage(props) {
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting
-    } = useTable(records, headCells, filterFn);
+    } = useTableCustom(records, headCells, filterFn);
 
 
     return(

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Table, TableHead, TableRow, TableCell, makeStyles, TablePagination, TableSortLabel } from '@material-ui/core'
-import { COLOR_PRIMARY, COLOR_WHITE } from 'constants/color';
+import { COLOR_PRIMARY, COLOR_WHITE } from 'styles/Color';
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function useTable(records, headCells,filterFn) {
+export default function useTableCustom(records, headCells,filterFn) {
 
     const classes = useStyles();
 

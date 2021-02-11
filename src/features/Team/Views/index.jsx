@@ -6,15 +6,15 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import teamApi from 'api/Team/teamApi';
+import GroupWorkIcon from '@material-ui/icons/GroupWork';
+import teamApi from 'api/Team';
 import { useParams } from 'react-router-dom';
 import Input from 'custom-fields/Input';
 import { Avatar, Grid, ListItemAvatar } from '@material-ui/core';
-import { SET_BACKGROUND_COLOR_PRIMARY } from 'constants/color';
+import { SET_BACKGROUND_COLOR_PRIMARY } from 'styles/Color';
+import { changeListToText, formatDateTime, formatDate,changeListMember } from 'utils/converter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +29,11 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     display: "flex",
     justifyContent: "center",
-}
+  },
+  text: {
+    marginLeft: 0,
+    background: "red",
+  }
 }));
 
 export default function ViewTeamPage() {
@@ -51,29 +55,13 @@ export default function ViewTeamPage() {
       });
   };
 
-  useEffect(() => { fetchData(); }, []);
-
-  const renderRow = (icon, title, info) =>{
-    return(
-        <ListItem>
-            <ListItemAvatar>
-                <Avatar style={SET_BACKGROUND_COLOR_PRIMARY}>
-                {icon}
-                </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={title} secondary={info} />
-        </ListItem>
-    );
-  }
-
-  console.log(teamInfo);
-    
+  useEffect(() => { fetchData(); }, []);   
 
   return (
     <div className={classes.root}>
       <Grid container className={classes.grid}>
-        <Grid item xs={12} sm={6}>
-        <h1>TEAM 01</h1>
+        <Grid item xs={12} sm={4}>
+        <h1>{teamInfo.name}</h1>
 
           <Accordion>
             <AccordionSummary
@@ -85,11 +73,12 @@ export default function ViewTeamPage() {
             </AccordionSummary>
 
             <AccordionDetails>
-              <Typography>
-              
-                {renderRow(<DraftsIcon />, "#"+teamInfo.id, "ID" )}
-                {renderRow(<DraftsIcon />, teamInfo.name, "Team Name")}
-                {renderRow(<DraftsIcon />, teamInfo.status, "Status")}
+              <Typography component={'span'} variant={'body2'} align={"left"}>
+                
+                <li key={teamInfo.id}>{`ID : #${teamInfo.id}`}</li>
+                <li key={teamInfo.name}>{`Name : ${teamInfo.name}`}</li>
+                <li key={teamInfo.status}>{`Status : ${teamInfo.status}`}</li>
+
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -133,10 +122,13 @@ export default function ViewTeamPage() {
               <Typography className={classes.heading}>Member</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {/* {teamInfo.students().map(item=>{
-                  console.log(item);
-                })} */}
+              <Typography component={'div'} variant={'body2'} align={"left"}>
+                  {teamInfo.students
+                    ? teamInfo.students.map(item => {
+                        return <li key={item.count}>{`${item.count} | ${item.studentName} | ${formatDate(item.timeJoin)}`}</li>
+                      })
+                    : "No member yet." // !=[]
+                  }
               </Typography>
             </AccordionDetails>
           </Accordion>

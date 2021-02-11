@@ -9,6 +9,13 @@ export const LIST_DEFAULT = () => ([
     { "id": 1, "title": '' },
 ])
 
+export const LIST_ROLES = () => ([
+    { "id": 1, "title": 'STUDENT' },
+    { "id": 1, "title": 'TEACHER' },
+    { "id": 1, "title": 'ADMIN' },
+    { "id": 1, "title": 'ACCOUNTANT' },
+])
+
 export const initialValuesStudentDefault = {
     id: 0,
     code: '',

@@ -34,10 +34,22 @@ export const getNameFromFullName = (fullName) => {
 //change date => string / fix backend
 
 export const changeListToText = (list) => {
+    console.log(list);
     let str = ""
-    list.map(i => {str += " |" +i} );
+    list.map(i => {
+        return( str += " |" + i) 
+    });
+    console.log(str);
     return str;
 }
+
+// export const changeListMember = (list) => {
+//     list.map(item=>{
+//         return(
+//           <li key={item.studentId}>{`#${item.count}  ${item.studentName}  ${formatDateTime(item.timeJoin)}`}</li>
+//         )  
+//     })
+// }
 
 export const formatDate = (date) =>{
     let d = new Date(date);

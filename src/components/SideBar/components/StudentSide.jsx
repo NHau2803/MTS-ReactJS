@@ -12,23 +12,14 @@ import Collapse from '@material-ui/core/Collapse';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import PersonIcon from '@material-ui/icons/Person';
-import { SET_COLOR_TEAL } from "constants/color";
+import { SET_COLOR_TEAL } from "styles/Color";
+import { useSideStyles } from "styles/Side";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-}));
 
 const StudentSide = props => {
 
   const { history } = props;
-  const classes = useStyles();
+  const classes = useSideStyles();
 
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {

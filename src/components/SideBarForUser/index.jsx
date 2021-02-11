@@ -12,7 +12,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
-import { SET_COLOR_PRIMARY } from "constants/color";
+import { SET_COLOR_PRIMARY } from "styles/Color";
 
 const useStyles = makeStyles((theme) => ({
   root: {

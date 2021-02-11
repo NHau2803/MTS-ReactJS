@@ -12,23 +12,14 @@ import Collapse from '@material-ui/core/Collapse';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
-import { SET_COLOR_AMBER } from "constants/color";
+import { SET_COLOR_AMBER } from "styles/Color";
+import { useSideStyles } from "styles/Side";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-}));
 
 const TeamSide = props => {
 
   const { history } = props;
-  const classes = useStyles();
+  const classes = useSideStyles();
 
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {

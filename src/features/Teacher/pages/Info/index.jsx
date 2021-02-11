@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Grid, ListItem, ListItemAvatar, ListItemText, Paper } from "@material-ui/core";
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
@@ -11,9 +10,9 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 import WcIcon from '@material-ui/icons/Wc';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import SchoolIcon from '@material-ui/icons/School';
-import { SET_BACKGROUND_COLOR_PRIMARY } from "constants/color";
-import teacherApi from "api/Teacher/teacherApi";
-import { useInfoStyles } from "styles";
+import { SET_BACKGROUND_COLOR_PRIMARY } from "styles/Color";
+import teacherApi from "api/Teacher";
+import { useInfoStyles } from "styles/Info";
 import { formatDate } from "utils/converter";
 
 export default function InfoPage() {

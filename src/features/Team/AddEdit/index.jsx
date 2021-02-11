@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom';
-import { FormGroup, FormLabel, Grid, List, ListItem, ListItemText, ListSubheader, makeStyles, Paper, } from '@material-ui/core';
+import { FormGroup, FormLabel, Grid, List, ListItem, ListItemText, ListSubheader } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SaveIcon from '@material-ui/icons/Save';
 import UpdateIcon from '@material-ui/icons/Update';
 import Input from 'custom-fields/Input';
-import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constants/color';
+import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'styles/Color';
 import Button from 'custom-fields/Button';
 import { useFormCustom } from 'custom-fields/Use/useFormCustom';
-import { useFormStyles } from 'styles';
-import { TYPE } from 'constants/type';
-import { initialFValuesTeamDefault } from 'constants/initialValues';
-import { useSelectTopicStyles } from 'styles';
-import TopicListAPI from 'api/Select/topicListAPI';
-import teamApi from 'api/Team/teamApi';
+import { TYPE } from 'constants/Type/type';
+import { initialFValuesTeamDefault } from 'constants/InitialValues';
+import { useSelectTopicStyles } from 'styles/SelectTopic';
+import TopicListAPI from 'api/GetListForSelect/topicListAPI';
+import teamApi from 'api/Team';
 import { getTeamUpdateObject, getTeamCreateObject } from 'utils/getObject';
 import Notification from 'custom-fields/Notification';
+import { useFormStyles } from 'styles/Form';
+
 
 
 export default function AddEditPage(props) {

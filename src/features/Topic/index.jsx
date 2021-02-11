@@ -23,8 +23,6 @@ export default function Topic(props) {
         <Route path={`${match.url}/:topicId/view/:teamId/view`} component={ViewTeamPage} />
         <Route path={`${match.url}/:topicId`} component={AddEditPage} />
         
-        
-
         <Route component={NotFound} />
         </Switch>
       </Suspense>

@@ -8,18 +8,18 @@ import Input from 'custom-fields/Input';
 import RadioGroup from 'custom-fields/RadioGroup';
 import DatePicker from 'custom-fields/DatePicker';
 import Select from 'custom-fields/Select';
-import studentApi from 'api/Student/studentApi';
+import studentApi from 'api/Student';
 import { getNameFromFullName } from 'utils/converter';
-import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constants/color';
+import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'styles/Color';
 import Button from 'custom-fields/Button';
 import Checkbox from 'custom-fields/Checkbox';
-import FacultyListAPI from 'api/Select/facultyList';
+import FacultyListAPI from 'api/GetListForSelect/facultyList';
 import Notification from 'custom-fields/Notification';
 import { useFormCustom } from 'custom-fields/Use/useFormCustom';
-import {GENDER_LIST, initialValuesStudentDefault, LIST_DEFAULT} from 'constants/initialValues';
-import { TYPE } from 'constants/type';
+import {GENDER_LIST, initialValuesStudentDefault, LIST_DEFAULT} from 'constants/InitialValues';
+import { TYPE } from 'constants/Type/type';
 import { getStudentCreateObject, getStudentUpdateObject } from 'utils/getObject';
-import { useFormStyles } from 'styles';
+import { useFormStyles } from 'styles/Form';
 
 export default function AddEditPage(props) {
 

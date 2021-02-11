@@ -1,7 +1,7 @@
-import studentApi from 'api/Student/studentApi';
-import teacherApi from 'api/Teacher/teacherApi';
-import teamApi from 'api/Team/teamApi';
-import { TYPE } from 'constants/type';
+import studentApi from 'api/Student';
+import teacherApi from 'api/Teacher';
+import teamApi from 'api/Team';
+import { TYPE } from 'constants/Type/type';
 import { useEffect, useState } from 'react'
 import { getStudentObject, getTeacherObject, getTeamObject } from 'utils/getObject';
 

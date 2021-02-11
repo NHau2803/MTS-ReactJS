@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import HomeIcon from '@material-ui/icons/Home';
-import { SET_COLOR_PRIMARY } from "constants/color";
+import { SET_COLOR_PRIMARY } from "styles/Color";
 
 
 const HomeSide = props => {

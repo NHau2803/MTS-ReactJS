@@ -5,13 +5,13 @@ import { Search } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CachedIcon from '@material-ui/icons/Cached';
-import useTable from 'custom-fields/Use/useTable';
+import useTableCustom from 'custom-fields/Use/useTableCustom';
 import Input from 'custom-fields/Input';
 import ButtonIcon from 'custom-fields/ButtonIcon';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
 import Notification from 'custom-fields/Notification';
-import { useTableStyles } from 'styles';
-import teamApi from 'api/Team/teamApi';
+import { useTableStyles } from 'styles/Table';
+import teamApi from 'api/Team';
 import { useParams } from 'react-router-dom';
 
 const headCells = [
@@ -22,7 +22,6 @@ const headCells = [
     { id: 'studentTotal', label: 'Total' },
     { id: 'status', label: 'Status' },
     { id: 'action', label: 'Action' },
-   
 ]
 
 export default function TablePage(props) {
@@ -113,7 +112,7 @@ export default function TablePage(props) {
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting
-    } = useTable(records, headCells, filterFn);
+    } = useTableCustom(records, headCells, filterFn);
 
 
     return(

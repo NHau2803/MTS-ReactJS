@@ -1,44 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Checkbox, FormControlLabel, FormGroup, Grid, Paper, Typography } from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { COLOR_PRIMARY, COLOR_PRIMARY_DARK, SET_BACKGROUND_COLOR_PRIMARY } from "constants/color";
+import { SET_BACKGROUND_COLOR_PRIMARY } from "styles/Color";
 import Input from "custom-fields/Input";
 import Button from "custom-fields/Button";
+import { useLoginStyles } from "styles/Login";
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        margin: "auto auto 1rem auto",
-        flexGrow: 1,
-    },
-    grid: {
-        display: "flex",
-        justifyContent: "center",
-        padding: theme.spacing(4),
-    },
-    pager:{
-       padding: theme.spacing(4),
-    },
-    text: {
-        color: COLOR_PRIMARY,
-    },
-    link: {
-        textDecoration: "none",
-        color: COLOR_PRIMARY,
-        '&:hover': {
-            transition: "all 0.5s ease-in-out 0s",
-            color: COLOR_PRIMARY_DARK,
-          },
+export default function Login(props) {
 
-    },
- 
-}));
-export default function Login() {
+    const classes = useLoginStyles();
+    const [account, setAccount] = useState({"username": "", "password": ""});
+    const [error, setError] = useState(false);
+    const {history} = props;
 
-    const classes = useStyles();
+    const handleInputChange = e => {
+        const { name, value } = e.target
+        setAccount({
+            ...account,
+            [name]: value
+        })
+    }
+    const handleLogin = e => {
+        if(account.username == "admin" && account.password =="admin"){
+            setError(false);
+            history.push('/admin');
+        }
+        if(account.username == "hau.197ct31311" && account.password =="197ct31311"){
+            history.push('/mts')
+        }else{
+            setError(true);
+        }
+    }
+
+    // const handleLogin = e => {
+    //     const url = 'http://localhost:8090/login';  
+    //     axios.post(url, account).then(res=>{
+    //         console.log(res.status);
+    //     }).catch(error=>{
+    //         console.log(error)
+    //     })
+    // }
+
 
     return(
         <div className={classes.root}>
@@ -53,20 +58,28 @@ export default function Login() {
                     <FormGroup>
                         <Input
                             variant="standard"
-                            label='Username'  
+                            label='Username'
+                            name="username"
+                            value={account.username}
+                            onChange={handleInputChange}
                             placeholder='Enter username'
                             fullWidth
                             required
+                            error={error ? "incorrect" : null}
                         >
                         </Input>
                         <br/>
                         <Input
                             variant="standard"
-                            label='Password'  
+                            name="password"
                             placeholder='Enter password' 
+                            label='Password' 
+                            value={account.password}
+                            onChange={handleInputChange}
                             type='password' 
                             fullWidth 
                             required
+                            error={error ? "incorrect" : null}
                         >
                         </Input>
 
@@ -84,7 +97,7 @@ export default function Login() {
                             type="submit"
                             text="Login"
                             startIcon={<ExitToAppIcon />}
-                        // onClick={handleSubmit}
+                            onClick={handleLogin}
                             background = {SET_BACKGROUND_COLOR_PRIMARY}
                         />
                         <br/>
@@ -95,11 +108,6 @@ export default function Login() {
                         </Typography>
                     </FormGroup>
 
-                    {/* <Typography > Do you have an account ?
-                        <Link href="#" >
-                            Sign Up 
-                    </Link>
-                    </Typography> */}
                 </Paper>
             </Grid>
         </Grid>

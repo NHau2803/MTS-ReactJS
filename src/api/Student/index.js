@@ -1,7 +1,6 @@
-import { executeErrorHandler } from 'api/Handle/executeError';
 import { handleApi } from 'api/Handle/handleApi';
 import axios from 'axios';
-import urlApi from '../URL/urlApi';
+import urlApi from '../URL';
 
 const studentApi = {
   

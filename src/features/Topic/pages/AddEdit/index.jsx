@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom';
-import { FormGroup, FormLabel, Grid, List, ListItem, ListItemText, ListSubheader, makeStyles, Paper, } from '@material-ui/core';
+import { FormGroup, FormLabel, Grid } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SaveIcon from '@material-ui/icons/Save';
 import UpdateIcon from '@material-ui/icons/Update';
 import Input from 'custom-fields/Input';
-import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'constants/color';
+import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'styles/Color';
 import Button from 'custom-fields/Button';
 import { useFormCustom } from 'custom-fields/Use/useFormCustom';
-import { useFormStyles } from 'styles';
-import { TYPE } from 'constants/type';
-import { initialFValuesTopicDefault } from 'constants/initialValues';
-import { useSelectTopicStyles } from 'styles';
-import TopicListAPI from 'api/Select/topicListAPI';
-import { gettopicUpdateObject, gettopicCreateObject } from 'utils/getObject';
+import { TYPE } from 'constants/Type/type';
+import { initialFValuesTopicDefault } from 'constants/InitialValues';
 import Notification from 'custom-fields/Notification';
 import DatePicker from 'custom-fields/DatePicker';
-import FacultyListAPI from 'api/Select/facultyList';
 import Select from 'custom-fields/Select';
-import TypeTopicListAPI from 'api/Select/typeTopicList';
+import TypeTopicListAPI from 'api/GetListForSelect/typeTopicListAPI';
+import { useFormStyles } from 'styles/Form';
 
 
 export default function AddEditPage(props) {

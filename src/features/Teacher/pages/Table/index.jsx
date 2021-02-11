@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import {makeStyles, TableBody, TableRow, TableCell, InputAdornment, Toolbar, FormLabel } from '@material-ui/core';
+import { TableBody, TableRow, TableCell, InputAdornment, Toolbar, FormLabel } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { Search } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import useTable from 'custom-fields/Use/useTable';
+import useTableCustom from 'custom-fields/Use/useTableCustom';
 import Input from 'custom-fields/Input';
 import ButtonIcon from 'custom-fields/ButtonIcon';
 import CachedIcon from '@material-ui/icons/Cached';
 import ConfirmDialog from 'custom-fields/ConfirmDialog';
 import Notification from 'custom-fields/Notification';
 import { changeListToText } from 'utils/converter';
-import teacherApi from 'api/Teacher/teacherApi';
-import { useTableStyles } from 'styles';
+import teacherApi from 'api/Teacher';
+import { useTableStyles } from 'styles/Table';
 
 const headCells = [
     { id: 'id', label: 'ID' },
@@ -98,7 +98,7 @@ export default function TablePage(props) {
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting
-    } = useTable(records, headCells, filterFn);
+    } = useTableCustom(records, headCells, filterFn);
 
 
     return(
