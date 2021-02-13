@@ -20,20 +20,20 @@ const accountApi = {
     }
   },
 
-//   find: async (id) => {
-//     try{
+  find: async (id) => {
+    try{
 
-//       const url = urlApi.BASE_URL_account +`/${id}`;
-//       return await handleApi(await axios.get(url));
+      const url = urlApi.BASE_URL_account +`/${id}`;
+      return await handleApi(await axios.get(url));
       
-//     }catch(error){
-//       return {
-//         result: null,
-//         success: false,
-//         errorMessage: "Sorry, Server Connection Problem!"
-//       };
-//     }
-//   },
+    }catch(error){
+      return {
+        result: null,
+        success: false,
+        errorMessage: "Sorry, Server Connection Problem!"
+      };
+    }
+  },
 
 //   info: async(id) => {
 //     try{

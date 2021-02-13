@@ -3,4 +3,7 @@ export const TYPE = {
     TEACHER: 'TEACHER_TYPE',
     TEAM: 'TEAM_TYPE',
     TOPIC: 'TOPIC_TYPE',
+    MYTOPIC: 'MYTOPIC_TYPE',
+    ACCOUNT: 'ACCOUNT_TYPE'
+
 }

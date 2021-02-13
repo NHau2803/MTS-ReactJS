@@ -24,11 +24,11 @@ export default function Login(props) {
         })
     }
     const handleLogin = e => {
-        if(account.username == "admin" && account.password =="admin"){
+        if(account.username === "admin" && account.password ==="admin"){
             setError(false);
             history.push('/admin');
         }
-        if(account.username == "hau.197ct31311" && account.password =="197ct31311"){
+        if(account.username === "hau.197ct31311" && account.password ==="197ct31311"){
             history.push('/mts')
         }else{
             setError(true);

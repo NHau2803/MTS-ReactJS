@@ -34,12 +34,10 @@ export const getNameFromFullName = (fullName) => {
 //change date => string / fix backend
 
 export const changeListToText = (list) => {
-    console.log(list);
     let str = ""
     list.map(i => {
         return( str += " |" + i) 
     });
-    console.log(str);
     return str;
 }
 

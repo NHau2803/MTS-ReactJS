@@ -145,7 +145,7 @@ export default function Header(props) {
         {/* SideMenu */}
         <Divider />
           {
-            mode == "ADMIN" 
+            mode === "ADMIN" 
             ?<SideBar /> 
             :<SideBarForUser />
           }

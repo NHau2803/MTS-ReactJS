@@ -23,15 +23,25 @@ export default function InfoPage() {
     const [studentInfo, setStudentInfo] = useState({});
 
     const fetchData = async () => {
-        studentApi.info(studentId).then(res=>{
-            res.errorMessage
-            ? setNotify({
+        if(studentId !== undefined){
+            studentApi.info(studentId).then(res=>{
+                res.errorMessage
+                ? setNotify({
+                    isOpen: true,
+                    message: res.errorMessage,
+                    type: 'error'
+                })
+                : setStudentInfo(res.result);            
+            });
+        }else{
+            setNotify({
                 isOpen: true,
-                message: res.errorMessage,
+                message: "Sory, Not Found",
                 type: 'error'
             })
-            : setStudentInfo(res.result);            
-        });
+            setStudentInfo([]); 
+        }
+      
     };
 
     useEffect(() => { fetchData(); }, []);

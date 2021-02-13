@@ -34,6 +34,7 @@ const StudentSide = props => {
   const handleClick = () => {
     setOpen(!open);
   };
+  const studentId = 1;
 
   const itemsList = [
    
@@ -50,15 +51,15 @@ const StudentSide = props => {
     {
       text: "My Topic",
       icon: <FolderOpenIcon style={SET_COLOR_PRIMARY}/>,
-      onClick: () => history.push("/mts/my")
+      onClick: () => history.push(`/mts/my/${studentId}/view`)
     },
     {
       text: "My Info",
       icon: <AssignmentIndIcon style={SET_COLOR_PRIMARY}/>,
-      onClick: () => history.push("/mts/info")
+      onClick: () => history.push(`/mts/info/${studentId}`)
     },
     {
-      text: "My Accout",
+      text: "My Account",
       icon: <AccountCircleIcon style={SET_COLOR_PRIMARY}/>,
       onClick: () => history.push("/mts/account")
     },

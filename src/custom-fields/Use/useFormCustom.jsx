@@ -1,6 +1,7 @@
 import studentApi from 'api/Student';
 import teacherApi from 'api/Teacher';
 import teamApi from 'api/Team';
+import topicApi from 'api/Topic';
 import { TYPE } from 'constants/Type/type';
 import { useEffect, useState } from 'react'
 import { getStudentObject, getTeacherObject, getTeamObject } from 'utils/getObject';
@@ -11,78 +12,66 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
     const [errors, setErrors] = useState({});
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' });
     const [notFound, setNotFound] = useState(false);
-
-    function getInfo(){
-        console.log(isAddMode);
-        console.log(type);
-        switch(type){
-
-            case TYPE.STUDENT:
-                studentApi.find(id).then(res => {
-                    if(res.errorMessage === null){
-                        let object = getStudentObject(res.result);
-                        console.log(object);
-                        setValues(object);
-                    }else{
-                        setValues(initialFValuesDefault);
-                        setNotify({
-                            isOpen: true,
-                            message: res.errorMessage,
-                            type: 'error'
-                        });
-                        setNotFound(true);
-                    }
-                });
-                break;
-            
-            case TYPE.TEACHER:
-                teacherApi.find(id).then(res => {
-                    if(res.errorMessage === null){
-                        let object = getTeacherObject(res.result);
-                        console.log(object);
-                        setValues(object);
-                    }else{
-                        setValues(initialFValuesDefault);
-                        setNotify({
-                            isOpen: true,
-                            message: res.errorMessage,
-                            type: 'error'
-                        });
-                        setNotFound(true);
-                    }
-                });
-                break;
-
-                case TYPE.TEAM:
-                    teamApi.find(id).then(res => {
-                        if(res.errorMessage === null){
-                            let object = getTeamObject(res.result);
-                            console.log(object);
-                            setValues(object);
-                        }else{
-                            setValues(initialFValuesDefault);
-                            setNotify({
-                                isOpen: true,
-                                message: res.errorMessage,
-                                type: 'error'
-                            });
-                            setNotFound(true);
-                        }
-                    });
-                    break;
-
-            default:
-                setValues([]);
-                setNotFound(true);
-                break;
-
+    useEffect(()=>{
+        if(isAddMode)
+        {
+            console.log('add mode!')
         }
-        
-        
-    }
-
-    useEffect(isAddMode? ()=>{console.log('add mode!')} : () => { getInfo(); }, []);
-      
+        else{
+            const setValueOjb=(result, funcGetObj)=>{
+                if(result.errorMessage===null)
+                {
+                    let object = funcGetObj(result.result);
+                    console.log(object);
+                    setValues(object);
+                }
+                else{
+                    setValues(initialFValuesDefault);
+                    setNotify({
+                        isOpen: true,
+                        message: result.errorMessage,
+                        type: 'error'
+                    });
+                    setNotFound(true);
+                }
+            }
+            const getInfo=async ()=>{
+                console.log(type);
+                switch(type){
+                    case TYPE.STUDENT:
+                        const studentResult=await studentApi.find(id)
+                        setValueOjb(studentResult,getStudentObject)
+                        break;
+                    case TYPE.TEACHER:
+                        const teacherResult=await studentApi.find(id)
+                        setValueOjb(teacherResult,getTeacherObject)
+                        break;
+                    case TYPE.TEAM:
+                        const teamResult=await teamApi.find(id)
+                        setValueOjb(teamResult,getTeamObject)
+                        break;
+                    case TYPE.TOPIC:
+                        const topicResult=await topicApi.find(id)
+                        setValueOjb(topicResult,getTeamObject)
+                        break;
+                    case TYPE.ACCOUNT:
+                        console.log("ACCOUNT")
+                        setValues({
+                            username: '197CT31311',
+                            passwordOld: '',
+                            passwordFirst: '',
+                            passwordLast: '',
+                        })                        
+                        break;
+                    default:
+                        setValues([]);
+                        setNotFound(true);
+                        break;
+                }
+            }
+            getInfo()
+        }
+    },[])
     const handleInputChange = e => {
         const { name, value } = e.target
         setValues({

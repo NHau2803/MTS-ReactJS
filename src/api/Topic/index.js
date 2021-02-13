@@ -21,6 +21,23 @@ const topicApi = {
     }
   },
 
+  searchByStudentId: async (id) => {
+    try{
+
+      const url = urlApi.BASE_URL_TOPIC + `/search/${id}`;  
+      let result = await handleApi(await axios.get(url));
+      console.log(result);
+      return result;
+
+    }catch(error){
+      return {
+        result: null,
+        success: false,
+        errorMessage: "Sorry, Server Connection Problem!"
+      };
+    }
+  },
+
   // searchTopics: async (params) => {
   //   try{
 

@@ -75,3 +75,40 @@ export const initialFValuesTopicDefault = {
 
     ],
 }
+
+
+export const initialFValuesDeadlinesDefault = [
+    {
+        id: 0,
+        startDeadline: new Date('2001-01-01T12:00:00'),
+        endDeadline: new Date('2001-01-01T12:00:00'),
+        content: '',
+    },
+    {
+        id: 1,
+        startDeadline: new Date('2001-01-01T12:00:00'),
+        endDeadline: new Date('2001-01-01T12:00:00'),
+        content: '',
+    },
+    {
+        id: 2,
+        startDeadline: new Date('2001-01-01T12:00:00'),
+        endDeadline: new Date('2001-01-01T12:00:00'),
+        content: '',
+    },
+
+]
+
+
+export const initialValuesAccountDefault = {
+
+    username: '',
+    passwordOld: '',
+    passwordFirst: '',
+    passwordLast: '',
+
+}
+
+
+
+

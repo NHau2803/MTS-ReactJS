@@ -13,6 +13,7 @@ import Notification from 'custom-fields/Notification';
 import { useTableStyles } from 'styles/Table';
 import topicApi from 'api/Topic';
 import { changeListToText, formatDateTime } from 'utils/converter';
+import { useParams } from 'react-router-dom';
 
 const headCells = [
     { id: 'id', label: 'ID' },
@@ -31,6 +32,7 @@ export default function TablePage(props) {
 
     const classes = useTableStyles();
     const {history} = props;
+    const { studentId } = useParams();
     const [records, setRecords] = useState([]);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
@@ -40,16 +42,32 @@ export default function TablePage(props) {
 
     const fetchData = async () => {
         
-        topicApi.search().then(res=>{
-            res.errorMessage
-            ? setNotify({
-                isOpen: true,
-                message: res.errorMessage,
-                type: 'error'
-            })
-            : setRecords(res.result);
+        if(studentId === undefined){
+            topicApi.search().then(res=>{
+                
+                res.errorMessage
+                ? setNotify({
+                    isOpen: true,
+                    message: res.errorMessage,
+                    type: 'error'
+                })
+                : setRecords(res.result);
 
-        })
+            })
+         
+        }else{
+            topicApi.searchByStudentId(studentId).then(res=>{
+                
+                res.errorMessage
+                ? setNotify({
+                    isOpen: true,
+                    message: res.errorMessage,
+                    type: 'error'
+                })
+                : setRecords(res.result);
+
+            })
+        }
     };
 
     useEffect(() => { fetchData(); }, []);
@@ -107,7 +125,7 @@ export default function TablePage(props) {
     return(
         <div className={classes.root}>
             <FormLabel>
-                <h1 className={classes.title}>Topic List</h1>
+                <h1 className={classes.title}>{!studentId ? "Topic List" : "My Topic"}</h1>
             </FormLabel>
             
             <Toolbar>
@@ -147,6 +165,7 @@ export default function TablePage(props) {
                                             size="small"
                                             icon={<EditOutlinedIcon fontSize="small" />}   
                                             onClick= {() => history.push(`${history.location.pathname}/${item.id}`)} 
+                                            disabled = {studentId ? true : false}
                                         />
 
                                         <ButtonIcon
@@ -159,13 +178,15 @@ export default function TablePage(props) {
                                                     subTitle: "You can't undo this operation",
                                                     onConfirm: () => { onDelete(item.id) }
                                                 },)
-                                        }}>
-                                        </ButtonIcon>
+                                            }}
+                                            disabled = {studentId ? true : false}
+                                        />
+                                      
 
                                         <ButtonIcon
                                             size="small"
                                             icon={<VisibilityIcon fontSize="small" />}   
-                                            onClick= {() => history.push(`${history.location.pathname}/${item.id}/view`)} 
+                                            onClick= {() => history.push(`${history.location.pathname.replace("my", "topic")}/${item.id}/view`)} 
                                         />
                                         
                                     </TableCell>

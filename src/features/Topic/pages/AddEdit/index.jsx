@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { FormGroup, FormLabel, Grid } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
@@ -9,12 +9,14 @@ import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'styles/Color';
 import Button from 'custom-fields/Button';
 import { useFormCustom } from 'custom-fields/Use/useFormCustom';
 import { TYPE } from 'constants/Type/type';
-import { initialFValuesTopicDefault } from 'constants/InitialValues';
+import { initialFValuesDeadlinesDefault, initialFValuesTopicDefault } from 'constants/InitialValues';
 import Notification from 'custom-fields/Notification';
 import DatePicker from 'custom-fields/DatePicker';
 import Select from 'custom-fields/Select';
 import TypeTopicListAPI from 'api/GetListForSelect/typeTopicListAPI';
 import { useFormStyles } from 'styles/Form';
+import { formatDateTime } from "utils/converter";
+import AddEditDeadlines from 'features/Topic/components/Deadline';
 
 
 export default function AddEditPage(props) {
@@ -23,6 +25,7 @@ export default function AddEditPage(props) {
     const {history} = props;
     const { topicId } = useParams();
     const isAddMode = !topicId;
+    const [deadlines, setDeadlines] = useState([]);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -134,14 +137,14 @@ export default function AddEditPage(props) {
                     <DatePicker
                         name="startTime"
                         label="Start Time"
-                        value={values.startTime}
+                        value={formatDateTime(values.startTime)}
                         onChange={handleInputChange}
                     />
                     <br/>
                     <DatePicker
                         name="endTime"
                         label="End Time"
-                        value={values.endTime}
+                        value={formatDateTime(values.endTime)}
                         onChange={handleInputChange}
                     />
                     <br/>
@@ -153,8 +156,12 @@ export default function AddEditPage(props) {
                         options={TypeTopicListAPI() || ""}
                         error={errors.typeTopicId}
                     />
-                    <br/>
-                    DEADLINE??
+                    {/* <br/>
+                    {
+                        values.deadlines.map(deadline => {
+                            <p>{deadline.content}</p>
+                        })
+                    } */}
                     </FormGroup>
                 </Grid>
             </Grid>
