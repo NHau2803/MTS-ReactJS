@@ -66,14 +66,6 @@ export const initialFValuesTopicDefault = {
     facultyId: '',
     teacherId: '',
     typeTopicId: '',
-    deadlines: [
-        {
-            startDeadline: new Date('2001-01-01T12:00:00'),
-            endDeadline: new Date('2001-01-01T12:00:00'),
-            content: '',
-        },
-
-    ],
 }
 
 
@@ -104,8 +96,8 @@ export const initialValuesAccountDefault = {
 
     username: '',
     passwordOld: '',
-    passwordFirst: '',
-    passwordLast: '',
+    passwordNew: '',
+    passwordConfirm: '',
 
 }
 

@@ -2,6 +2,7 @@ import studentApi from 'api/Student';
 import teacherApi from 'api/Teacher';
 import teamApi from 'api/Team';
 import topicApi from 'api/Topic';
+import { initialFValuesDeadlinesDefault } from 'constants/InitialValues';
 import { TYPE } from 'constants/Type/type';
 import { useEffect, useState } from 'react'
 import { getStudentObject, getTeacherObject, getTeamObject } from 'utils/getObject';
@@ -55,13 +56,15 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
                         setValueOjb(topicResult,getTeamObject)
                         break;
                     case TYPE.ACCOUNT:
-                        console.log("ACCOUNT")
                         setValues({
-                            username: '197CT31311',
+                            username: '',
                             passwordOld: '',
-                            passwordFirst: '',
-                            passwordLast: '',
-                        })                        
+                            passwordNew: '',
+                            passwordConfirm: '',
+                        })     
+                        break;
+                    case TYPE.DEADLINE:
+                        setValues(initialFValuesDeadlinesDefault)     
                         break;
                     default:
                         setValues([]);
@@ -78,8 +81,9 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
             ...values,
             [name]: value
         })
-        if (validateOnChange)
+        if (validateOnChange){
             validate({ [name]: value })
+        }
     }
 
     const onReset = () => {

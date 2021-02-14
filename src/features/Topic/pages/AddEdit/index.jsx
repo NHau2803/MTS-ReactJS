@@ -17,6 +17,8 @@ import TypeTopicListAPI from 'api/GetListForSelect/typeTopicListAPI';
 import { useFormStyles } from 'styles/Form';
 import { formatDateTime } from "utils/converter";
 import AddEditDeadlines from 'features/Topic/components/Deadline';
+import { set } from 'date-fns';
+import DateTimePicker from 'custom-fields/DateTimePicker';
 
 
 export default function AddEditPage(props) {
@@ -25,7 +27,8 @@ export default function AddEditPage(props) {
     const {history} = props;
     const { topicId } = useParams();
     const isAddMode = !topicId;
-    const [deadlines, setDeadlines] = useState([]);
+    const [count, setCount] = useState(0);
+    
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -54,7 +57,9 @@ export default function AddEditPage(props) {
         onReset
     } = useFormCustom(initialFValuesTopicDefault, isAddMode, TYPE.TOPIC, topicId, true, validate);
    
-   const handleSubmit = e => {
+    console.log(values);
+
+    const handleSubmit = e => {
     //add or update 
         e.preventDefault();
         
@@ -134,18 +139,22 @@ export default function AddEditPage(props) {
                         error={errors.name}
                     />
                     <br/>
-                    <DatePicker
+                    <DateTimePicker
                         name="startTime"
                         label="Start Time"
-                        value={formatDateTime(values.startTime)}
+                        value={values.startTime}
                         onChange={handleInputChange}
                     />
                     <br/>
-                    <DatePicker
+                    <DateTimePicker
                         name="endTime"
                         label="End Time"
-                        value={formatDateTime(values.endTime)}
+                        value={values.endTime}
                         onChange={handleInputChange}
+                        error={values.startTime >= values.endTime
+                            ? "Invalid"
+                            : ""
+                        }
                     />
                     <br/>
                     <Select
@@ -156,12 +165,46 @@ export default function AddEditPage(props) {
                         options={TypeTopicListAPI() || ""}
                         error={errors.typeTopicId}
                     />
-                    {/* <br/>
+                    <br/>
                     {
-                        values.deadlines.map(deadline => {
-                            <p>{deadline.content}</p>
-                        })
-                    } */}
+                        // values.deadlines.map(deadline => (
+                            
+                        //     <FormGroup key={deadline.id}>
+                        //         {/* {setCount(count+1)} */}
+                        //         <FormLabel>Deadline</FormLabel>
+                        //         <br/>
+                        //         <DateTimePicker
+                        //             name="startDeadline"
+                        //             label="Start Deadline"
+                        //             format = "datetime"
+                        //             value={deadline.startDeadline}
+                        //             onChange={handleInputChange}
+                        //         />
+                        //         <br/>
+                        //         <DateTimePicker
+                        //             name="endDeadline"
+                        //             label="End Deadline"
+                        //             value={deadline.endDeadline}
+                        //             onChange={handleInputChange}
+                        //             // error={deadline.endDeadline < deadline.startDeadline
+                        //             //        ? "End Daadline need than Start Deadline"
+                        //             //        : ""
+                        //             //     }
+                        //         />
+                        //         <br/>
+                        //         <Input
+                        //             name="content"
+                        //             label="content"
+                        //             placeholder="Ex: Finsh exams"
+                        //             value={deadline.content}
+                        //             onChange={handleInputChange}
+                        //             error={errors.code}
+                        //         />
+                        //         <br/>
+                        //     </FormGroup>
+                        // ))
+                        
+                    }
                     </FormGroup>
                 </Grid>
             </Grid>
