@@ -84,6 +84,7 @@ const studentApi = {
     try{
 
       const url = urlApi.BASE_URL_ADMIN + `/student/${id}/delete`;
+      console.log(url)
       return await handleApi(await axios.post(url, id));
 
     }catch(error){

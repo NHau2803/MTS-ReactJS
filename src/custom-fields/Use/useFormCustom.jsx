@@ -5,7 +5,7 @@ import topicApi from 'api/Topic';
 import { initialFValuesDeadlinesDefault } from 'constants/InitialValues';
 import { TYPE } from 'constants/Type/type';
 import { useEffect, useState } from 'react'
-import { getStudentObject, getTeacherObject, getTeamObject } from 'utils/getObject';
+import { getStudentObject, getTeacherObject, getTeamObject, getTopicObject } from 'utils/getObject';
 
 export function useFormCustom(initialFValuesDefault, isAddMode, type , id, validateOnChange = false, validate) {
 
@@ -13,6 +13,7 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
     const [errors, setErrors] = useState({});
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' });
     const [notFound, setNotFound] = useState(false);
+    
     useEffect(()=>{
         if(isAddMode)
         {
@@ -44,7 +45,7 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
                         setValueOjb(studentResult,getStudentObject)
                         break;
                     case TYPE.TEACHER:
-                        const teacherResult=await studentApi.find(id)
+                        const teacherResult=await teacherApi.find(id)
                         setValueOjb(teacherResult,getTeacherObject)
                         break;
                     case TYPE.TEAM:
@@ -53,7 +54,7 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
                         break;
                     case TYPE.TOPIC:
                         const topicResult=await topicApi.find(id)
-                        setValueOjb(topicResult,getTeamObject)
+                        setValueOjb(topicResult,getTopicObject)
                         break;
                     case TYPE.ACCOUNT:
                         setValues({
@@ -63,9 +64,9 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
                             passwordConfirm: '',
                         })     
                         break;
-                    case TYPE.DEADLINE:
-                        setValues(initialFValuesDeadlinesDefault)     
-                        break;
+                    // case TYPE.DEADLINE:
+                    //     setValues(initialFValuesDeadlinesDefault)     
+                    //     break;
                     default:
                         setValues([]);
                         setNotFound(true);
@@ -75,6 +76,7 @@ export function useFormCustom(initialFValuesDefault, isAddMode, type , id, valid
             getInfo()
         }
     },[])
+
     const handleInputChange = e => {
         const { name, value } = e.target
         setValues({

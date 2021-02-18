@@ -134,7 +134,7 @@ export default function TablePage(props) {
                                     <TableCell>{item.code}</TableCell>
                                     <TableCell>{item.name}</TableCell>
                                     <TableCell>{item.academyName}</TableCell>
-                                    <TableCell>{item.positonName}</TableCell>
+                                    <TableCell>{item.positionName}</TableCell>
                                     <TableCell>{item.facultyName}</TableCell>
                                     <TableCell className={classes.tableCell}>{changeListToText(item.topicNames)}</TableCell>
                                     <TableCell>{item.status}</TableCell>

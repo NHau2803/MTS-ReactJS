@@ -126,3 +126,51 @@ export const getTeamObject = (result) =>{
         topicName: result.topicName
     }
 }
+
+
+/***************************TOPIC**************************************/
+
+export const getTopicObject = (result) =>{
+    return {
+        id: result.id,
+        code: result.code,
+        name: result.name,
+        startTime: new Date(result.startTime),
+        endTime: new Date(result.endTime),
+        facultyId: Number(result.facultyId),
+        teacherId: Number(result.teacherId),
+        typeTopicId: Number(result.typeTopicId),
+        deadlines: result.deadlines
+    }
+}
+
+export const getTopicCreateObject = (values, deadlines) => {
+
+    const newDeadlines = deadlines.map(deadline => {
+        deadline["startDeadline"] = new Date(deadline.startDeadline).toISOString()
+        deadline["endDeadline"] = new Date(deadline.endDeadline).toISOString()
+        return deadline;
+    })  
+
+    return {
+        id: values.id,
+        code: values.code,
+        name: values.name,
+        startTime: new Date(values.startTime).toISOString(),
+        endTime: new Date(values.endTime).toISOString(),
+        facultyId: 1, // need data of teacher when login
+        teacherId: 1,
+        typeTopicId: Number(values.typeTopicId),
+        deadlines: newDeadlines
+    }
+}
+
+// export const getDeadlinesCreateObject = (deadlines) => {
+
+//     const newDeadlines = deadlines.map(deadline => {
+//         deadline["startDeadline"] = new Date(deadline.startDeadline).toISOString()
+//         deadline["endDeadline"] = new Date(deadline.endDeadline).toISOString()
+//         return deadline;
+//     })  
+//    return newDeadlines
+// }

@@ -64,10 +64,7 @@ export default function UpdateAccountPage(props) {
         <div className={classes.root}>
         <FormGroup onSubmit={handleSubmit}>
             <FormLabel>
-                {isAddMode 
-                ? <h1>Create a Team</h1>
-                : <h1>Update Team</h1>
-                }
+                <h1>Update Password</h1>
             </FormLabel>
             
             <Grid container className={classes.grid}>
@@ -117,7 +114,7 @@ export default function UpdateAccountPage(props) {
                     startIcon={isAddMode ? <SaveIcon />: <UpdateIcon />}
                     onClick={handleSubmit}
                     background = {SET_BACKGROUND_COLOR_PRIMARY_DARK}
-                    disabled={notFound ? true : false}
+                    disabled={true}
                 />
                 <Button
                     text="Reset"

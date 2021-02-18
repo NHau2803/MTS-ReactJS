@@ -143,7 +143,7 @@ export default function TablePage(props) {
                                         <Input
                                             name="password"
                                             label="New Password"
-                                            value={"A"}
+                                            value={""}
                                             // onChange={handleInputChange}
                                             // error={errors.username}
                                             // disabled={

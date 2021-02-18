@@ -77,6 +77,7 @@ export default function ViewTeamPage() {
                 
                 <li key={teamInfo.id}>{`ID : #${teamInfo.id}`}</li>
                 <li key={teamInfo.name}>{`Name : ${teamInfo.name}`}</li>
+                <li key={teamInfo.topicName}>{`Topic : ${teamInfo.topicName}`}</li>
                 <li key={teamInfo.status}>{`Status : ${teamInfo.status}`}</li>
 
               </Typography>
@@ -109,6 +110,26 @@ export default function ViewTeamPage() {
             <AccordionDetails>
               <Typography>
                 
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography className={classes.heading}>Deadlines</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography component={'div'} variant={'body2'} align={"left"}>
+                  {teamInfo.deadlines
+                    ? teamInfo.deadlines.map(item => {
+                        return <li key={item.count}>{`${item.count} | ${item.content} | ${formatDateTime(item.startDeadline)} to ${formatDateTime(item.endDeadline)}`}</li>
+                      })
+                    : "No member yet." // !=[]
+                  }
               </Typography>
             </AccordionDetails>
           </Accordion>

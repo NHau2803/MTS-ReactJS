@@ -70,6 +70,7 @@ export default function AddEditPage(props) {
         if(isAddMode){
 
             const studentCreate = getStudentCreateObject(values);
+            console.log(studentCreate)
             studentApi.create(studentCreate).then(res=>{
                 if(res.success){
                     setNotify({

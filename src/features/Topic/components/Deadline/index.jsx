@@ -30,7 +30,6 @@ export default function AddEditDealinesPage(props) {
     const {history} = props;
     const { topicId } = useParams();
     const isAddMode = !topicId;
-    const [count, setCount] = useState(0);
     
 
     const validate = (fieldValues = values) => {
@@ -57,20 +56,21 @@ export default function AddEditDealinesPage(props) {
     } = useFormCustom(initialFValuesDeadlinesDefault, isAddMode, TYPE.DEADLINE, topicId, true, validate);
    
     const handleRemoveFields = id => {
-        values.splice(values.findIndex(deadline => deadline.id === id), 1);
-        setValues(values);
+        const deadlines  = [...values];
+        deadlines.splice(deadlines.findIndex(deadline => deadline.id === id), 1);
+        setValues(deadlines);
     }
 
     const handleAddFields = () => {
         setValues([...values, 
             { id: Number(values[values.length-1].id) + 1,
             startDeadline: new Date('2001-01-01T12:00:00'),
-            endDeadline: new Date('2001-01-01T12:00:00'),
+            endDeadline: new Date('2001-01-07T12:00:00'),
             content: '', }
         ])
     }
 
-    const handleInputChange = (id, event) => {
+    const handleDeadlineChange = (id, event) => {
         const newValues = values.map(i => {
             if(id === i.id) {
             i[event.target.name] = event.target.value
@@ -93,8 +93,8 @@ export default function AddEditDealinesPage(props) {
         <FormGroup onSubmit={handleSubmit}>
             <FormLabel>
                 {isAddMode 
-                ? <h1>Create a Topic / Deadline</h1>
-                : <h1>Update Topic/ Deadline</h1>
+                ? <h1>Create a Topic / Deadlines</h1>
+                : <h1>Update Topic/ Deadlines</h1>
                 }
             </FormLabel>
             
@@ -111,17 +111,16 @@ export default function AddEditDealinesPage(props) {
                                 <DateTimePicker
                                     name="startDeadline"
                                     label="Start Deadline"
-                                    format = "datetime"
                                     value={deadline.startDeadline}
-                                    onChange={event => handleInputChange(deadline.id, event)}
+                                    onChange={event => handleDeadlineChange(deadline.id, event)}
                                 />
                                 <br/>
                                 <DateTimePicker
                                     name="endDeadline"
                                     label="End Deadline"
                                     value={deadline.endDeadline}
-                                    onChange={event => handleInputChange(deadline.id, event)}
-                                    error={deadline.endDeadline < deadline.startDeadline
+                                    onChange={event => handleDeadlineChange(deadline.id, event)}
+                                    error={deadline.endDeadline <=  deadline.startDeadline
                                            ? "Invalid"
                                            : ""
                                         }
@@ -132,7 +131,7 @@ export default function AddEditDealinesPage(props) {
                                     label="content"
                                     placeholder="Ex: Finsh exams"
                                     value={deadline.content}
-                                    onChange={event => handleInputChange(deadline.id, event)}
+                                    onChange={event => handleDeadlineChange(deadline.id, event)}
                                     error={errors.code}
                                 />
                                 <br/>
@@ -150,7 +149,7 @@ export default function AddEditDealinesPage(props) {
                     </FormGroup>
                     <FormGroup>
                     <IconButton 
-                        onClick={() => handleAddFields}
+                        onClick={() => handleAddFields()}
                     >
                         <AddIcon />
                     </IconButton>

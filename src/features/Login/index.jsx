@@ -50,7 +50,7 @@ export default function Login(props) {
         <Grid container className={classes.grid} align='center'>
             <Grid item xs={12} sm={3}>
                
-                <h1 className={classes.text}>MTS</h1>
+                <h1 className={classes.text}>CPM</h1>
                 <Paper elevation={10} className={classes.pager}>
             
                     <Avatar style={SET_BACKGROUND_COLOR_PRIMARY}><LockOutlinedIcon/></Avatar>

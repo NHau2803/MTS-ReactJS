@@ -16,6 +16,7 @@ export const LIST_ROLES = () => ([
     { "id": 1, "title": 'ACCOUNTANT' },
 ])
 
+//*************************************************** */
 export const initialValuesStudentDefault = {
     id: 0,
     code: '',
@@ -32,6 +33,7 @@ export const initialValuesStudentDefault = {
     tickDefaultPassword: true
 }
 
+//*************************************************** */
 export const initialValuesTeacherDefault = {
     id: 0,
     code: '',
@@ -50,6 +52,7 @@ export const initialValuesTeacherDefault = {
     tickDefaultPassword: true
 }
 
+//*************************************************** */
 export const initialFValuesTeamDefault = {
     id: 0,
     name: '',
@@ -57,41 +60,40 @@ export const initialFValuesTeamDefault = {
     topicName: '',
 }
 
-export const initialFValuesTopicDefault = {
-    id: 0,
-    code: '',
-    name: '',
-    startTime: new Date('2001-01-01T12:00:00'),
-    endTime: new Date('2001-01-01T12:00:00'),
-    facultyId: '',
-    teacherId: '',
-    typeTopicId: '',
-}
-
-
+//*************************************************** */
 export const initialFValuesDeadlinesDefault = [
     {
         id: 0,
-        startDeadline: new Date('2001-01-01T12:00:00'),
-        endDeadline: new Date('2001-01-01T12:00:00'),
+        startDeadline: new Date('2021-01-01T12:00:00'),
+        endDeadline: new Date('2021-01-07T12:00:00'),
         content: '',
     },
     {
         id: 1,
-        startDeadline: new Date('2001-01-01T12:00:00'),
-        endDeadline: new Date('2001-01-01T12:00:00'),
+        startDeadline: new Date('2021-01-01T12:00:00'),
+        endDeadline: new Date('2021-01-07T12:00:00'),
         content: '',
     },
-    {
-        id: 2,
-        startDeadline: new Date('2001-01-01T12:00:00'),
-        endDeadline: new Date('2001-01-01T12:00:00'),
-        content: '',
-    },
-
 ]
 
+export const initialFValuesTopicDefault = {
+    id: 0,
+    code: '',
+    name: '',
+    startTime: new Date('2021-01-01T12:00:00'),
+    endTime: new Date('2021-01-07T12:00:00'),
+    facultyId: '',
+    teacherId: '',
+    typeTopicId: '',
+    deadlines: [{
+        id: 0,
+        startDeadline: new Date('2001-01-01T12:00:00'),
+        endDeadline: new Date('2001-01-07T12:00:00'),
+        content: '',
+    },]
+}
 
+//*************************************************** */
 export const initialValuesAccountDefault = {
 
     username: '',

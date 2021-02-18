@@ -86,7 +86,7 @@ const topicApi = {
   create: async(topic) => {
     try{
 
-      const url = urlApi.BASE_URL_TOPIC + '/team';
+      const url = urlApi.BASE_URL_TOPIC;
       return await handleApi(await axios.post(url, topic));
 
     }catch(error){
