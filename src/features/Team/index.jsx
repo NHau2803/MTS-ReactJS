@@ -3,9 +3,9 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Loader from 'components/Loader';
 import NotFound from 'components/NotFound';
 
-const TablePage = React.lazy(() => import("./Table"));
-const AddEditPage = React.lazy(() => import("./AddEdit"));
-const ViewTeamPage =  React.lazy(() => import("./Views"))
+const TablePage = React.lazy(() => import("./pages/Table"));
+const AddEditPage = React.lazy(() => import("./pages/AddEdit"));
+const ViewTeamPage =  React.lazy(() => import("./pages/Views"))
 
 export default function Team(props) {
   

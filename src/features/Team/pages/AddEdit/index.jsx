@@ -16,6 +16,7 @@ import teamApi from 'api/Team';
 import { getTeamUpdateObject, getTeamCreateObject } from 'utils/getObject';
 import Notification from 'custom-fields/Notification';
 import { useFormStyles } from 'styles/Form';
+import { checkValidation } from 'utils/validation';
 
 
 
@@ -29,18 +30,12 @@ export default function AddEditPage(props) {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('code' in fieldValues)
-            temp.code = fieldValues.code ? "" : "This field is required."
-        if ('name' in fieldValues)
-            temp.name = fieldValues.name ? "" : "This field is required."
-        if ('topicId' in fieldValues)
-            temp.topicId = fieldValues.topicId.length !== 0 ? "" : "This field is required."
-        
+        temp = checkValidation(temp, fieldValues);
         setErrors({ ...temp })
-
         if (fieldValues === values)
             return Object.values(temp).every(x => x === "")
     }
+
 
     const {
         values,

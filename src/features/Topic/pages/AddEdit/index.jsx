@@ -17,8 +17,9 @@ import { useFormStyles } from 'styles/Form';
 import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import DateTimePicker from 'custom-fields/DateTimePicker';
-import { getDeadlinesCreateObject, getTopicCreateObject } from 'utils/getObject';
+import {  getTopicCreateObject } from 'utils/getObject';
 import topicApi from 'api/Topic';
+import { checkValidation } from 'utils/validation';
 
 
 export default function AddEditPage(props) {
@@ -30,18 +31,12 @@ export default function AddEditPage(props) {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('code' in fieldValues)
-            temp.code = fieldValues.code ? "" : "This field is required."
-        if ('name' in fieldValues)
-            temp.name = fieldValues.name ? "" : "This field is required."
-        if ('topicId' in fieldValues)
-            temp.topicId = fieldValues.topicId.length !== 0 ? "" : "This field is required."
-        
+        temp = checkValidation(temp, fieldValues);
         setErrors({ ...temp })
-
         if (fieldValues === values)
             return Object.values(temp).every(x => x === "")
     }
+
 
     const {
         values,
@@ -250,10 +245,11 @@ export default function AddEditPage(props) {
                                     placeholder="Ex: Finsh exams"
                                     value={deadline.content || ""}
                                     onChange={event => handleDeadlineChange(deadline.id, event)}
-                                    error={errors.code}
+                                    error={errors.content}
                                 />
-                                <br/>
+                                
                                 <IconButton 
+                                    className={classes.iconPrimary}
                                     disabled={deadlines.length === 1} 
                                     onClick={() => handleRemoveFields(deadline.id)}
                                 >
@@ -265,7 +261,9 @@ export default function AddEditPage(props) {
                     </FormGroup>
 
                     <FormGroup>
+                        <br/>
                         <IconButton 
+                            className={classes.iconPrimary}
                             onClick={() => handleAddFields()}
                         >
                             <AddIcon />

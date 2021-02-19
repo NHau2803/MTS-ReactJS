@@ -112,6 +112,22 @@ const teamApi = {
    
   },
 
+  submitLink: async(id, link) => {
+    try{
+
+      const url = urlApi.BASE_URL_TEAM + `/${id}/submit`;
+      return await handleApi(await axios.post(url, link));
+
+    }catch(error){
+      return {
+        result: null,
+        success: false,
+        errorMessage: "Sorry, Server Connection Problem!"
+      };
+    }
+   
+  },
+
   delete: async(id) => {
     try{
 

@@ -25,10 +25,10 @@ export default function Input(props) {
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            {...other}
             {...(error && {error: true, helperText: error})}
             size="small"
             disabled={disabled}
+            {...other}
                         
         />
     )

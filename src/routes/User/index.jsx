@@ -8,7 +8,7 @@ const InfoPage = React.lazy(() => import('../../features/Student/pages/Info'));
 const HomePage = React.lazy(() => import('../../features/Home'));
 const Topic = React.lazy(() => import('../../features/Topic'));
 const MyTopic = React.lazy(() => import('../../features/Topic/pages/Table'));
-const AddTeamPage = React.lazy(()=> import('../../features/Team/AddEdit'));
+const AddTeamPage = React.lazy(()=> import('../../features/Team/pages/AddEdit'));
 const UpdateAccountPage = React.lazy(()=> import('../../features/Account/pages/Update'));
 
 export default function RouteUser(props) {

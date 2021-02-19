@@ -10,6 +10,7 @@ import DatePicker from 'custom-fields/DatePicker';
 import Select from 'custom-fields/Select';
 import studentApi from 'api/Student';
 import { getNameFromFullName } from 'utils/converter';
+import { checkValidation } from 'utils/validation';
 import { SET_BACKGROUND_COLOR_PRIMARY_DARK } from 'styles/Color';
 import Button from 'custom-fields/Button';
 import Checkbox from 'custom-fields/Checkbox';
@@ -30,27 +31,11 @@ export default function AddEditPage(props) {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('code' in fieldValues)
-            temp.code = fieldValues.code ? "" : "This field is required."
-        if ('name' in fieldValues)
-            temp.name = fieldValues.name ? "" : "This field is required."
-        if ('email' in fieldValues)
-            temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
-        if ('phone' in fieldValues)
-            temp.phone = fieldValues.phone ? "" : "This field is required."
-        if ('facultyId' in fieldValues)
-            temp.facultyId = fieldValues.facultyId.length !== 0 ? "" : "This field is required."
-        if ('username' in fieldValues)
-            temp.username = fieldValues.username ? "" : "This field is required."
-        if ('password' in fieldValues)
-            temp.password = fieldValues.password ? (fieldValues.password.length > 8 ? "" : "Password must be geater than 8") : "This field is required"
-
+        temp = checkValidation(temp, fieldValues);
         setErrors({ ...temp })
-
         if (fieldValues === values)
             return Object.values(temp).every(x => x === "")
     }
-
 
     const {
         values,

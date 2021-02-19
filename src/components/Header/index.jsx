@@ -78,7 +78,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
 
   const { mode } = props;
-
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -114,12 +113,10 @@ export default function Header(props) {
 
           <Typography 
             variant="h6" 
-            noWrap
-            >
-              MTS
+            noWrap> MTS
           </Typography>
           
-          <NotiProfileSide />
+          <NotiProfileSide/>
           
         </Toolbar>
       </AppBar>

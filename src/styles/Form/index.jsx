@@ -1,3 +1,5 @@
+import { COLOR_PRIMARY } from "styles/Color";
+
 const { makeStyles } = require("@material-ui/core");
 
 export const useFormStyles = makeStyles((theme) => ({
@@ -6,7 +8,11 @@ export const useFormStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     icon: {
-        fontSize: theme.spacing(10),
+        fontSize: theme.spacing(15),
+    },
+    iconPrimary: {
+        width: "3rem",
+        color: COLOR_PRIMARY, 
     },
     grid: {
         display: "flex",
@@ -27,5 +33,6 @@ export const useFormStyles = makeStyles((theme) => ({
     submit: {
         //background: "red",
     },
+
    
 }));

@@ -4,13 +4,25 @@ const removeUft8 = (char) => {
         .includes(char.charCodeAt(0))){
         return "a";
     }
-    if([234,7871,7873,7875,7877,7879]
+    if([234,7871,7873,7875,7877,7879,233,232,7869,7867]
         .includes(char.charCodeAt(0))){
         return "e";
     }
-    if([432,7913,7915,7917,7919,7921 ]
+    if([432,7913,7915,7917,7919,7921,249,250,361,7911 ]
         .includes(char.charCodeAt(0))){
         return "u";
+    }
+    if([243,242,245,7887,244,7889,7895,7897,7891,417,7899,7901,7905,7903 ]
+        .includes(char.charCodeAt(0))){
+        return "o";
+    }
+    if([237,236,7883,297 ]
+        .includes(char.charCodeAt(0))){
+        return "i";
+    }
+    if([253,7923,7927,7929 ]
+        .includes(char.charCodeAt(0))){
+        return "y";
     }
     if(char.charCodeAt(0) === 273){
         return "d";
@@ -31,8 +43,6 @@ export const getNameFromFullName = (fullName) => {
     return result;
 }
 
-//change date => string / fix backend
-
 export const changeListToText = (list) => {
     let str = ""
     list.map(i => {
@@ -40,14 +50,6 @@ export const changeListToText = (list) => {
     });
     return str;
 }
-
-// export const changeListMember = (list) => {
-//     list.map(item=>{
-//         return(
-//           <li key={item.studentId}>{`#${item.count}  ${item.studentName}  ${formatDateTime(item.timeJoin)}`}</li>
-//         )  
-//     })
-// }
 
 export const formatDate = (date) =>{
     let d = new Date(date);
@@ -58,10 +60,3 @@ export const formatDateTime = (date) =>{
     let d = new Date(date);
     return d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " "+d.toLocaleTimeString();
 }
-
-// export const handleEmail = (tickDefaultEmail, email, name, code) => {
-//     if(tickDefaultEmail){
-//         return getNameFromFullName(name)+ "." + code + "@vanlanguni.vn";
-//     }
-//     return email;
-// }
