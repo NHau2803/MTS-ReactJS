@@ -127,6 +127,21 @@ const teamApi = {
     }
    
   },
+  submitPoint: async(id, point) => {
+    try{
+
+      const url = urlApi.BASE_URL_TEAM + `/${id}/mark`;
+      return await handleApi(await axios.post(url, point));
+
+    }catch(error){
+      return {
+        result: null,
+        success: false,
+        errorMessage: "Sorry, Server Connection Problem!"
+      };
+    }
+   
+  },
 
   delete: async(id) => {
     try{

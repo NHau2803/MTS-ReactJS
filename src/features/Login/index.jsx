@@ -14,7 +14,11 @@ export default function Login(props) {
     const classes = useLoginStyles();
     const [account, setAccount] = useState({"username": "", "password": ""});
     const [error, setError] = useState(false);
-    const {history} = props;
+    const { history } = props;
+
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("token");
+    localStorage.removeItem("roles");
 
     const handleInputChange = e => {
         const { name, value } = e.target
@@ -23,26 +27,38 @@ export default function Login(props) {
             [name]: value
         })
     }
-    const handleLogin = e => {
-        if(account.username === "admin" && account.password ==="admin"){
-            setError(false);
-            history.push('/admin');
-        }
-        if(account.username === "hau.197ct31311" && account.password ==="197ct31311"){
-            history.push('/mts')
-        }else{
-            setError(true);
-        }
-    }
 
-    // const handleLogin = e => {
-    //     const url = 'http://localhost:8090/login';  
-    //     axios.post(url, account).then(res=>{
-    //         console.log(res.status);
-    //     }).catch(error=>{
-    //         console.log(error)
-    //     })
-    // }
+    const handleLogin = e => {
+        var axios = require('axios');
+        var data = JSON.stringify(account);
+
+        var config = {
+            method: 'post',
+            url: 'http://localhost:8090/login',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+        };
+
+        axios(config)
+        .then(function (res) {
+            if(res.status === 200){
+                setError(false);
+                localStorage.setItem("accessToken", true);
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("roles", res.data.roles);
+                if(res.data.roles === "[TEACHER]"){
+                    history.push('/admin');
+                }if(res.data.roles === "[STUDENT]"){
+                    history.push('/mts')
+                }
+            }
+        })
+        .catch(function (error) {
+            setError(true);
+        });
+    }
 
 
     return(

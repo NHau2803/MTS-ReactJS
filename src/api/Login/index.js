@@ -1,26 +1,23 @@
 
-// import { handleApi } from 'api/Handle/handleApi';
 // import axios from 'axios';
-// import urlApi from '../URL/urlApi';
 
 // const loginApi = {
   
 //   login: async (account) => {
 //     try{
-//       console.log(account);
-//       const url = 'http://localhost:8090/login';  
+//       console.log(account)
+//       const url = BAES_URL_LOGIN;  
 //       axios.post(url, account)
 //       .then(res=>{
-       
+//         console.log(res)
 //         if(res.status === 200){
 //             return {
-//                 role: null,
+//                 roles: res.data.roles,
 //                 token: res.data.token,
 //                 success: true,
 //                 errorMessage: null
 //             };
-//         }
-          
+//         } 
 //       })
 //       .catch(error =>{
 //           console.log(error)

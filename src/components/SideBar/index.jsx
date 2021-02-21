@@ -6,6 +6,7 @@ import StudentSide from "./components/StudentSide";
 import TopicSide from "./components/TopicSide";
 import AccountSide from "./components/AccountSide";
 import TeamSide from "./components/TeamSide";
+import AnalysisSide from "./components/AnalysisSide";
 
 
 export default function SideBar() {
@@ -14,7 +15,7 @@ export default function SideBar() {
     <div>
       <List>
         <HomeSide />
-        
+        <AnalysisSide />
         <TeacherSide />
         <StudentSide />
         <TeamSide />

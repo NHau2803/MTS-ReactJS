@@ -29,7 +29,6 @@ export default function RouteUser(props) {
             <Route path={`${match.url}/info/:studentId`} component={InfoPage} /> 
             <Route path={`${match.url}/team/add`} component={AddTeamPage} /> 
             <Route path={`${match.url}/account`} component={UpdateAccountPage} /> 
-            {/* get in localStoges */}
             
             <Route component={NotFound} />
         </Switch>

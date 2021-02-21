@@ -5,6 +5,8 @@ export const COLOR_PRIMARY_DARK = "#0091ea";
 export const COLOR_WHITE = "#fafafa";
 export const COLOR_PURPLE = "#673ab7";
 export const COLOR_TEAL = "#009688";
+export const COLOR_BLUESGREY = "#607d8b";
+
 
 
 
@@ -16,6 +18,8 @@ export const SET_COLOR_TEAL = {color: COLOR_TEAL};
 export const SET_COLOR_AMBER = {color: "#ffc107"};
 export const SET_COLOR_RED = {color: "#f44336"};
 export const SET_COLOR_WHITE = {color: "#fafafa"};
+export const SET_COLOR_BLUESGREY = {color: COLOR_BLUESGREY};
+
 
 /*******************STYLE BACKGROUND COLOR***********************/
 export const SET_BACKGROUND_COLOR_PRIMARY = {background: COLOR_PRIMARY};

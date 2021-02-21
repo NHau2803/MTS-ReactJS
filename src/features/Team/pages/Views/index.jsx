@@ -14,7 +14,6 @@ import ButtonIcon from 'custom-fields/ButtonIcon';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import SaveIcon from '@material-ui/icons/Save';
 import Notification from 'custom-fields/Notification';
-import { set } from 'date-fns';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,9 +42,11 @@ export default function ViewTeamPage() {
   const { teamId } = useParams();
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   const [teamInfo, setTeamInfo] = useState({});
-  const [edit, setEdit] = useState(false);
+  const [editLink, setEditLink] = useState(false);
+  const [editPoint, setEditPoint] = useState(false);
   const [isFirst, setIsFirst] = useState(true);
   const [link, setLink] = useState("");
+  const [point, setPoint] = useState("");
 
 
   const fetchData = async () => {
@@ -59,6 +60,7 @@ export default function ViewTeamPage() {
           }else{
             setTeamInfo(res.result);
             setLink(teamInfo.link);
+            setPoint(teamInfo.point==null? "" : teamInfo.point);
           }            
       });
   };
@@ -78,37 +80,71 @@ export default function ViewTeamPage() {
   }
 
 
-  const onSubmitLink = () => {
-    teamApi.submitLink(teamId, {
-      id: teamId,
-      link: link
-    }).then(res=>{
-      if(res.success){
-          setNotify({
-              isOpen: true,
-              message: "Submit Successfully",
-              type: "success"
-          });
-          // setLink(link); ?? refesh?
-          
-      }else{
-          setNotify({
-              isOpen: true,
-              message: "Sorry, Submit Unsuccessfully",
-              type: "error"
-          });
-      }
-  });
-   
+  const checkPoint = (point) =>{
+    if(Number(point)){
+      return true;
+    }
+    return false;
   }
 
-  const onClickIcon = () =>{
+  const onSubmitLink = () =>{
 
-    if(edit){
-      onSubmitLink();
-      setEdit(!edit);
+    if(editLink){
+      teamApi.submitLink(teamId, {
+        id: teamId,
+        link: link
+      }).then(res=>{
+        if(res.success){
+            setNotify({
+                isOpen: true,
+                message: "Submit Successfully",
+                type: "success"
+            });
+            // setLink(link); ?? refesh?
+            
+        }else{
+            setNotify({
+                isOpen: true,
+                message: "Sorry, Submit Unsuccessfully",
+                type: "error"
+            });
+        }
+      });
+      setEditLink(!editLink);
     }else{
-      setEdit(!edit);
+      setEditLink(!editLink);
+    }
+    setIsFirst(false);
+  }
+
+  const onSubmitPoint = () =>{
+
+    if(editPoint){
+      teamApi.submitPoint(teamId, {
+        id: teamId,
+        point: Number(point)
+      }).then(res=>{
+        if(res.success){
+            setNotify({
+                isOpen: true,
+                message: "Submit Successfully",
+                type: "success"
+            });
+            // setLink(link); ?? refesh?
+            
+        }else{
+            setNotify({
+                isOpen: true,
+                message: "Sorry, Submit Unsuccessfully",
+                type: "error"
+            });
+        }
+      });
+      console.log("callapi")
+      setEditPoint(!editPoint);
+    }else{
+      console.log("a")
+      setEditPoint(!editPoint);
     }
     setIsFirst(false);
   }
@@ -142,13 +178,13 @@ export default function ViewTeamPage() {
                     fullWidth
                     value={isFirst ? teamInfo.link || "" : link || ""}
                     onChange={e => setLink(e.target.value)}
-                    disabled={edit ? false : true}
+                    disabled={editLink ? false : true}
                 />
                 <br/>                
                 {
                   <ButtonIcon 
-                    icon={edit ? <SaveIcon /> : <EditOutlinedIcon/>} 
-                    onClick= {onClickIcon} />
+                    icon={editLink ? <SaveIcon /> : <EditOutlinedIcon/>} 
+                    onClick= {onSubmitLink} />
                   
                 }
             </AccordionDetails>
@@ -157,7 +193,28 @@ export default function ViewTeamPage() {
           <Accordion>
             {accordionSummary("Point")}
             <AccordionDetails>
-              <b>{teamInfo.point || "No point yet!"}</b>
+                <Input
+                    name="point"
+                    label="Submit point for team"
+                    fullWidth
+                    value={isFirst ? teamInfo.point || "" : point || ""}
+                    onChange={e => setPoint(e.target.value)}
+                    disabled={editPoint ? false : true}
+                    error={point.length > 0 
+                          ? checkPoint(point) ? "" : "Invalid format number"
+                          :""
+                        }
+                />
+                <br/>                
+                {
+                  <ButtonIcon 
+                    icon={editPoint ? <SaveIcon /> : <EditOutlinedIcon/>} 
+                    onClick= {onSubmitPoint} 
+                    disabled={point.length > 0 
+                      ? checkPoint(point) ? false : true
+                      :false}/>
+                  
+                }
             </AccordionDetails>
           </Accordion>
 

@@ -130,6 +130,7 @@ export const getTeamObject = (result) =>{
 
 /***************************TOPIC**************************************/
 
+
 export const getTopicObject = (result) =>{
     return {
         id: result.id,
@@ -174,3 +175,41 @@ export const getTopicCreateObject = (values, deadlines) => {
 //     })  
 //    return newDeadlines
 // }
+
+
+/***************************ANALYSIS**************************************/
+
+
+export const getAnalysisGenderObject = (result) =>{
+    return [
+        {
+            name: "Male",
+            value: result.PercentMale,
+            total: result.male,
+        },
+        {
+            name: "Female",
+            value: result.PercentFemale,
+            total: result.female,
+        },
+    ];
+}
+export const getAnalysisActiveObject = (result) =>{
+    return [
+        {
+            name: "Active",
+            value: result.PercentActive,
+            total: result.active,
+        },
+    ];
+}
+
+export const getAnalysisTotalObject = (result) =>{
+    return [
+        {
+            name: "Active",
+            value: result.PercentActive,
+            total: result.active,
+        },
+    ];
+}

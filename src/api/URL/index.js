@@ -5,6 +5,7 @@ const urlApi = {
   BASE_URL_TEAM: 'http://localhost:8090/team',
   BASE_URL_TOPIC: 'http://localhost:8090/topic',
   BASE_URL_ADMIN: 'http://localhost:8090/api',
+  BAES_URL_LOGIN: 'http://localhost:8090/login',
 }
 
 export default urlApi;
